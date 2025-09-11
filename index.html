@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ricardo Alzurutt — Portfolio</title>
+    <meta name="description" content="Portfolio de Ricardo Alzurutt — Frontend especializado en React.js. Plantilla para personalizar." />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/header.css" />
+  <link rel="stylesheet" href="./css/studio.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/proyectos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- NAV: se esconde al bajar y aparece al subir (ver script.js: hideShowHeader) -->
+    <header id="navbar" class="nav">
+      <div class="container nav-row">
+        <a class="brand" href="#hero">
+          <img class="logo" src="./media/logo.svg" alt="Logo" width="50" height="50">
+          <span class="brand-name">Alzurutt.</span>
+        </a>
+        <nav class="nav-links" style="margin-left:auto; display:flex; gap:22px;">
+          <a href="#projects">proyectos</a>
+          <a href="#about">Sobre mí</a>
+          <a href="#contact">Contacto</a>
+        </nav>
+      </div>
+      <div class="progress" aria-hidden="true">
+        <div class="bar" id="scrollProgress"></div>
+      </div>
+    </header>
+
+    <!-- HERO: split headline con máscara/reveal y cursor-blur -->
+    <section id="hero" class="hero">
+      <!-- Ajusta textos desde script.js CONFIG.hero.* -->
+      <div class="cursor-blob" id="cursorBlob" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-left fx" data-stagger>
+          <p class="kicker" id="heroKicker">Frontend • React.js</p>
+          <h1 class="display hero-name">
+            <span class="mask"><span id="h1l1">RICARDO</span></span>
+            <span class="mask"><span id="h1l2">ALZURUTT</span></span>
+          </h1>
+          <p class="hero-sub mask"><span id="h1l3">Software Engineer</span></p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Ver proyectos</a>
+            <a class="btn btn-ghost" href="#contact">Contrátame</a>
+          </div>
+        </div>
+        <figure class="hero-right fx-zoom" aria-label="Espacio para ilustración/3D/imagen">
+          <!-- Placeholder para la ilustración grande similar a la maqueta. Reemplaza por imagen/3D. -->
+          <img class="hero-illustration" src="media/image/gif.gif" alt="Logo del sistema" />
+        </figure>
+      </div>
+      <!-- Marquee horizontal (infinito) -->
+      <div class="marquee" aria-hidden="true">
+        <div class="track">
+          <span>Strategy</span><span>Branding</span><span>Webflow</span><span>Motion</span><span>3D</span><span>Illustration</span>
+          <span>Strategy</span><span>Branding</span><span>Webflow</span><span>Motion</span><span>3D</span><span>Illustration</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS: plantilla editable -->
+    <section class="proyectos-section">
+      <h2>PROYECTOS</h2>
+      <div class="proyectos-carousel">
+        <!-- Proyecto 1 -->
+        <div class="proyecto active" id="proyecto-1">
+          <div class="proyecto-img">
+            <img src="media/image/proyecto1.jpg" alt="Proyecto 1">
+          </div>
+          <div class="proyecto-info">
+            <div class="proyecto-titulo">Landing Creativa</div>
+            <div class="proyecto-resumen">Landing page moderna para estudio creativo, con animaciones y diseño responsivo.</div>
+            <div class="proyecto-tags">
+              <span class="proyecto-tag">HTML</span>
+              <span class="proyecto-tag">CSS</span>
+              <span class="proyecto-tag">JavaScript</span>
+            </div>
+            <div class="proyecto-btns">
+              <button class="proyecto-btn">Conocer más</button>
+              <button class="proyecto-btn">Ir al proyecto</button>
+            </div>
+          </div>
+        </div>
+        <!-- Proyecto 2 -->
+        <div class="proyecto" id="proyecto-2">
+          <div class="proyecto-img">
+            <img src="media/image/proyecto2.jpg" alt="Proyecto 2">
+          </div>
+          <div class="proyecto-info">
+            <div class="proyecto-titulo">E-commerce Minimalista</div>
+            <div class="proyecto-resumen">Tienda online con carrito, filtros y panel de administración intuitivo.</div>
+            <div class="proyecto-tags">
+              <span class="proyecto-tag">React</span>
+              <span class="proyecto-tag">Node.js</span>
+              <span class="proyecto-tag">MongoDB</span>
+            </div>
+            <div class="proyecto-btns">
+              <button class="proyecto-btn">Conocer más</button>
+              <button class="proyecto-btn">Ir al proyecto</button>
+            </div>
+          </div>
+        </div>
+        <!-- Proyecto 3 -->
+        <div class="proyecto" id="proyecto-3">
+          <div class="proyecto-img">
+            <img src="media/image/proyecto3.jpg" alt="Proyecto 3">
+          </div>
+          <div class="proyecto-info">
+            <div class="proyecto-titulo">App de Tareas</div>
+            <div class="proyecto-resumen">Organizador de tareas con notificaciones, etiquetas y sincronización en la nube.</div>
+            <div class="proyecto-tags">
+              <span class="proyecto-tag">Vue</span>
+              <span class="proyecto-tag">Firebase</span>
+            </div>
+            <div class="proyecto-btns">
+              <button class="proyecto-btn">Conocer más</button>
+              <button class="proyecto-btn">Ir al proyecto</button>
+            </div>
+          </div>
+        </div>
+        <!-- Proyecto 4 -->
+        <div class="proyecto" id="proyecto-4">
+          <div class="proyecto-img">
+            <img src="media/image/proyecto4.jpg" alt="Proyecto 4">
+          </div>
+          <div class="proyecto-info">
+            <div class="proyecto-titulo">Portfolio Interactivo</div>
+            <div class="proyecto-resumen">Portfolio personal con animaciones, secciones dinámicas y contacto directo.</div>
+            <div class="proyecto-tags">
+              <span class="proyecto-tag">HTML</span>
+              <span class="proyecto-tag">CSS</span>
+              <span class="proyecto-tag">GSAP</span>
+            </div>
+            <div class="proyecto-btns">
+              <button class="proyecto-btn">Conocer más</button>
+              <button class="proyecto-btn">Ir al proyecto</button>
+            </div>
+          </div>
+        </div>
+        <!-- Flechas carrusel -->
+        <div class="carousel-arrow right" id="arrow-right">
+          <span class="arrow-icon" style="transform: rotate(180deg);">&#8592;</span>
+          <span class="arrow-tooltip" id="tooltip-right">E-commerce Minimalista</span>
+        </div>
+        <div class="carousel-arrow left" id="arrow-left">
+          <span class="arrow-icon" style="transform: rotate(180deg);">&#8594;</span>
+          <span class="arrow-tooltip" id="tooltip-left">App de Tareas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDIO: placeholder (se eliminaron las interacciones generadas) -->
+    <section id="studio" class="section section-studio">
+      <div class="container">
+        <div class="section-head fx">
+          <h2 class="h2">Estudio (Próximamente)</h2>
+          <p class="muted">Esta sección se actualizará en el futuro con una nueva experiencia interactiva. Actualmente está deshabilitada mientras se prepara la siguiente iteración.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="section">
+      <div class="container cta fx-zoom">
+        <h3 class="h1 center">Have a brief? Let’s make it move.</h3>
+        <p class="center muted">We respond within 1–2 business days.</p>
+        <div class="center">
+          <a class="btn btn-primary" href="mailto:hello@studionova.dev">Start a project</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-main">
+        <div class="footer-title">You can find me here:</div>
+        <div class="footer-socials">
+          <a href="#"><img src="media/image/dribbble.svg" alt="Dribbble"></a>
+          <a href="#"><img src="media/image/twitter.svg" alt="Twitter"></a>
+          <a href="#"><img src="media/image/twitch.svg" alt="Twitch"></a>
+          <a href="#"><img src="media/image/facebook.svg" alt="Facebook"></a>
+          <a href="#"><img src="media/image/instagram.svg" alt="Instagram"></a>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <a href="#works">WORKS</a>
+        <a href="#about">ABOUT</a>
+        <a href="#awards">AWARDS</a>
+        <a href="#contacts">CONTACTS</a>
+      </nav>
+      <div class="footer-bottom">
+        <span style="font-weight:bold;background:#fff;color:#ff4f3a;padding:4px 12px;border-radius:8px;letter-spacing:2px;">OK</span>
+        OSKAR KADERA &nbsp;|&nbsp; 2025 | COPYRIGHT ALL RIGHTS RESERVED
+      </div>
+    </footer>
+
+  <script src="./js/script.js"></script>
+  <script src="./js/header.js"></script>
+  <script src="./js/studio.js"></script>
+  </body>
+</html>

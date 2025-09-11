@@ -1,0 +1,84 @@
+/* Oculta el nav con animación al hacer scroll hacia abajo */
+.nav.nav--hidden {
+  transform: translateY(-100%);
+  transition: transform 0.35s ease, box-shadow 0.25s ease;
+}
+/* Animación de cambio de color para botones/enlaces del header */
+.nav-links a, .nav .btn {
+  position: relative;
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  color: var(--text);
+  background: transparent;
+  background-image: linear-gradient(to top, #000 100%, transparent 0%);
+  background-size: 100% 0%;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  transition: background-size 0.38s cubic-bezier(.22,.8,.28,1), color 0.32s cubic-bezier(.22,.8,.28,1), transform 0.32s cubic-bezier(.22,.8,.28,1), box-shadow 0.32s cubic-bezier(.22,.8,.28,1);
+  will-change: background-size, transform;
+  overflow: hidden;
+}
+
+.nav-links a:hover, .nav .btn:hover {
+  background-size: 100% 100%;
+  color: #fff !important;
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(11,36,51,0.08);
+  text-decoration: none;
+  text-shadow: none;
+}
+/* Header-specific styles (overrides / layout) */
+ .nav {
+  padding: 10px 32px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(11,36,51,0.08);
+  backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(11,36,51,0.06);
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: 70vw;
+  max-width: 700px;
+  min-width: 320px;
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+}
+.nav .brand .logo{font-size:13px}
+.progress{height:3px}
+.progress .bar{height:100%; border-radius:100px}
+/* small responsive tweaks for header area */
+@media (max-width:760px){
+  .nav-row{padding:0 8px}
+  .nav-links{display:none}
+}
+
+
+@font-face {
+  font-family: 'akira';
+  src: url('/media/fonts/Akira.otf') format('OpenType');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'bebas';
+  src: url('/media/fonts/BebasNeue.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'blonden';
+  src: url('/media/fonts/Blonden.otf') format('OpenType');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hero-illustration {
+  width: 120%;
+  height: 120%;
+  border-radius: 18px;
+}
+

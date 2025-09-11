@@ -1,0 +1,19 @@
+/* Animations and transitions separated for easy tuning */
+:root{ --anim-fast:180ms; --anim-base:380ms; --anim-slow:650ms }
+
+/* reusable transitions */
+.u-fade{transition:opacity var(--anim-base) var(--fx-ease), transform var(--anim-base) var(--fx-ease)}
+.u-scale{transition:transform var(--anim-base) var(--fx-ease)}
+
+/* studio specific transitions */
+.studio-media .studio-ph{transition:transform var(--anim-slow) var(--fx-ease), box-shadow var(--anim-base)}
+.studio-card{transition:transform var(--anim-base) var(--fx-ease), box-shadow var(--anim-base)}
+
+/* selector animations */
+.studio-track .selector{transition:transform .42s var(--fx-ease), left .32s var(--fx-ease), top .32s var(--fx-ease), width .32s var(--fx-ease), height .32s var(--fx-ease)}
+.studio-item{transition:transform .32s var(--fx-ease), box-shadow .32s var(--fx-ease)}
+
+
+/* hero mask reveal (fallback CSS) */
+.mask > span{transition:transform var(--fx-duration) var(--fx-ease)}
+

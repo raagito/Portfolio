@@ -1,0 +1,149 @@
+/* ============= THEME (modifica aquí colores y velocidades globales) ============= */
+:root{
+  /* Paleta más amigable: tonos pastel y teal */
+  --bg:#F7FBFF;          /* fondo general (muy claro) */
+  --surface:#FFFFFF;     /* tarjetas */
+  --text:#0B2433;        /* texto principal (azul oscuro) */
+  --muted:#5B7C88;       /* texto secundario (gris azulado) */
+  --primary:#4CC9B1;     /* acento principal (teal) */
+  --primary-2:#66D9E8;   /* acento secundario (celeste) */
+  --soft:#F0FBF9;        /* sección suave (very light teal) */
+  --border:rgba(11,36,51,0.06);
+
+  --radius:14px;
+  --radius-lg:20px;
+
+  --fx-duration:650ms;           /* velocidad global de animaciones */
+  --fx-ease:cubic-bezier(.22,.8,.28,1);
+  --fx-stagger:90ms;
+
+  --shadow:0 20px 50px rgba(11,36,51,0.06);
+  --shadow-soft:0 12px 30px rgba(11,36,51,0.05);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0; padding:0; overflow-x: hidden;}
+body{
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background:var(--bg); color:var(--text);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+img{max-width:100%; display:block}
+a{color:inherit}
+
+.container{max-width:1180px; margin:0 auto; padding:0 16px}
+.center{text-align:center}
+.display{font-size:48px; line-height:1.06; letter-spacing:-.02em; margin:0}
+@media (min-width: 860px){ .display{font-size:70px} }
+.h1{font-size:100px; margin:0 0 6px}
+.h2{font-size:24px; margin:0 0 6px}
+.muted{color:var(--muted)}
+.tiny{font-size:12px; color:#7D92AA}
+.pill{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(76,201,177,0.12); color:var(--text); font-weight:700; font-size:12px}
+
+/* ================= Nav con progreso y hide-on-scroll ================= */
+.nav{
+  position:sticky; top:18px; z-index:60; margin:0 12px;
+  backdrop-filter:saturate(140%) blur(8px);
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border-radius:100px; border:1px solid var(--border);
+  transform:translateY(0); transition:transform .35s ease, box-shadow .25s ease;
+  box-shadow:var(--shadow-soft);
+}
+.nav.nav--hidden{transform:translateY(-100%)}
+.nav-row{display:flex; align-items:center; justify-content:space-between; height:66px}
+.brand{display:flex; gap:12px; align-items:center; text-decoration:none}
+.brand-name{font-weight:800; letter-spacing:0.02em}
+.nav-links{display:flex; gap:18px}
+.nav-links a{opacity:.95; text-decoration:none; color:var(--text); font-weight:700}
+.nav-links a:hover{opacity:1; text-decoration:underline}
+.progress{height:2px; background:transparent}
+.progress .bar{height:100%; width:0; background:linear-gradient(90deg, var(--primary), var(--primary-2))}
+
+/* ================= Botones ================= */
+.btn{border-color:transparent; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 18px; border-radius:999px; font-weight:700; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease}
+.btn:hover{transform:translateY(-3px); box-shadow:0 8px 26px rgba(0,0,0,.12)}
+.btn:active{transform:translateY(0)}
+.btn.small{padding:8px 12px; font-weight:700}
+.btn-primary{background:linear-gradient(90deg, var(--primary), var(--primary-2)); color:#ffffff; box-shadow:0 14px 36px rgba(76,201,177,0.12)}
+.btn-dark{background:transparent; color:var(--text); border:1px solid rgba(11,36,51,0.06)}
+.btn-ghost{background:transparent; color:var(--text); border:1px dashed rgba(11,36,51,0.06)}
+
+/* ================= Hero ================= */
+.hero{position:relative; overflow:visible; padding-top:28px; padding-bottom:18px}
+.hero-grid{display:grid; gap:22px; padding:36px 0}
+@media (min-width: 980px){ .hero-grid{grid-template-columns:1fr 1fr; align-items:center} }
+.kicker{color:var(--muted); letter-spacing:.26em; text-transform:uppercase; font-size:12px; margin:0 0 12px}
+.mask{font-family:"akira"; display:block; overflow:hidden}
+.mask > span{display:inline-block; transform:translateY(110%)} /* se revela via JS */
+.hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
+
+/* subtitle under name */
+.hero-sub{margin-top:6px; font-size:16px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
+.hero-sub span{display:inline-block}
+
+
+.hero-illustration{width:92%; height:92%; border-radius:18px; background:conic-gradient(from 180deg at 50% 50%, #FFF7ED, #FFD8B0 30%, rgba(255,255,255,0.06) 60%);}
+.hero-right figcaption{margin-top:8px}
+
+.cursor-blob{
+  position:absolute; width:320px; height:320px; border-radius:50%;
+  background:radial-gradient(40% 40% at 50% 50%, rgba(49,163,255,.35), rgba(21,111,168,.05), transparent 70%);
+  pointer-events:none; filter:blur(18px); mix-blend-mode:screen; transform:translate(-50%, -50%) scale(.9);
+}
+
+/* Marquee */
+.marquee{border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04); white-space:nowrap; overflow:hidden}
+.marquee .track{display:inline-block; padding:10px 0; animation:marquee 24s linear infinite}
+.marquee span{margin:0 22px; color:#9ED7FF; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:12px}
+@keyframes marquee{ from { transform:translateX(0) } to { transform:translateX(-50%) } }
+
+/* ================= Work grid ================= */
+.section{padding:34px 0}
+.section-soft{background:var(--soft)}
+.section-head{display:grid; gap:6px}
+.projects-grid{display:grid; gap:18px}
+@media (min-width: 980px){ .projects-grid{grid-template-columns:repeat(3, 1fr)} }
+.card{background:transparent; border-radius:var(--radius); overflow:visible; position:relative}
+.card-inner{
+  display:block; color:inherit; text-decoration:none; min-height:320px; padding:0; background:transparent; transition:transform .45s var(--fx-ease), box-shadow .35s ease, filter .3s ease; border-radius:var(--radius);
+}
+.card-inner:hover{transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,.08)}
+.card .meta{position:relative; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border-radius:14px; margin-top:-36px}
+
+/* Placeholders de imagen para cada card (puedes cambiar a url) */
+.thumb{height:220px; border-radius:18px; overflow:hidden}
+.thumb-ph{width:100%; height:100%; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); display:block}
+
+/* ================= About ================= */
+.about-grid{display:grid; gap:18px; align-items:center}
+@media (min-width: 980px){ .about-grid{grid-template-columns:1fr 1fr} }
+.about-media .media-ph{
+  height:320px; border-radius:var(--radius-lg);
+  background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  box-shadow:var(--shadow-soft);
+}
+.counters{display:flex; gap:18px; margin:14px 0}
+.counter{display:grid; gap:2px; text-align:center}
+.counter span{font-size:28px; font-weight:800; color:#C8E7FF}
+.acc{border:1px solid var(--border); border-radius:12px; padding:10px; background:#0F1722}
+.acc summary{cursor:pointer; list-style:none; font-weight:700}
+.acc summary::-webkit-details-marker{display:none}
+.acc[open] summary{color:#A9C9FF}
+.acc-body{margin-top:8px; color:#9FB0C4}
+
+/* ================= CTA ================= */
+.cta{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.04); border-radius:18px; padding:28px; box-shadow:var(--shadow-soft)}
+
+/* ================= Footer ================= */
+.footer{border-top:1px solid var(--border)}
+.foot-row{display:flex; align-items:center; justify-content:space-between; padding:20px 0}
+.social{display:flex; gap:10px}
+.social a{text-decoration:none; color:#9FB0C4}
+.social a:hover{color:#D8E7FF}
+
+/* ================= Animaciones reusables (aplícalas con .fx / .fx-zoom) ================= */
+.fx{opacity:0; transform:translateY(14px); transition:opacity var(--fx-duration) var(--fx-ease), transform var(--fx-duration) var(--fx-ease)}
+.fx.in{opacity:1; transform:translateY(0)}
+.fx-zoom{opacity:0; transform:scale(.96); transition:opacity var(--fx-duration) var(--fx-ease), transform var(--fx-duration) var(--fx-ease)}
+.fx-zoom.in{opacity:1; transform:scale(1)}
