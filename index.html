@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ricardo Alzurutt — Portfolio</title>
-    <meta name="description" content="Portfolio de Ricardo Alzurutt — Frontend especializado en React.js. Plantilla para personalizar." />
+    <meta name="description" content="Portfolio de Ricardo Alzurutt — Frontend Developer. Landing personal con proyectos y contacto." />
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/header.css" />
+  <link rel="stylesheet" href="./css/hero.css" />
   <link rel="stylesheet" href="./css/studio.css" />
   <link rel="stylesheet" href="./css/animations.css" />
   <link rel="stylesheet" href="css/footer.css">
@@ -23,7 +24,19 @@
           <img class="logo" src="./media/logo.svg" alt="Logo" width="50" height="50">
           <span class="brand-name">Alzurutt.</span>
         </a>
-        <nav class="nav-links" style="margin-left:auto; display:flex; gap:22px;">
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          type="button"
+          aria-label="Abrir menu"
+          aria-controls="primaryNav"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav-links" id="primaryNav">
           <a href="#projects">proyectos</a>
           <a href="#about">Sobre mí</a>
           <a href="#contact">Contacto</a>
@@ -65,14 +78,14 @@
       </div>
     </section>
 
-    <!-- PROYECTOS: plantilla editable -->
-    <section class="proyectos-section">
+    <!-- PROYECTOS -->
+    <section id="projects" class="proyectos-section">
       <h2>PROYECTOS</h2>
       <div class="proyectos-carousel">
         <!-- Proyecto 1 -->
         <div class="proyecto active" id="proyecto-1">
           <div class="proyecto-img">
-            <img src="media/image/proyecto1.jpg" alt="Proyecto 1">
+            <img src="media/image/gif.gif" alt="Preview del proyecto Landing Creativa">
           </div>
           <div class="proyecto-info">
             <div class="proyecto-titulo">Landing Creativa</div>
@@ -91,7 +104,7 @@
         <!-- Proyecto 2 -->
         <div class="proyecto" id="proyecto-2">
           <div class="proyecto-img">
-            <img src="media/image/proyecto2.jpg" alt="Proyecto 2">
+            <img src="media/image/coffe.gif" alt="Preview del proyecto E-commerce Minimalista">
           </div>
           <div class="proyecto-info">
             <div class="proyecto-titulo">E-commerce Minimalista</div>
@@ -110,7 +123,7 @@
         <!-- Proyecto 3 -->
         <div class="proyecto" id="proyecto-3">
           <div class="proyecto-img">
-            <img src="media/image/proyecto3.jpg" alt="Proyecto 3">
+            <img src="media/logo.svg" alt="Preview del proyecto App de Tareas">
           </div>
           <div class="proyecto-info">
             <div class="proyecto-titulo">App de Tareas</div>
@@ -128,7 +141,7 @@
         <!-- Proyecto 4 -->
         <div class="proyecto" id="proyecto-4">
           <div class="proyecto-img">
-            <img src="media/image/proyecto4.jpg" alt="Proyecto 4">
+            <img src="media/image/gif.gif" alt="Preview del proyecto Portfolio Interactivo">
           </div>
           <div class="proyecto-info">
             <div class="proyecto-titulo">Portfolio Interactivo</div>
@@ -146,22 +159,22 @@
         </div>
         <!-- Flechas carrusel -->
         <div class="carousel-arrow right" id="arrow-right">
-          <span class="arrow-icon" style="transform: rotate(180deg);">&#8592;</span>
+          <span class="arrow-icon">&#8592;</span>
           <span class="arrow-tooltip" id="tooltip-right">E-commerce Minimalista</span>
         </div>
         <div class="carousel-arrow left" id="arrow-left">
-          <span class="arrow-icon" style="transform: rotate(180deg);">&#8594;</span>
+          <span class="arrow-icon">&#8594;</span>
           <span class="arrow-tooltip" id="tooltip-left">App de Tareas</span>
         </div>
       </div>
     </section>
 
     <!-- STUDIO: placeholder (se eliminaron las interacciones generadas) -->
-    <section id="studio" class="section section-studio">
+    <section id="about" class="section section-studio">
       <div class="container">
         <div class="section-head fx">
-          <h2 class="h2">Estudio (Próximamente)</h2>
-          <p class="muted">Esta sección se actualizará en el futuro con una nueva experiencia interactiva. Actualmente está deshabilitada mientras se prepara la siguiente iteración.</p>
+          <h2 class="h2">Sobre mí</h2>
+          <p class="muted">Soy frontend developer enfocado en experiencias web interactivas, rendimiento y diseño visual. Esta sección seguirá creciendo con más casos de estudio y proceso creativo.</p>
         </div>
       </div>
     </section>
@@ -169,10 +182,10 @@
     <!-- CTA -->
     <section id="contact" class="section">
       <div class="container cta fx-zoom">
-        <h3 class="h1 center">Have a brief? Let’s make it move.</h3>
-        <p class="center muted">We respond within 1–2 business days.</p>
+        <h3 class="h1 center">¿Tienes una idea? Hagámosla realidad.</h3>
+        <p class="center muted">Respondo en 24-48 horas hábiles.</p>
         <div class="center">
-          <a class="btn btn-primary" href="mailto:hello@studionova.dev">Start a project</a>
+          <a class="btn btn-primary" href="mailto:ricardo.alzurutt@gmail.com">Empezar proyecto</a>
         </div>
       </div>
     </section>
@@ -181,27 +194,23 @@
       <div class="footer-main">
         <div class="footer-title">You can find me here:</div>
         <div class="footer-socials">
-          <a href="#"><img src="media/image/dribbble.svg" alt="Dribbble"></a>
-          <a href="#"><img src="media/image/twitter.svg" alt="Twitter"></a>
-          <a href="#"><img src="media/image/twitch.svg" alt="Twitch"></a>
-          <a href="#"><img src="media/image/facebook.svg" alt="Facebook"></a>
-          <a href="#"><img src="media/image/instagram.svg" alt="Instagram"></a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">IN</a>
+          <a href="mailto:ricardo.alzurutt@gmail.com" aria-label="Email">@</a>
         </div>
       </div>
       <nav class="footer-nav">
-        <a href="#works">WORKS</a>
+        <a href="#projects">WORKS</a>
         <a href="#about">ABOUT</a>
-        <a href="#awards">AWARDS</a>
-        <a href="#contacts">CONTACTS</a>
+        <a href="#hero">HOME</a>
+        <a href="#contact">CONTACT</a>
       </nav>
       <div class="footer-bottom">
-        <span style="font-weight:bold;background:#fff;color:#ff4f3a;padding:4px 12px;border-radius:8px;letter-spacing:2px;">OK</span>
-        OSKAR KADERA &nbsp;|&nbsp; 2025 | COPYRIGHT ALL RIGHTS RESERVED
+        RICARDO ALZURUTT &nbsp;|&nbsp; <span id="year">2026</span> | ALL RIGHTS RESERVED
       </div>
     </footer>
 
   <script src="./js/script.js"></script>
-  <script src="./js/header.js"></script>
   <script src="./js/studio.js"></script>
   </body>
 </html>

@@ -1,84 +1,129 @@
-/* Footer estilo Oskar Kadera adaptado a tu web */
+/* ----------------- Footer (mobile first) ----------------- */
 .footer {
   background: #ff4f3a;
   color: #fff;
-  padding: 48px 0 24px 0;
+  padding: 36px 16px 24px;
   border-radius: 0 0 24px 24px;
-  box-shadow: 0 -4px 32px rgba(11,36,51,0.08);
+  box-shadow: 0 -4px 32px rgba(11, 36, 51, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'bebas', 'akira', Arial, sans-serif;
+  font-family: "bebas", "akira", Arial, sans-serif;
 }
+
 .footer-main {
-  background: rgba(255,255,255,0.08);
-  border-radius: 24px;
-  padding: 32px 48px;
-  margin-bottom: 32px;
+  width: min(100%, 860px);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 20px 14px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .footer-title {
-  font-size: 2.2rem;
-  font-weight: bold;
-  margin-bottom: 24px;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 18px;
   text-align: center;
 }
+
 .footer-socials {
   display: flex;
-  gap: 32px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 8px;
 }
+
 .footer-socials a {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  min-width: 54px;
+  height: 54px;
+  padding: 0 12px;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(11,36,51,0.08);
-  transition: transform 0.2s;
+  color: #ff4f3a;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(11, 36, 51, 0.08);
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
 }
+
 .footer-socials a:hover {
-  transform: scale(1.08);
+  transform: translateY(-2px);
   background: #ffe5e0;
 }
-.footer-socials img {
-  width: 32px;
-  height: 32px;
-}
+
 .footer-nav {
   display: flex;
-  gap: 32px;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 14px;
 }
+
 .footer-nav a {
   color: #fff;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 1px;
   transition: color 0.2s;
 }
+
 .footer-nav a:hover {
   color: #ffd6cf;
 }
+
 .footer-bottom {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: #ffd6cf;
-  margin-top: 12px;
+  margin-top: 8px;
   text-align: center;
 }
-@media (max-width: 600px) {
+
+@media (min-width: 760px) {
+  .footer {
+    padding: 48px 16px 24px;
+  }
+
   .footer-main {
-    padding: 18px 8px;
+    border-radius: 24px;
+    padding: 30px 42px;
+    margin-bottom: 30px;
   }
+
+  .footer-title {
+    font-size: 2.2rem;
+    margin-bottom: 24px;
+  }
+
   .footer-socials {
-    gap: 16px;
+    gap: 24px;
+    margin-bottom: 16px;
   }
+
+  .footer-socials a {
+    min-width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    font-size: 1.3rem;
+  }
+
   .footer-nav {
-    gap: 16px;
+    gap: 32px;
+    margin-bottom: 16px;
+  }
+
+  .footer-nav a {
+    font-size: 1.1rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.95rem;
+    margin-top: 12px;
   }
 }

@@ -1,0 +1,86 @@
+/* ----------------- Hero section (mobile first) ----------------- */
+.hero{position:relative; overflow:visible; padding-top:96px; padding-bottom:18px}
+.hero-grid{display:grid; gap:22px; padding:36px 0}
+@media (min-width: 980px){ .hero-grid{grid-template-columns:1fr 1fr; align-items:center} }
+.kicker{color:var(--muted); letter-spacing:.26em; text-transform:uppercase; font-size:12px; margin:0 0 12px}
+.mask{font-family:"akira"; display:block; overflow:hidden}
+.mask > span{display:inline-block; transform:translateY(110%)}
+.hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
+
+.hero-sub{margin-top:6px; font-size:16px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
+.hero-sub span{display:inline-block}
+
+.hero-illustration{width:100%; height:auto; border-radius:18px; background:conic-gradient(from 180deg at 50% 50%, #FFF7ED, #FFD8B0 30%, rgba(255,255,255,0.06) 60%);}
+.hero-right figcaption{margin-top:8px}
+
+/* Mobile behavior */
+.hero{
+  min-height:100svh;
+}
+
+.hero-grid{
+  min-height:calc(100svh - 114px);
+  align-content:center;
+  text-align:center;
+}
+
+.hero-left{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.hero-name,
+.hero-sub,
+.kicker{
+  text-align:center;
+}
+
+.hero-actions{
+  justify-content:center;
+}
+
+.hero-right{
+  display:none;
+}
+
+@media (min-width: 980px){
+  .hero{
+    min-height:auto;
+  }
+
+  .hero-grid{
+    min-height:auto;
+    text-align:left;
+    align-content:initial;
+  }
+
+  .hero-left{
+    align-items:flex-start;
+  }
+
+  .hero-name,
+  .hero-sub,
+  .kicker{
+    text-align:left;
+  }
+
+  .hero-actions{
+    justify-content:flex-start;
+  }
+
+  .hero-right{
+    display:block;
+  }
+}
+
+.cursor-blob{
+  position:absolute; width:320px; height:320px; border-radius:50%;
+  background:radial-gradient(40% 40% at 50% 50%, rgba(49,163,255,.35), rgba(21,111,168,.05), transparent 70%);
+  pointer-events:none; filter:blur(18px); mix-blend-mode:screen; transform:translate(-50%, -50%) scale(.9);
+}
+
+.marquee{border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04); white-space:nowrap; overflow:hidden}
+.marquee .track{display:inline-block; padding:10px 0; animation:marquee 24s linear infinite}
+.marquee span{margin:0 22px; color:#9ED7FF; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:12px}
+@keyframes marquee{ from { transform:translateX(0) } to { transform:translateX(-50%) } }

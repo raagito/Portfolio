@@ -33,32 +33,120 @@ a{color:inherit}
 
 .container{max-width:1180px; margin:0 auto; padding:0 16px}
 .center{text-align:center}
-.display{font-size:48px; line-height:1.06; letter-spacing:-.02em; margin:0}
+.display{font-size:40px; line-height:1.06; letter-spacing:-.02em; margin:0}
 @media (min-width: 860px){ .display{font-size:70px} }
-.h1{font-size:100px; margin:0 0 6px}
-.h2{font-size:24px; margin:0 0 6px}
+.h1{font-size:34px; margin:0 0 6px}
+.h2{font-size:22px; margin:0 0 6px}
+@media (min-width: 860px){ .h1{font-size:56px} }
 .muted{color:var(--muted)}
 .tiny{font-size:12px; color:#7D92AA}
 .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(76,201,177,0.12); color:var(--text); font-weight:700; font-size:12px}
 
 /* ================= Nav con progreso y hide-on-scroll ================= */
 .nav{
-  position:sticky; top:18px; z-index:60; margin:0 12px;
+  position:fixed;
+  top:10px;
+  left:12px;
+  right:12px;
+  z-index:100;
   backdrop-filter:saturate(140%) blur(8px);
   background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border-radius:100px; border:1px solid var(--border);
-  transform:translateY(0); transition:transform .35s ease, box-shadow .25s ease;
+  border-radius:100px;
+  border:1px solid var(--border);
+  transform:translateY(0);
+  transition:transform .35s ease, box-shadow .25s ease;
   box-shadow:var(--shadow-soft);
 }
-.nav.nav--hidden{transform:translateY(-100%)}
+.nav.nav--hidden{transform:translateY(-120%)}
 .nav-row{display:flex; align-items:center; justify-content:space-between; height:66px}
 .brand{display:flex; gap:12px; align-items:center; text-decoration:none}
 .brand-name{font-weight:800; letter-spacing:0.02em}
-.nav-links{display:flex; gap:18px}
+.nav-toggle{
+  width:42px;
+  height:42px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#ffffff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+}
+.nav-toggle span{
+  width:18px;
+  height:2px;
+  background:var(--text);
+  border-radius:4px;
+  transition:transform .25s ease, opacity .25s ease;
+}
+.nav.nav--open .nav-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav.nav--open .nav-toggle span:nth-child(2){opacity:0}
+.nav.nav--open .nav-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+.nav-links{
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(100% + 8px);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#ffffff;
+  box-shadow:var(--shadow-soft);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-8px);
+  transition:opacity .25s ease, transform .25s ease;
+}
+
+.nav.nav--open .nav-links{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
 .nav-links a{opacity:.95; text-decoration:none; color:var(--text); font-weight:700}
 .nav-links a:hover{opacity:1; text-decoration:underline}
 .progress{height:2px; background:transparent}
 .progress .bar{height:100%; width:0; background:linear-gradient(90deg, var(--primary), var(--primary-2))}
+
+@media (min-width: 760px){
+  .nav{
+    top:18px;
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
+    width:min(70vw, 700px);
+  }
+
+  .nav.nav--hidden{
+    transform:translateX(-50%) translateY(-120%);
+  }
+
+  .nav-links{
+    position:static;
+    opacity:1;
+    pointer-events:auto;
+    transform:none;
+    margin-left:auto;
+    flex-direction:row;
+    gap:14px;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+  }
+
+  .nav-toggle{
+    display:none;
+  }
+}
 
 /* ================= Botones ================= */
 .btn{border-color:transparent; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 18px; border-radius:999px; font-weight:700; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease}
@@ -68,35 +156,6 @@ a{color:inherit}
 .btn-primary{background:linear-gradient(90deg, var(--primary), var(--primary-2)); color:#ffffff; box-shadow:0 14px 36px rgba(76,201,177,0.12)}
 .btn-dark{background:transparent; color:var(--text); border:1px solid rgba(11,36,51,0.06)}
 .btn-ghost{background:transparent; color:var(--text); border:1px dashed rgba(11,36,51,0.06)}
-
-/* ================= Hero ================= */
-.hero{position:relative; overflow:visible; padding-top:28px; padding-bottom:18px}
-.hero-grid{display:grid; gap:22px; padding:36px 0}
-@media (min-width: 980px){ .hero-grid{grid-template-columns:1fr 1fr; align-items:center} }
-.kicker{color:var(--muted); letter-spacing:.26em; text-transform:uppercase; font-size:12px; margin:0 0 12px}
-.mask{font-family:"akira"; display:block; overflow:hidden}
-.mask > span{display:inline-block; transform:translateY(110%)} /* se revela via JS */
-.hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
-
-/* subtitle under name */
-.hero-sub{margin-top:6px; font-size:16px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
-.hero-sub span{display:inline-block}
-
-
-.hero-illustration{width:92%; height:92%; border-radius:18px; background:conic-gradient(from 180deg at 50% 50%, #FFF7ED, #FFD8B0 30%, rgba(255,255,255,0.06) 60%);}
-.hero-right figcaption{margin-top:8px}
-
-.cursor-blob{
-  position:absolute; width:320px; height:320px; border-radius:50%;
-  background:radial-gradient(40% 40% at 50% 50%, rgba(49,163,255,.35), rgba(21,111,168,.05), transparent 70%);
-  pointer-events:none; filter:blur(18px); mix-blend-mode:screen; transform:translate(-50%, -50%) scale(.9);
-}
-
-/* Marquee */
-.marquee{border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04); white-space:nowrap; overflow:hidden}
-.marquee .track{display:inline-block; padding:10px 0; animation:marquee 24s linear infinite}
-.marquee span{margin:0 22px; color:#9ED7FF; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:12px}
-@keyframes marquee{ from { transform:translateX(0) } to { transform:translateX(-50%) } }
 
 /* ================= Work grid ================= */
 .section{padding:34px 0}
