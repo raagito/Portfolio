@@ -84,6 +84,49 @@ const CONFIG = {
   );
 })();
 
+(function enforceWebmInfiniteLoop() {
+  function isWebmVideo(video) {
+    if (!video) return false;
+
+    const directSrc = (video.getAttribute("src") || "").toLowerCase();
+    if (directSrc.endsWith(".webm")) return true;
+
+    const sources = Array.from(video.querySelectorAll("source"));
+    return sources.some((source) => {
+      const src = (source.getAttribute("src") || "").toLowerCase();
+      const type = (source.getAttribute("type") || "").toLowerCase();
+      return src.endsWith(".webm") || type.includes("video/webm");
+    });
+  }
+
+  function applyWebmRules(video) {
+    if (!isWebmVideo(video)) return;
+
+    video.loop = true;
+    video.autoplay = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute("loop", "");
+  }
+
+  document.querySelectorAll("video").forEach(applyWebmRules);
+
+  if (!document.body) return;
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+
+        if (node.tagName === "VIDEO") applyWebmRules(node);
+        node.querySelectorAll?.("video").forEach(applyWebmRules);
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+
 (function headerBehavior() {
   const nav = document.getElementById("navbar");
   const bar = document.getElementById("scrollProgress");
