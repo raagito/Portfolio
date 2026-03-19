@@ -46,11 +46,11 @@
 
 @media (min-width: 980px){
   .hero{
-    min-height:auto;
+    min-height:100svh;
   }
 
   .hero-grid{
-    min-height:auto;
+    min-height:calc(100svh - 120px);
     text-align:left;
     align-content:initial;
   }
@@ -85,22 +85,19 @@
 .marquee span{margin:0 22px; color:#9ED7FF; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:12px}
 @keyframes marquee{ from { transform:translateX(0) } to { transform:translateX(-50%) } }
 
-/* Hero disintegration canvases */
-.hero-shard-canvas{
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:1;
-  will-change:transform, opacity;
-}
-
-.hero-shard-layer{
+/* Hero dissolve dust layer */
+.hero-dust-layer{
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index:5;
   opacity:0;
+}
+
+.hero-dust{
+  position:absolute;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, rgba(255,255,255,0.95), rgba(76,201,177,0.55));
+  filter:blur(0.5px);
+  will-change:transform, opacity;
 }

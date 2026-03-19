@@ -38,136 +38,112 @@
   });
 })();
 
-(function initHeroDisintegration() {
-  if (!window.gsap || !window.ScrollTrigger || !window.html2canvas) return;
+(function initHeroDissolveLite() {
+  if (!window.gsap || !window.ScrollTrigger) return;
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) return;
 
   const hero = document.getElementById("hero");
-  if (!hero) return;
+  const heroGrid = hero ? hero.querySelector(".hero-grid") : null;
+  const marquee = hero ? hero.querySelector(".marquee") : null;
+  const blob = document.getElementById("cursorBlob");
+  if (!hero || !heroGrid) return;
 
-  const heroParts = hero.querySelectorAll(".hero-grid, .marquee, #cursorBlob");
-  const SHARD_COUNT = 55;
-  const REPEAT_COUNT = 2;
-  let shardLayer = null;
-  let shardCanvases = [];
-  let disintegrateTimeline = null;
-  let buildToken = 0;
+  let dustLayer = null;
+  let dissolveTimeline = null;
 
-  function getShardLayer() {
-    if (shardLayer && hero.contains(shardLayer)) return shardLayer;
-    shardLayer = document.createElement("div");
-    shardLayer.className = "hero-shard-layer";
-    hero.appendChild(shardLayer);
-    return shardLayer;
+  function getDustLayer() {
+    if (dustLayer && hero.contains(dustLayer)) return dustLayer;
+    dustLayer = document.createElement("div");
+    dustLayer.className = "hero-dust-layer";
+    hero.appendChild(dustLayer);
+    return dustLayer;
   }
 
-  function clearShards() {
-    if (disintegrateTimeline) {
-      disintegrateTimeline.kill();
-      disintegrateTimeline = null;
+  function clearEffect() {
+    if (dissolveTimeline) {
+      dissolveTimeline.kill();
+      dissolveTimeline = null;
     }
 
-    shardCanvases.forEach((canvas) => canvas.remove());
-    shardCanvases = [];
-
-    if (shardLayer) {
-      shardLayer.innerHTML = "";
-      shardLayer.style.opacity = "0";
+    if (dustLayer) {
+      dustLayer.innerHTML = "";
+      dustLayer.style.opacity = "0";
     }
+
+    gsap.set([heroGrid, marquee, blob], {
+      clearProps: "opacity,visibility,transform,filter"
+    });
   }
 
-  async function buildShards() {
-    const token = ++buildToken;
+  function createDustParticles(layer, count) {
+    const particles = [];
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement("span");
+      dot.className = "hero-dust";
+      dot.style.left = `${Math.random() * 100}%`;
+      dot.style.top = `${Math.random() * 100}%`;
+      dot.style.width = `${2 + Math.random() * 6}px`;
+      dot.style.height = dot.style.width;
+      dot.style.opacity = "0";
+      layer.appendChild(dot);
+      particles.push(dot);
+    }
+    return particles;
+  }
 
-    clearShards();
+  function buildEffect() {
+    clearEffect();
+
     ScrollTrigger.getAll()
-      .filter((trigger) => trigger.vars && trigger.vars.id === "hero-disintegrate")
+      .filter((trigger) => trigger.vars && trigger.vars.id === "hero-dissolve-lite")
       .forEach((trigger) => trigger.kill());
 
-    hero.style.opacity = "1";
-    heroParts.forEach((part) => {
-      part.style.opacity = "1";
-      part.style.visibility = "visible";
-    });
+    const layer = getDustLayer();
+    const particleCount = window.innerWidth >= 980 ? 34 : 18;
+    const particles = createDustParticles(layer, particleCount);
+    const motionTargets = [heroGrid, marquee, blob].filter(Boolean);
 
-    const layer = getShardLayer();
-    const snapshot = await html2canvas(hero, {
-      backgroundColor: null,
-      useCORS: true,
-      scale: Math.min(window.devicePixelRatio || 1, 2),
-      ignoreElements: (element) => {
-        return element.classList && element.classList.contains("hero-shard-layer");
-      }
-    });
-
-    if (token !== buildToken) return;
-
-    const width = snapshot.width;
-    const height = snapshot.height;
-    const sourceCtx = snapshot.getContext("2d");
-    if (!sourceCtx) return;
-
-    const imageData = sourceCtx.getImageData(0, 0, width, height);
-    const dataList = Array.from({ length: SHARD_COUNT }, () => sourceCtx.createImageData(width, height));
-
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < height; y++) {
-        const pixelIndex = (x + y * width) * 4;
-        for (let repeat = 0; repeat < REPEAT_COUNT; repeat++) {
-          const randomBias = Math.random() + (x * 1.8) / width;
-          const shardIndex = Math.min(SHARD_COUNT - 1, Math.floor((SHARD_COUNT * randomBias) / 2.8));
-          for (let channel = 0; channel < 4; channel++) {
-            dataList[shardIndex].data[pixelIndex + channel] = imageData.data[pixelIndex + channel];
-          }
-        }
-      }
-    }
-
-    dataList.forEach((data, index) => {
-      const shard = document.createElement("canvas");
-      shard.width = width;
-      shard.height = height;
-      shard.className = "hero-shard-canvas";
-
-      const shardCtx = shard.getContext("2d");
-      if (!shardCtx) return;
-      shardCtx.putImageData(data, 0, 0);
-
-      layer.appendChild(shard);
-      shardCanvases.push(shard);
-    });
-
-    disintegrateTimeline = gsap.timeline({
+    dissolveTimeline = gsap.timeline({
       scrollTrigger: {
-        id: "hero-disintegrate",
+        id: "hero-dissolve-lite",
         trigger: hero,
         start: "top top",
-        end: () => `+=${window.innerHeight * 1.2}`,
-        scrub: 1
+        end: () => `+=${window.innerHeight * 0.95}`,
+        scrub: 1,
+        invalidateOnRefresh: true
       }
     });
 
-    disintegrateTimeline.to(layer, { opacity: 1, duration: 0.08, ease: "none" }, 0);
-    disintegrateTimeline.to(heroParts, { autoAlpha: 0, duration: 0.2, ease: "none" }, 0);
+    dissolveTimeline.to(layer, { opacity: 1, duration: 0.15, ease: "none" }, 0);
+    dissolveTimeline.to(
+      motionTargets,
+      {
+        opacity: 0,
+        y: -28,
+        filter: "blur(8px)",
+        stagger: 0.03,
+        ease: "none",
+        duration: 0.85
+      },
+      0
+    );
 
-    shardCanvases.forEach((shard, index) => {
+    particles.forEach((particle, index) => {
       const angle = (Math.random() - 0.5) * Math.PI * 2;
-      const moveDistance = 35 + Math.random() * 65;
-      const rotateAmount = (Math.random() - 0.5) * 48;
-
-      disintegrateTimeline.to(
-        shard,
+      const distance = 24 + Math.random() * 64;
+      dissolveTimeline.to(
+        particle,
         {
-          x: Math.sin(angle) * moveDistance,
-          y: Math.cos(angle) * moveDistance,
-          rotate: rotateAmount,
+          x: Math.cos(angle) * distance,
+          y: Math.sin(angle) * distance,
           opacity: 0,
+          scale: 0.35,
           ease: "none",
-          duration: 0.95
+          duration: 0.9
         },
-        index * 0.003
+        0.03 + index * 0.007
       );
     });
 
@@ -177,16 +153,14 @@
   let resizeTimeout;
   window.addEventListener("resize", () => {
     window.clearTimeout(resizeTimeout);
-    resizeTimeout = window.setTimeout(() => {
-      buildShards();
-    }, 250);
+    resizeTimeout = window.setTimeout(buildEffect, 200);
   });
 
-  window.addEventListener("beforeunload", clearShards);
+  window.addEventListener("beforeunload", clearEffect);
 
   if (document.readyState === "complete") {
-    buildShards();
+    buildEffect();
   } else {
-    window.addEventListener("load", buildShards, { once: true });
+    window.addEventListener("load", buildEffect, { once: true });
   }
 })();
