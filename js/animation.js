@@ -1,3 +1,6 @@
+/* =========================================================
+  HERO + GLOBAL ENTRANCE ANIMATIONS
+  ========================================================= */
 (function initGSAP() {
   if (!window.gsap || !window.ScrollTrigger) return;
 
@@ -24,14 +27,35 @@
   });
 })();
 
+/* =========================================================
+   PROJECTS CAROUSEL (CLICK + SWIPE NAVIGATION)
+   ========================================================= */
 (function initProjectsGallery() {
   if (!window.gsap) return;
 
+  const projectsSection = document.getElementById("projects");
   const cards = gsap.utils.toArray(".cards li");
   const cardsContainer = document.querySelector(".cards");
   const nextButton = document.querySelector(".next");
   const prevButton = document.querySelector(".prev");
-  if (!cards.length || !cardsContainer || !nextButton || !prevButton) return;
+  if (!projectsSection || !cards.length || !cardsContainer || !nextButton || !prevButton) return;
+
+  gsap.fromTo(
+    cardsContainer,
+    { scale: 0.82, opacity: 0.86 },
+    {
+      scale: 1,
+      opacity: 1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: projectsSection,
+        start: "top 30%",
+        end: "top -20%",
+        scrub: 1.2,
+        invalidateOnRefresh: true
+      }
+    }
+  );
 
   const state = {
     current: 0,
@@ -109,8 +133,8 @@
         opacity: visualState.opacity,
         zIndex: visualState.zIndex,
         filter: visualState.filter,
-        duration: immediate ? 0 : 0.55,
-        ease: "power2.inOut",
+        duration: immediate ? 0 : 0.34,
+        ease: "power2.out",
         onStart() {
           card.style.pointerEvents = visualState.pointerEvents;
         }
@@ -125,7 +149,7 @@
     render(false);
     window.setTimeout(() => {
       state.animating = false;
-    }, 580);
+    }, 360);
   }
 
   nextButton.addEventListener("click", () => go(1));
@@ -191,6 +215,38 @@
   render(true);
 })();
 
+/* =========================================================
+   PROJECTS SECTION ENTRY TRANSITION (SVG WAVE)
+   - Circle grows with scroll progress in projects section
+   - Works as persistent background reveal
+   ========================================================= */
+(function initProjectsEntryTransition() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const projectsSection = document.getElementById("projects");
+  const circle = document.querySelector(".projects-transition-circle");
+  if (!projectsSection || !circle) return;
+
+  gsap.fromTo(
+    circle,
+    { attr: { r: 0 } },
+    {
+      attr: { r: 145 },
+      ease: "none",
+      scrollTrigger: {
+        trigger: projectsSection,
+        start: "top 40%",
+        end: "top -10%",
+        scrub: 0.2,
+        invalidateOnRefresh: true
+      }
+    }
+  );
+})();
+
+/* =========================================================
+   HERO DISSOLVE ON SCROLL
+   ========================================================= */
 (function initHeroDissolveLite() {
   if (!window.gsap || !window.ScrollTrigger) return;
 
