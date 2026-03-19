@@ -1,21 +1,21 @@
 /* ----------------- Font setup ----------------- */
 @font-face {
   font-family: "akira";
-  src: url("../media/fonts/Akira.otf") format("opentype");
+  src: url("../media/fonts/Akira.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "bebas";
-  src: url("../media/fonts/BebasNeue-Regular.ttf") format("truetype");
+  src: url("../media/fonts/BebasNeue-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "blonden";
-  src: url("../media/fonts/Blonden-Regular.otf") format("opentype");
+  src: url("../media/fonts/Blonden-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
