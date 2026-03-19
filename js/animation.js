@@ -237,7 +237,7 @@
         trigger: projectsSection,
         start: "top 40%",
         end: "top -10%",
-        scrub: 0.2,
+        scrub: 1.2,
         invalidateOnRefresh: true
       }
     }
