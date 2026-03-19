@@ -33,7 +33,13 @@ const CONFIG = {
   const h1l2 = document.getElementById("h1l2");
   const h1l3 = document.getElementById("h1l3");
 
-  if (heroKicker) heroKicker.textContent = CONFIG.hero.kicker;
+  function updateHeroKicker() {
+    if (!heroKicker) return;
+    heroKicker.textContent = window.innerWidth < 980 ? "Frontend Developer" : CONFIG.hero.kicker;
+  }
+
+  updateHeroKicker();
+  window.addEventListener("resize", updateHeroKicker);
   if (h1l1) h1l1.textContent = CONFIG.hero.line1;
   if (h1l2) h1l2.textContent = CONFIG.hero.line2;
   if (h1l3) h1l3.textContent = CONFIG.hero.line3;
