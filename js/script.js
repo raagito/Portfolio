@@ -7,7 +7,7 @@ const CONFIG = {
     primary2: "#66D9E8"
   },
   hero: {
-    kicker: "Frontend • React.js",
+    kicker: "Frontend Developer",
     line1: "RICARDO",
     line2: "ALZURUTT",
     line3: "Software Engineer"
@@ -33,13 +33,7 @@ const CONFIG = {
   const h1l2 = document.getElementById("h1l2");
   const h1l3 = document.getElementById("h1l3");
 
-  function updateHeroKicker() {
-    if (!heroKicker) return;
-    heroKicker.textContent = window.innerWidth < 980 ? "Frontend Developer" : CONFIG.hero.kicker;
-  }
-
-  updateHeroKicker();
-  window.addEventListener("resize", updateHeroKicker);
+  if (heroKicker) heroKicker.textContent = CONFIG.hero.kicker;
   if (h1l1) h1l1.textContent = CONFIG.hero.line1;
   if (h1l2) h1l2.textContent = CONFIG.hero.line2;
   if (h1l3) h1l3.textContent = CONFIG.hero.line3;
@@ -74,17 +68,6 @@ const CONFIG = {
   );
 
   items.forEach((el) => io.observe(el));
-})();
-
-(function heroMask() {
-  const lines = document.querySelectorAll(".mask > span");
-  lines.forEach((line, i) => {
-    line.style.transition = "transform var(--fx-duration) var(--fx-ease)";
-    line.style.transitionDelay = `${80 * i}ms`;
-    requestAnimationFrame(() => {
-      line.style.transform = "translateY(0)";
-    });
-  });
 })();
 
 (function cursorBlob() {
@@ -178,75 +161,3 @@ const CONFIG = {
   }
 })();
 
-(function projectCarousel() {
-  const projects = Array.from(document.querySelectorAll(".proyecto"));
-  const arrowLeft = document.getElementById("arrow-left");
-  const arrowRight = document.getElementById("arrow-right");
-  const tooltipLeft = document.getElementById("tooltip-left");
-  const tooltipRight = document.getElementById("tooltip-right");
-
-  if (!projects.length || !arrowLeft || !arrowRight || !tooltipLeft || !tooltipRight) return;
-
-  const names = [
-    "Landing Creativa",
-    "E-commerce Minimalista",
-    "App de Tareas",
-    "Portfolio Interactivo"
-  ];
-
-  let current = 0;
-  let animating = false;
-
-  function updateTooltips() {
-    tooltipLeft.textContent = names[(current - 1 + projects.length) % projects.length];
-    tooltipRight.textContent = names[(current + 1) % projects.length];
-  }
-
-  function showProject(nextIndex, direction) {
-    if (animating || nextIndex === current) return;
-
-    animating = true;
-    const prevProject = projects[current];
-    const nextProject = projects[nextIndex];
-    const directionClass = direction === "right" ? "enter-right" : "enter-left";
-
-    projects.forEach((project) => {
-      project.classList.remove("active", "enter-right", "enter-left");
-      project.style.zIndex = "1";
-      project.style.opacity = "0";
-      project.style.pointerEvents = "none";
-    });
-
-    prevProject.classList.add("active");
-    prevProject.style.zIndex = "2";
-    prevProject.style.opacity = "1";
-    prevProject.style.pointerEvents = "auto";
-
-    nextProject.classList.add(directionClass);
-    nextProject.style.zIndex = "3";
-    nextProject.style.opacity = "1";
-    nextProject.style.pointerEvents = "auto";
-
-    window.setTimeout(() => {
-      nextProject.classList.remove("enter-right", "enter-left");
-      nextProject.classList.add("active");
-      prevProject.classList.remove("active");
-
-      current = nextIndex;
-      animating = false;
-      updateTooltips();
-    }, 600);
-  }
-
-  arrowLeft.addEventListener("click", () => {
-    const next = (current - 1 + projects.length) % projects.length;
-    showProject(next, "left");
-  });
-
-  arrowRight.addEventListener("click", () => {
-    const next = (current + 1) % projects.length;
-    showProject(next, "right");
-  });
-
-  updateTooltips();
-})();

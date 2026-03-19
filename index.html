@@ -52,7 +52,7 @@
       <!-- Ajusta textos desde script.js CONFIG.hero.* -->
       <div class="cursor-blob" id="cursorBlob" aria-hidden="true"></div>
       <div class="container hero-grid">
-        <div class="hero-left fx" data-stagger>
+        <div class="hero-left">
           <p class="kicker" id="heroKicker">Frontend Developer</p>
           <h1 class="display hero-name">
             <span class="mask"><span id="h1l1">RICARDO</span></span>
@@ -81,90 +81,40 @@
     <!-- PROYECTOS -->
     <section id="projects" class="proyectos-section">
       <h2>PROYECTOS</h2>
-      <div class="proyectos-carousel">
-        <!-- Proyecto 1 -->
-        <div class="proyecto active" id="proyecto-1">
-          <div class="proyecto-img">
-            <img src="media/image/gif.gif" alt="Preview del proyecto Landing Creativa">
-          </div>
-          <div class="proyecto-info">
-            <div class="proyecto-titulo">Landing Creativa</div>
-            <div class="proyecto-resumen">Landing page moderna para estudio creativo, con animaciones y diseño responsivo.</div>
-            <div class="proyecto-tags">
-              <span class="proyecto-tag">HTML</span>
-              <span class="proyecto-tag">CSS</span>
-              <span class="proyecto-tag">JavaScript</span>
-            </div>
-            <div class="proyecto-btns">
-              <button class="proyecto-btn">Conocer más</button>
-              <button class="proyecto-btn">Ir al proyecto</button>
-            </div>
-          </div>
-        </div>
-        <!-- Proyecto 2 -->
-        <div class="proyecto" id="proyecto-2">
-          <div class="proyecto-img">
-            <img src="media/image/coffe.gif" alt="Preview del proyecto E-commerce Minimalista">
-          </div>
-          <div class="proyecto-info">
-            <div class="proyecto-titulo">E-commerce Minimalista</div>
-            <div class="proyecto-resumen">Tienda online con carrito, filtros y panel de administración intuitivo.</div>
-            <div class="proyecto-tags">
-              <span class="proyecto-tag">React</span>
-              <span class="proyecto-tag">Node.js</span>
-              <span class="proyecto-tag">MongoDB</span>
-            </div>
-            <div class="proyecto-btns">
-              <button class="proyecto-btn">Conocer más</button>
-              <button class="proyecto-btn">Ir al proyecto</button>
-            </div>
-          </div>
-        </div>
-        <!-- Proyecto 3 -->
-        <div class="proyecto" id="proyecto-3">
-          <div class="proyecto-img">
-            <img src="media/logo.svg" alt="Preview del proyecto App de Tareas">
-          </div>
-          <div class="proyecto-info">
-            <div class="proyecto-titulo">App de Tareas</div>
-            <div class="proyecto-resumen">Organizador de tareas con notificaciones, etiquetas y sincronización en la nube.</div>
-            <div class="proyecto-tags">
-              <span class="proyecto-tag">Vue</span>
-              <span class="proyecto-tag">Firebase</span>
-            </div>
-            <div class="proyecto-btns">
-              <button class="proyecto-btn">Conocer más</button>
-              <button class="proyecto-btn">Ir al proyecto</button>
-            </div>
-          </div>
-        </div>
-        <!-- Proyecto 4 -->
-        <div class="proyecto" id="proyecto-4">
-          <div class="proyecto-img">
-            <img src="media/image/gif.gif" alt="Preview del proyecto Portfolio Interactivo">
-          </div>
-          <div class="proyecto-info">
-            <div class="proyecto-titulo">Portfolio Interactivo</div>
-            <div class="proyecto-resumen">Portfolio personal con animaciones, secciones dinámicas y contacto directo.</div>
-            <div class="proyecto-tags">
-              <span class="proyecto-tag">HTML</span>
-              <span class="proyecto-tag">CSS</span>
-              <span class="proyecto-tag">GSAP</span>
-            </div>
-            <div class="proyecto-btns">
-              <button class="proyecto-btn">Conocer más</button>
-              <button class="proyecto-btn">Ir al proyecto</button>
-            </div>
-          </div>
-        </div>
-        <!-- Flechas carrusel -->
-        <div class="carousel-arrow right" id="arrow-right">
-          <span class="arrow-icon">&#8592;</span>
-          <span class="arrow-tooltip" id="tooltip-right">E-commerce Minimalista</span>
-        </div>
-        <div class="carousel-arrow left" id="arrow-left">
-          <span class="arrow-icon">&#8594;</span>
-          <span class="arrow-tooltip" id="tooltip-left">App de Tareas</span>
+      <div class="gallery">
+        <ul class="cards">
+          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/image/gif.gif');">
+            <article class="project-card-content">
+              <h3>Landing Creativa</h3>
+              <p>Landing page moderna para estudio creativo, con animaciones y diseño responsivo.</p>
+              <p class="project-tech">HTML • CSS • JavaScript</p>
+            </article>
+          </li>
+          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/image/coffe.gif');">
+            <article class="project-card-content">
+              <h3>E-commerce Minimalista</h3>
+              <p>Tienda online con carrito, filtros y panel de administración intuitivo.</p>
+              <p class="project-tech">React • Node.js • MongoDB</p>
+            </article>
+          </li>
+          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.2), rgba(11,36,51,0.75)), url('media/logo.svg');">
+            <article class="project-card-content">
+              <h3>App de Tareas</h3>
+              <p>Organizador de tareas con notificaciones, etiquetas y sincronización en la nube.</p>
+              <p class="project-tech">Vue • Firebase</p>
+            </article>
+          </li>
+          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/image/gif.gif');">
+            <article class="project-card-content">
+              <h3>Portfolio Interactivo</h3>
+              <p>Portfolio personal con animaciones, secciones dinámicas y contacto directo.</p>
+              <p class="project-tech">HTML • CSS • GSAP</p>
+            </article>
+          </li>
+        </ul>
+        <div class="actions" aria-label="Controles de proyectos">
+          <button class="project-nav-btn prev" type="button">Prev</button>
+          <button class="project-nav-btn next" type="button">Next</button>
         </div>
       </div>
     </section>

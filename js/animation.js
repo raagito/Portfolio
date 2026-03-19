@@ -9,33 +9,140 @@
   const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
   intro
     .from(".nav", { y: -30, opacity: 0, duration: 0.6 })
-    .from("#heroKicker", { y: 20, opacity: 0, duration: 0.5 }, "-=0.25")
-    .from(".hero-name .mask > span", { yPercent: 110, stagger: 0.08, duration: 0.8 }, "-=0.2")
+    .from(".hero-name .mask > span", { opacity: 0, stagger: 0.12, duration: 0.55, ease: "power1.inOut" }, "-=0.1")
     .from(".hero-sub", { y: 16, opacity: 0, duration: 0.5 }, "-=0.4")
     .from(".hero-actions .btn", { y: 16, opacity: 0, stagger: 0.08, duration: 0.45 }, "-=0.35");
+  gsap.from(".proyectos-section h2", {
+    opacity: 0,
+    y: 26,
+    duration: 0.6,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".proyectos-section",
+      start: "top 85%"
+    }
+  });
+})();
 
-  gsap.utils.toArray(".proyecto").forEach((card) => {
-    gsap.from(card, {
+(function initProjectsGallery() {
+  if (!window.gsap) return;
+
+  const cards = gsap.utils.toArray(".cards li");
+  const nextButton = document.querySelector(".next");
+  const prevButton = document.querySelector(".prev");
+  if (!cards.length || !nextButton || !prevButton) return;
+
+  const state = {
+    current: 0,
+    animating: false
+  };
+
+  gsap.set(cards, {
+    xPercent: -50,
+    yPercent: -50,
+    left: "50%",
+    top: "48%",
+    transformOrigin: "center center"
+  });
+
+  function relativeIndex(index) {
+    const total = cards.length;
+    let delta = index - state.current;
+    if (delta > total / 2) delta -= total;
+    if (delta < -total / 2) delta += total;
+    return delta;
+  }
+
+  function getStepDistance(absDelta) {
+    const mobile = window.innerWidth < 980;
+    if (absDelta === 1) return mobile ? window.innerWidth * 0.33 : 290;
+    if (absDelta === 2) return mobile ? window.innerWidth * 0.56 : 520;
+    return mobile ? window.innerWidth * 0.7 : 640;
+  }
+
+  function getStateFromDelta(delta) {
+    const abs = Math.abs(delta);
+    const direction = delta === 0 ? 0 : delta / abs;
+
+    if (abs === 0) {
+      return {
+        x: 0,
+        scale: 1,
+        opacity: 1,
+        zIndex: 40,
+        filter: "brightness(1) saturate(1)",
+        pointerEvents: "auto"
+      };
+    }
+
+    if (abs === 1) {
+      return {
+        x: direction * getStepDistance(1),
+        scale: 0.86,
+        opacity: 0.78,
+        zIndex: 30,
+        filter: "brightness(1.16) saturate(0.9)",
+        pointerEvents: "none"
+      };
+    }
+
+    if (abs === 2) {
+      return {
+        x: direction * getStepDistance(2),
+        scale: 0.72,
+        opacity: 0.48,
+        zIndex: 20,
+        filter: "brightness(1.22) saturate(0.82)",
+        pointerEvents: "none"
+      };
+    }
+
+    return {
+      x: direction * getStepDistance(3),
+      scale: 0.66,
       opacity: 0,
-      y: 40,
-      duration: 0.7,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: card,
-        start: "top 85%",
-        toggleActions: "play none none reverse"
-      }
+      zIndex: 10,
+      filter: "brightness(1.18)",
+      pointerEvents: "none"
+    };
+  }
+
+  function render(immediate) {
+    cards.forEach((card, index) => {
+      const delta = relativeIndex(index);
+      const visualState = getStateFromDelta(delta);
+
+      gsap.to(card, {
+        x: visualState.x,
+        scale: visualState.scale,
+        opacity: visualState.opacity,
+        zIndex: visualState.zIndex,
+        filter: visualState.filter,
+        duration: immediate ? 0 : 0.55,
+        ease: "power2.inOut",
+        onStart() {
+          card.style.pointerEvents = visualState.pointerEvents;
+        }
+      });
     });
-  });
+  }
 
-  const mm = gsap.matchMedia();
-  mm.add("(max-width: 979px)", () => {
-    gsap.from(".proyectos-section h2", { opacity: 0, y: 20, duration: 0.5 });
-  });
+  function go(direction) {
+    if (state.animating) return;
+    state.animating = true;
+    state.current = (state.current + direction + cards.length) % cards.length;
+    render(false);
+    window.setTimeout(() => {
+      state.animating = false;
+    }, 580);
+  }
 
-  mm.add("(min-width: 980px)", () => {
-    gsap.from(".proyectos-section h2", { opacity: 0, y: 40, duration: 0.7 });
-  });
+  nextButton.addEventListener("click", () => go(1));
+  prevButton.addEventListener("click", () => go(-1));
+
+  window.addEventListener("resize", () => render(true));
+
+  render(true);
 })();
 
 (function initHeroDissolveLite() {

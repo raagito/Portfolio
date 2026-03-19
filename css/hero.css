@@ -4,7 +4,7 @@
 @media (min-width: 980px){ .hero-grid{grid-template-columns:1fr 1fr; align-items:center} }
 .kicker{color:var(--muted); letter-spacing:.26em; text-transform:uppercase; font-size:12px; margin:0 0 12px}
 .mask{font-family:"akira"; display:block; overflow:hidden}
-.mask > span{display:inline-block; transform:translateY(110%)}
+.mask > span{display:inline-block}
 .hero-actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
 
 .hero-sub{margin-top:6px; font-size:16px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
