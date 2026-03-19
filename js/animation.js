@@ -28,9 +28,10 @@
   if (!window.gsap) return;
 
   const cards = gsap.utils.toArray(".cards li");
+  const cardsContainer = document.querySelector(".cards");
   const nextButton = document.querySelector(".next");
   const prevButton = document.querySelector(".prev");
-  if (!cards.length || !nextButton || !prevButton) return;
+  if (!cards.length || !cardsContainer || !nextButton || !prevButton) return;
 
   const state = {
     current: 0,
@@ -86,17 +87,7 @@
       };
     }
 
-    if (abs === 2) {
-      return {
-        x: direction * getStepDistance(2),
-        scale: 0.72,
-        opacity: 0.48,
-        zIndex: 20,
-        filter: "brightness(1.22) saturate(0.82)",
-        pointerEvents: "none"
-      };
-    }
-
+    // Keep all non-adjacent cards hidden until navigation brings them near center.
     return {
       x: direction * getStepDistance(3),
       scale: 0.66,
@@ -139,6 +130,61 @@
 
   nextButton.addEventListener("click", () => go(1));
   prevButton.addEventListener("click", () => go(-1));
+
+  // Mobile UX: horizontal swipe over cards triggers prev/next.
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchDeltaX = 0;
+  let touchDeltaY = 0;
+  let trackingTouch = false;
+
+  cardsContainer.addEventListener(
+    "touchstart",
+    (event) => {
+      if (!event.touches.length) return;
+      const touch = event.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchDeltaX = 0;
+      touchDeltaY = 0;
+      trackingTouch = true;
+    },
+    { passive: true }
+  );
+
+  cardsContainer.addEventListener(
+    "touchmove",
+    (event) => {
+      if (!trackingTouch || !event.touches.length) return;
+      const touch = event.touches[0];
+      touchDeltaX = touch.clientX - touchStartX;
+      touchDeltaY = touch.clientY - touchStartY;
+
+      // Prevent accidental page scroll only when the gesture is clearly horizontal.
+      if (Math.abs(touchDeltaX) > Math.abs(touchDeltaY) * 1.2) {
+        event.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+
+  function handleSwipeEnd() {
+    if (!trackingTouch) return;
+    trackingTouch = false;
+
+    const isHorizontalIntent = Math.abs(touchDeltaX) > Math.abs(touchDeltaY) * 1.2;
+    const passedThreshold = Math.abs(touchDeltaX) > 45;
+    if (!isHorizontalIntent || !passedThreshold) return;
+
+    if (touchDeltaX < 0) {
+      go(1);
+    } else {
+      go(-1);
+    }
+  }
+
+  cardsContainer.addEventListener("touchend", handleSwipeEnd, { passive: true });
+  cardsContainer.addEventListener("touchcancel", handleSwipeEnd, { passive: true });
 
   window.addEventListener("resize", () => render(true));
 
