@@ -93,6 +93,21 @@ const CONFIG = {
 
   let lastY = window.scrollY;
   let ticking = false;
+  const MIN_SCROLL_Y = 90;
+  const DELTA_THRESHOLD = 2;
+  let isHidden = false;
+
+  function applyNavState(hidden) {
+    isHidden = hidden;
+    nav.classList.toggle("nav--hidden", hidden);
+
+    const desktop = window.innerWidth >= 760;
+    if (desktop) {
+      nav.style.transform = hidden ? "translateX(-50%) translateY(-120%)" : "translateX(-50%)";
+    } else {
+      nav.style.transform = hidden ? "translateY(-120%)" : "translateY(0)";
+    }
+  }
 
   function updateProgress() {
     const doc = document.documentElement;
@@ -108,13 +123,19 @@ const CONFIG = {
     }
 
     const currentY = window.scrollY;
-    const goingDown = currentY > lastY;
+    const delta = currentY - lastY;
 
-    if (goingDown && currentY > 100) {
-      nav.classList.add("nav--hidden");
-    } else {
-      nav.classList.remove("nav--hidden");
+    // Ignore tiny scroll jitters to prevent flicker.
+    if (Math.abs(delta) < DELTA_THRESHOLD) {
+      lastY = currentY;
+      ticking = false;
+      return;
     }
+
+    const goingDown = delta > 0;
+
+    if (goingDown && currentY > MIN_SCROLL_Y) applyNavState(true);
+    else applyNavState(false);
 
     lastY = currentY;
     ticking = false;
@@ -133,6 +154,7 @@ const CONFIG = {
   );
 
   updateProgress();
+  applyNavState(false);
 
   function closeMobileMenu() {
     nav.classList.remove("nav--open");
@@ -151,6 +173,7 @@ const CONFIG = {
 
     window.addEventListener("resize", () => {
       if (window.innerWidth >= 760) closeMobileMenu();
+      applyNavState(isHidden);
     });
 
     document.addEventListener("click", (event) => {

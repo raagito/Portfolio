@@ -21,9 +21,6 @@
 }
 
 /* ----------------- Header interactions ----------------- */
-.nav.nav--hidden {
-  transform: translateY(-120%);
-}
 
 .nav-links {
   gap: 8px;

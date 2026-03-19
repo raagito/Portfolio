@@ -11,6 +11,7 @@
 .hero-sub span{display:inline-block}
 
 .hero-illustration{width:100%; height:auto; border-radius:18px; background:conic-gradient(from 180deg at 50% 50%, #FFF7ED, #FFD8B0 30%, rgba(255,255,255,0.06) 60%);}
+.hero-video{display:block; object-fit:cover}
 .hero-right figcaption{margin-top:8px}
 
 /* Mobile behavior */

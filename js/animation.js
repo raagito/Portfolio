@@ -11,7 +11,7 @@
 
   const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
   intro
-    .from(".nav", { y: -30, opacity: 0, duration: 0.6 })
+    .from(".nav", { y: -30, opacity: 0, duration: 0.6, clearProps: "transform" })
     .from(".hero-name .mask > span", { opacity: 0, stagger: 0.12, duration: 0.55, ease: "power1.inOut" }, "-=0.1")
     .from(".hero-sub", { y: 16, opacity: 0, duration: 0.5 }, "-=0.4")
     .from(".hero-actions .btn", { y: 16, opacity: 0, stagger: 0.08, duration: 0.45 }, "-=0.35");

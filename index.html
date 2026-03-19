@@ -65,8 +65,18 @@
           </div>
         </div>
         <figure class="hero-right fx-zoom" aria-label="Espacio para ilustración/3D/imagen">
-          <!-- Placeholder para la ilustración grande similar a la maqueta. Reemplaza por imagen/3D. -->
-          <img class="hero-illustration" src="media/image/gif.gif" alt="Logo del sistema" />
+          <video
+            class="hero-illustration hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="media/image/coffe.gif"
+            aria-label="Video de presentación"
+          >
+            <source src="media/image/gif.webm" type="video/webm" />
+          </video>
         </figure>
       </div>
       <!-- Marquee horizontal (infinito) -->
@@ -100,14 +110,17 @@
       </div>
       <div class="gallery">
         <ul class="cards">
-          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/image/gif.gif');">
+          <li style="background-color: #0b2433;">
+            <video class="project-card-media" autoplay muted loop playsinline preload="none" poster="media/image/coffe.gif" aria-hidden="true">
+              <source src="media/image/gif.webm" type="video/webm" />
+            </video>
             <article class="project-card-content">
               <h3>Landing Creativa</h3>
               <p>Landing page moderna para estudio creativo, con animaciones y diseño responsivo.</p>
               <p class="project-tech">HTML • CSS • JavaScript</p>
             </article>
           </li>
-          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/image/coffe.gif');">
+          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/logo.svg');">
             <article class="project-card-content">
               <h3>E-commerce Minimalista</h3>
               <p>Tienda online con carrito, filtros y panel de administración intuitivo.</p>
@@ -121,7 +134,10 @@
               <p class="project-tech">Vue • Firebase</p>
             </article>
           </li>
-          <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/image/gif.gif');">
+          <li style="background-color: #0b2433;">
+            <video class="project-card-media" autoplay muted loop playsinline preload="none" poster="media/image/coffe.gif" aria-hidden="true">
+              <source src="media/image/gif.webm" type="video/webm" />
+            </video>
             <article class="project-card-content">
               <h3>Portfolio Interactivo</h3>
               <p>Portfolio personal con animaciones, secciones dinámicas y contacto directo.</p>
