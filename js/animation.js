@@ -373,3 +373,56 @@
     window.addEventListener("load", buildEffect, { once: true });
   }
 })();
+
+/* =========================================================
+   ABOUT BENTO FLIP SCROLL ANIMATION
+   ========================================================= */
+(function initAboutBentoFlip() {
+  if (!window.gsap || !window.ScrollTrigger || !window.Flip) return;
+
+  gsap.registerPlugin(ScrollTrigger, Flip);
+
+  let flipCtx;
+
+  function createTween() {
+    const galleryElement = document.querySelector("#gallery-8");
+    if (!galleryElement) return;
+
+    const galleryItems = galleryElement.querySelectorAll(".gallery__item");
+    if (!galleryItems.length) return;
+
+    if (flipCtx) flipCtx.revert();
+    galleryElement.classList.remove("gallery--final");
+
+    flipCtx = gsap.context(() => {
+      galleryElement.classList.add("gallery--final");
+      const flipState = Flip.getState(galleryItems);
+      galleryElement.classList.remove("gallery--final");
+
+      const flipTween = Flip.to(flipState, {
+        simple: true,
+        ease: "expoScale(1, 5)"
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: galleryElement,
+          start: "center center",
+          end: "+=100%",
+          scrub: true,
+          pin: galleryElement.parentNode,
+          invalidateOnRefresh: true
+        }
+      });
+
+      tl.add(flipTween);
+
+      return () => {
+        gsap.set(galleryItems, { clearProps: "all" });
+      };
+    }, galleryElement);
+  }
+
+  createTween();
+  window.addEventListener("resize", createTween);
+})();
