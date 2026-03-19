@@ -81,18 +81,11 @@
       <h2>PROYECTOS</h2>
       <div class="projects-transition-wrap" aria-hidden="true">
         <svg class="projects-transition" viewBox="0 0 100 100" preserveAspectRatio="xMidYMin slice">
-          <defs>
-            <linearGradient id="projects-grad" x1="0" y1="0" x2="99" y2="99" gradientUnits="userSpaceOnUse">
-              <stop offset="0.2" stop-color="rgb(255, 135, 9)" />
-              <stop offset="0.7" stop-color="rgb(247, 189, 248)" />
-            </linearGradient>
-          </defs>
           <circle
             class="projects-transition-circle"
             cx="50"
             cy="100"
             r="0"
-            fill="url(#projects-grad)"
           />
         </svg>
       </div>
@@ -161,18 +154,19 @@
               <span aria-hidden="true">Frontend&nbsp;</span>
               <span class="sr-only">Frontend stack</span>
             </h2>
-            <div class="tech-tags" aria-label="Frontend technologies">
-              <span class="tech-tag">HTML</span>
-              <span class="tech-tag">CSS</span>
-              <span class="tech-tag">JavaScript</span>
-              <span class="tech-tag">TypeScript</span>
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Next.js</span>
-              <span class="tech-tag">Tailwind</span>
-              <span class="tech-tag">GSAP</span>
-              <span class="tech-tag">Accessibility</span>
-              <span class="tech-tag">Testing</span>
-              <span class="tech-tag">Performance</span>
+            <div class="tech-logos" aria-label="Frontend technologies">
+              <span class="tech-logo-item is-js" title="JavaScript">
+                <img src="media/svg/logo_js.svg" alt="JavaScript" loading="lazy" />
+              </span>
+              <span class="tech-logo-item is-react" title="React">
+                <img src="media/svg/logo_react.svg" alt="React" loading="lazy" />
+              </span>
+              <span class="tech-logo-item is-tailwind" title="Tailwind CSS">
+                <img src="media/svg/logo_tailwind.svg" alt="Tailwind CSS" loading="lazy" />
+              </span>
+              <span class="tech-logo-item is-gsap" title="GSAP">
+                <img src="media/svg/logo_gsap.svg" alt="GSAP" loading="lazy" />
+              </span>
             </div>
           </section>
 
@@ -181,18 +175,16 @@
               <span aria-hidden="true">Backend&nbsp;</span>
               <span class="sr-only">Backend stack</span>
             </h2>
-            <div class="tech-tags" aria-label="Backend technologies">
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">Django</span>
-              <span class="tech-tag">Express</span>
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">REST API</span>
-              <span class="tech-tag">GraphQL</span>
-              <span class="tech-tag">PostgreSQL</span>
-              <span class="tech-tag">MongoDB</span>
-              <span class="tech-tag">Firebase</span>
-              <span class="tech-tag">Auth</span>
-              <span class="tech-tag">Deploy</span>
+            <div class="tech-logos" aria-label="Backend technologies">
+              <span class="tech-logo-item is-node" title="Node.js">
+                <img src="media/svg/logo_node.svg" alt="Node.js" loading="lazy" />
+              </span>
+              <span class="tech-logo-item is-django" title="Django">
+                <img src="media/svg/logo_django.svg" alt="Django" loading="lazy" />
+              </span>
+              <span class="tech-logo-item is-postgres" title="PostgreSQL">
+                <img src="media/svg/logo_postgres.svg" alt="PostgreSQL" loading="lazy" />
+              </span>
             </div>
           </section>
         </div>
@@ -204,14 +196,23 @@
         <section class="about-stack-flow" id="aboutStackFlow" aria-label="Valores principales">
           <div class="about-stack-stage">
             <article class="about-stack-card">
+              <div class="about-stack-card__media">
+                <img src="media/image/whyme.jpg" alt="Visual de estrategia" loading="lazy" />
+              </div>
               <h3>Desarrollo orientado a negocio</h3>
               <p>Cada decision de interfaz tiene objetivo: retencion, conversion o claridad de producto.</p>
             </article>
             <article class="about-stack-card">
+              <div class="about-stack-card__media">
+                <img src="media/image/whyme.jpg" alt="Visual de arquitectura" loading="lazy" />
+              </div>
               <h3>Arquitectura limpia y escalable</h3>
               <p>Codigo ordenado para crecer sin romper: componentes reutilizables y mantenimiento simple.</p>
             </article>
             <article class="about-stack-card">
+              <div class="about-stack-card__media">
+                <img src="media/image/whyme.jpg" alt="Visual de identidad" loading="lazy" />
+              </div>
               <h3>Experiencia visual con identidad</h3>
               <p>No hago interfaces genericas. Creo una presencia visual coherente y memorable.</p>
             </article>

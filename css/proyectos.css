@@ -35,6 +35,7 @@
 
 .projects-transition-circle {
   transform-origin: center bottom;
+  fill: #8be3d3;
 }
 
 .gallery {

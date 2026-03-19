@@ -136,6 +136,77 @@
   justify-content: center;
 }
 
+.tech-logos {
+  width: min(100%, 640px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(116px, 1fr));
+  gap: 1.1rem;
+  justify-items: center;
+}
+
+.tech-logo-item {
+  --logo-glow: rgba(139, 227, 211, 0.45);
+  width: 118px;
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.tech-logo-item img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.tech-logo-item:hover,
+.tech-logo-item:focus-visible {
+  transform: scale(1.12);
+}
+
+.tech-logo-item:hover img,
+.tech-logo-item:focus-visible img {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 14px var(--logo-glow));
+}
+
+.tech-logo-item.is-js { --logo-glow: rgba(255, 233, 88, 0.75); }
+.tech-logo-item.is-react { --logo-glow: rgba(97, 218, 251, 0.78); }
+.tech-logo-item.is-tailwind { --logo-glow: rgba(56, 189, 248, 0.78); }
+.tech-logo-item.is-gsap { --logo-glow: rgba(136, 255, 64, 0.8); }
+.tech-logo-item.is-node { --logo-glow: rgba(131, 217, 94, 0.75); }
+.tech-logo-item.is-django { --logo-glow: rgba(24, 180, 108, 0.78); }
+.tech-logo-item.is-postgres { --logo-glow: rgba(112, 170, 255, 0.78); }
+
+.tech-content--backend .tech-logos {
+  width: min(100%, 700px);
+  grid-template-columns: repeat(3, minmax(130px, 1fr));
+  gap: 1.4rem;
+}
+
+.tech-content--backend .tech-logo-item {
+  width: 132px;
+}
+
+.tech-content--backend .tech-logo-item img {
+  width: 90%;
+  height: 90%;
+}
+
+.tech-content--backend .tech-logo-item.is-django {
+  width: 146px;
+}
+
+.tech-content--backend .tech-logo-item.is-django img {
+  width: 98%;
+  height: 98%;
+}
+
 .tech-tag {
   display: inline-flex;
   align-items: center;
@@ -181,26 +252,43 @@
 .about-stack-stage {
   position: sticky;
   top: 12vh;
-  height: min(520px, 70svh);
+  height: min(720px, 82svh);
 }
 
 .about-stack-card {
   position: absolute;
   left: 0;
   right: 0;
-  width: min(100%, 860px);
+  width: min(100%, 940px);
   margin: 0 auto;
-  border-radius: 18px;
-  padding: 1.5rem;
+  border-radius: 22px;
+  padding: 1.25rem 1.25rem 1.4rem;
   background: #f8fafc;
   border: 1px solid rgba(11, 36, 51, 0.12);
-  box-shadow: 0 16px 28px rgba(11, 36, 51, 0.1);
+  box-shadow: 0 22px 40px rgba(11, 36, 51, 0.14);
+}
+
+.about-stack-card__media {
+  width: 100%;
+  height: clamp(180px, 22vw, 260px);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: #dbe9f8;
+}
+
+.about-stack-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .about-stack-card h3 {
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.72rem;
   color: #0b2433;
-  font-size: clamp(1.2rem, 2.1vw, 2rem);
+  font-size: clamp(1.34rem, 2.35vw, 2.3rem);
   line-height: 1.1;
   text-align: center;
 }
@@ -208,7 +296,7 @@
 .about-stack-card p {
   margin: 0;
   color: #6b7f89;
-  font-size: clamp(1rem, 1.3vw, 1.55rem);
+  font-size: clamp(1.04rem, 1.45vw, 1.62rem);
   line-height: 1.45;
   text-align: center;
 }
@@ -276,6 +364,28 @@
     font-size: clamp(1.2rem, 5vw, 1.6rem);
   }
 
+  .tech-logos {
+    grid-template-columns: repeat(3, minmax(86px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .tech-logo-item {
+    width: 90px;
+  }
+
+  .tech-content--backend .tech-logos {
+    grid-template-columns: repeat(3, minmax(94px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .tech-content--backend .tech-logo-item {
+    width: 102px;
+  }
+
+  .tech-content--backend .tech-logo-item.is-django {
+    width: 114px;
+  }
+
   .tech-tag {
     font-size: 0.78rem;
     padding: 0.45rem 0.62rem;
@@ -299,8 +409,14 @@
     width: 100%;
     margin: 0 0 0.9rem;
     box-shadow: 0 10px 20px rgba(11, 36, 51, 0.08);
-    padding: 1.05rem;
+    padding: 1rem;
     border-radius: 14px;
+  }
+
+  .about-stack-card__media {
+    height: 170px;
+    border-radius: 12px;
+    margin-bottom: 0.85rem;
   }
 
   .about-stack-card:last-child {

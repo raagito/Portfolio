@@ -397,8 +397,22 @@
     if (!items.length) return;
 
     const focusItem = gallery.querySelector(".about-gallery__item--focus") || items[Math.floor(items.length / 2)];
+    const isMobileViewport = window.innerWidth < 981;
 
-    if (zoomCtx) zoomCtx.revert();
+    if (zoomCtx) {
+      zoomCtx.revert();
+      zoomCtx = null;
+    }
+
+    if (isMobileViewport) {
+      // On mobile, keep WHY ME as a regular static image block (no pin / no scroll animation).
+      gsap.set(items, { clearProps: "all" });
+      const focusImg = focusItem.querySelector("img");
+      if (focusImg) gsap.set(focusImg, { clearProps: "all" });
+      if (titleOverlay) gsap.set(titleOverlay, { clearProps: "all" });
+      gsap.set([galleryWrap, gallery], { clearProps: "all" });
+      return;
+    }
 
     zoomCtx = gsap.context(() => {
       gsap.set(items, { transformOrigin: "50% 50%" });
@@ -418,7 +432,7 @@
       tl.to(
         focusItem,
         {
-          scale: window.innerWidth < 980 ? 2.4 : 3.2,
+          scale: 3.2,
           zIndex: 12,
           filter: "blur(0px)",
           ease: "none",
@@ -438,7 +452,6 @@
       );
 
       const focusImg = focusItem.querySelector("img");
-      const isMobileViewport = window.innerWidth < 981;
       if (focusImg) {
         tl.to(
           focusImg,
@@ -451,17 +464,15 @@
           0
         );
 
-        if (!isMobileViewport) {
-          tl.to(
-            focusImg,
-            {
-              opacity: 0,
-              ease: "none",
-              duration: 0.45
-            },
-            1
-          );
-        }
+        tl.to(
+          focusImg,
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 0.45
+          },
+          1
+        );
       }
 
       return () => {
