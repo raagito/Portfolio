@@ -8,6 +8,7 @@
 .about-gallery-wrap {
   position: relative;
   width: 100%;
+  height: 100svh;
   min-height: 100svh;
   display: flex;
   align-items: center;
@@ -15,6 +16,7 @@
   overflow: hidden;
   padding: 0;
   background: #0B2433;
+  z-index: 3;
 }
 
 .about-title-overlay {
@@ -229,6 +231,7 @@
 
 @media (max-width: 980px) {
   .about-gallery-wrap {
+    height: 100svh;
     min-height: 100svh;
   }
 

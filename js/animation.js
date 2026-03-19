@@ -438,6 +438,7 @@
       );
 
       const focusImg = focusItem.querySelector("img");
+      const isMobileViewport = window.innerWidth < 981;
       if (focusImg) {
         tl.to(
           focusImg,
@@ -450,15 +451,17 @@
           0
         );
 
-        tl.to(
-          focusImg,
-          {
-            opacity: 0,
-            ease: "none",
-            duration: 0.45
-          },
-          1
-        );
+        if (!isMobileViewport) {
+          tl.to(
+            focusImg,
+            {
+              opacity: 0,
+              ease: "none",
+              duration: 0.45
+            },
+            1
+          );
+        }
       }
 
       return () => {
