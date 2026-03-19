@@ -449,6 +449,16 @@
           },
           0
         );
+
+        tl.to(
+          focusImg,
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 0.45
+          },
+          1
+        );
       }
 
       return () => {
