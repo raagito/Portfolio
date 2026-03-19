@@ -22,7 +22,6 @@
       <div class="container nav-row">
         <a class="brand" href="#hero">
           <img class="logo" src="./media/logo.svg" alt="Logo" width="50" height="50">
-          <span class="brand-name">Alzurutt.</span>
         </a>
         <button
           class="nav-toggle"
@@ -37,9 +36,9 @@
           <span></span>
         </button>
         <nav class="nav-links" id="primaryNav">
-          <a href="#projects">proyectos</a>
-          <a href="#about">Sobre mí</a>
-          <a href="#contact">Contacto</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#about">ABOUT ME</a>
+          <a href="#contact">LET'S WORK</a>
         </nav>
       </div>
       <div class="progress" aria-hidden="true">
@@ -60,23 +59,12 @@
           </h1>
           <p class="hero-sub mask"><span id="h1l3">Software Engineer</span></p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#projects">Ver proyectos</a>
-            <a class="btn btn-ghost" href="#contact">Contrátame</a>
+            <a class="btn btn-primary" href="#projects">View Projects</a>
+            <a class="btn btn-ghost" href="#contact">Let's Work</a>
           </div>
         </div>
-        <figure class="hero-right fx-zoom" aria-label="Espacio para ilustración/3D/imagen">
-          <video
-            class="hero-illustration hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="media/image/coffe.gif"
-            aria-label="Video de presentación"
-          >
-            <source src="media/image/gif.webm" type="video/webm" />
-          </video>
+        <figure class="hero-right fx-zoom">
+          <img class="hero-illustration" src="media/svg/hero-25.svg" alt="Hero illustration" loading="eager" />
         </figure>
       </div>
       <!-- Marquee horizontal (infinito) -->
@@ -152,30 +140,83 @@
       </div>
     </section>
 
-    <!-- ABOUT / BENTO GALLERY -->
+    <!-- ABOUT / SINGLE IMAGE STRUCTURE -->
     <section id="about" class="aboutme-root">
-      <div class="gallery-wrap">
-        <div class="gallery gallery--bento gallery--switch" id="gallery-8">
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 1" loading="lazy" /></div>
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 2" loading="lazy" /></div>
-          <div class="gallery__item gallery__item--focus"><img src="media/logo.svg" alt="Placeholder 3" loading="lazy" /></div>
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 4" loading="lazy" /></div>
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 5" loading="lazy" /></div>
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 6" loading="lazy" /></div>
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 7" loading="lazy" /></div>
-          <div class="gallery__item"><img src="media/logo.svg" alt="Placeholder 8" loading="lazy" /></div>
+      <div class="gallery-wrap about-gallery-wrap">
+        <p class="about-title-overlay">WHY ME?</p>
+        <div class="about-gallery" id="about-gallery-1">
+          <div class="about-gallery__item about-gallery__item--focus">
+            <img src="media/image/whyme.jpg" alt="Placeholder focus" loading="lazy" />
+          </div>
         </div>
       </div>
-      <div class="section">
-        <h2>Here is some content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="section about-info tech-stack">
+        <header class="tech-header">
+          <h1 class="fluid">Tecnologias<br />que uso.</h1>
+        </header>
+
+        <div class="tech-main">
+          <section class="tech-content fluid tech-content--frontend">
+            <h2>
+              <span aria-hidden="true">Frontend&nbsp;</span>
+              <span class="sr-only">Frontend stack</span>
+            </h2>
+            <div class="tech-tags" aria-label="Frontend technologies">
+              <span class="tech-tag">HTML</span>
+              <span class="tech-tag">CSS</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Next.js</span>
+              <span class="tech-tag">Tailwind</span>
+              <span class="tech-tag">GSAP</span>
+              <span class="tech-tag">Accessibility</span>
+              <span class="tech-tag">Testing</span>
+              <span class="tech-tag">Performance</span>
+            </div>
+          </section>
+
+          <section class="tech-content fluid tech-content--backend">
+            <h2>
+              <span aria-hidden="true">Backend&nbsp;</span>
+              <span class="sr-only">Backend stack</span>
+            </h2>
+            <div class="tech-tags" aria-label="Backend technologies">
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">Django</span>
+              <span class="tech-tag">Express</span>
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">REST API</span>
+              <span class="tech-tag">GraphQL</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">Firebase</span>
+              <span class="tech-tag">Auth</span>
+              <span class="tech-tag">Deploy</span>
+            </div>
+          </section>
+        </div>
+
+        <footer class="tech-footer">Stack adaptable segun proyecto.</footer>
+
+        <h2 class="qualities-title">Cualidades</h2>
+
+        <section class="about-stack-flow" id="aboutStackFlow" aria-label="Valores principales">
+          <div class="about-stack-stage">
+            <article class="about-stack-card">
+              <h3>Desarrollo orientado a negocio</h3>
+              <p>Cada decision de interfaz tiene objetivo: retencion, conversion o claridad de producto.</p>
+            </article>
+            <article class="about-stack-card">
+              <h3>Arquitectura limpia y escalable</h3>
+              <p>Codigo ordenado para crecer sin romper: componentes reutilizables y mantenimiento simple.</p>
+            </article>
+            <article class="about-stack-card">
+              <h3>Experiencia visual con identidad</h3>
+              <p>No hago interfaces genericas. Creo una presencia visual coherente y memorable.</p>
+            </article>
+          </div>
+        </section>
       </div>
     </section>
 

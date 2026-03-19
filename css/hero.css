@@ -10,7 +10,7 @@
 .hero-sub{margin-top:6px; font-size:16px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
 .hero-sub span{display:inline-block}
 
-.hero-illustration{width:100%; height:auto; border-radius:18px; background:conic-gradient(from 180deg at 50% 50%, #FFF7ED, #FFD8B0 30%, rgba(255,255,255,0.06) 60%);}
+.hero-illustration{display:block; width:100%; height:auto; border-radius:0; background:none; box-shadow:none;}
 .hero-video{display:block; object-fit:cover}
 .hero-right figcaption{margin-top:8px}
 
@@ -72,6 +72,8 @@
 
   .hero-right{
     display:block;
+    width:min(115%, 700px);
+    justify-self:end;
   }
 }
 

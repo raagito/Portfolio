@@ -388,15 +388,15 @@
 
   function createZoomTimeline() {
     const section = document.getElementById("about");
-    const galleryWrap = section ? section.querySelector(".gallery-wrap") : null;
-    const gallery = section ? section.querySelector("#gallery-8") : null;
+    const galleryWrap = section ? section.querySelector(".about-gallery-wrap") : null;
+    const gallery = section ? section.querySelector("#about-gallery-1") : null;
+    const titleOverlay = section ? section.querySelector(".about-title-overlay") : null;
     if (!section || !galleryWrap || !gallery) return;
 
-    const items = Array.from(gallery.querySelectorAll(".gallery__item"));
+    const items = Array.from(gallery.querySelectorAll(".about-gallery__item"));
     if (!items.length) return;
 
-    const focusItem = gallery.querySelector(".gallery__item--focus") || items[Math.floor(items.length / 2)];
-    const nonFocusItems = items.filter((item) => item !== focusItem);
+    const focusItem = gallery.querySelector(".about-gallery__item--focus") || items[Math.floor(items.length / 2)];
 
     if (zoomCtx) zoomCtx.revert();
 
@@ -407,7 +407,7 @@
         scrollTrigger: {
           trigger: galleryWrap,
           start: "top top",
-          end: "+=160%",
+          end: "+=170%",
           scrub: 1,
           pin: galleryWrap,
           anticipatePin: 1,
@@ -416,11 +416,11 @@
       });
 
       tl.to(
-        nonFocusItems,
+        focusItem,
         {
-          opacity: 0.08,
-          scale: 0.82,
-          filter: "blur(5px)",
+          scale: window.innerWidth < 980 ? 2.4 : 3.2,
+          zIndex: 12,
+          filter: "blur(0px)",
           ease: "none",
           duration: 1
         },
@@ -428,11 +428,9 @@
       );
 
       tl.to(
-        focusItem,
+        gallery,
         {
-          scale: 4.6,
-          zIndex: 30,
-          filter: "blur(0px)",
+          scale: 1.05,
           ease: "none",
           duration: 1
         },
@@ -445,7 +443,7 @@
           focusImg,
           {
             opacity: 1,
-            scale: 1.08,
+            scale: 1.12,
             ease: "none",
             duration: 1
           },
@@ -456,6 +454,7 @@
       return () => {
         gsap.set(items, { clearProps: "all" });
         if (focusImg) gsap.set(focusImg, { clearProps: "all" });
+        if (titleOverlay) gsap.set(titleOverlay, { clearProps: "all" });
       };
     }, section);
   }
@@ -466,5 +465,54 @@
   window.addEventListener("resize", () => {
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(createZoomTimeline, 180);
+  });
+})();
+
+/* =========================================================
+   ABOUT STACKED CARDS (FOLDER OVERLAP ON SCROLL)
+   ========================================================= */
+(function initAboutStackCards() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const stackSection = document.getElementById("aboutStackFlow");
+  const stage = stackSection ? stackSection.querySelector(".about-stack-stage") : null;
+  const cards = stackSection ? Array.from(stackSection.querySelectorAll(".about-stack-card")) : [];
+  if (!stackSection || !stage || cards.length < 3) return;
+
+  const mm = gsap.matchMedia();
+
+  mm.add("(min-width: 981px)", () => {
+    gsap.set(cards, {
+      y: (index) => (index === 0 ? 0 : 170 + index * 18),
+      opacity: (index) => (index === 0 ? 1 : 0),
+      zIndex: (index) => index + 1
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: stackSection,
+        start: "top top",
+        end: "+=180%",
+        scrub: 1,
+        pin: stage,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+      }
+    });
+
+    tl.to(cards[1], { y: 18, opacity: 1, duration: 0.34, ease: "none" }, 0.24);
+    tl.to(cards[2], { y: 36, opacity: 1, duration: 0.34, ease: "none" }, 0.66);
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+      gsap.set(cards, { clearProps: "all" });
+    };
+  });
+
+  mm.add("(max-width: 980px)", () => {
+    gsap.set(cards, { clearProps: "all" });
   });
 })();
