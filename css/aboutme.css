@@ -37,6 +37,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow: 0 20px 35px rgba(11, 36, 51, 0.18);
+  will-change: transform, opacity, filter;
 }
 
 .aboutme-root .gallery__item img {
@@ -44,6 +45,15 @@
   width: 100%;
   height: 100%;
   opacity: 0.72;
+  transition: opacity 220ms ease;
+}
+
+.aboutme-root .gallery__item--focus {
+  z-index: 5;
+}
+
+.aboutme-root .gallery__item--focus img {
+  opacity: 0.9;
 }
 
 .aboutme-root .gallery--bento {

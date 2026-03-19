@@ -375,54 +375,96 @@
 })();
 
 /* =========================================================
-   ABOUT BENTO FLIP SCROLL ANIMATION
+   ABOUT CENTER IMAGE ZOOM ON SCROLL
+   - Pins gallery while zooming focus item
+   - Unpins when zoom completes so content continues naturally
    ========================================================= */
-(function initAboutBentoFlip() {
-  if (!window.gsap || !window.ScrollTrigger || !window.Flip) return;
+(function initAboutCenterZoom() {
+  if (!window.gsap || !window.ScrollTrigger) return;
 
-  gsap.registerPlugin(ScrollTrigger, Flip);
+  gsap.registerPlugin(ScrollTrigger);
 
-  let flipCtx;
+  let zoomCtx;
 
-  function createTween() {
-    const galleryElement = document.querySelector("#gallery-8");
-    if (!galleryElement) return;
+  function createZoomTimeline() {
+    const section = document.getElementById("about");
+    const galleryWrap = section ? section.querySelector(".gallery-wrap") : null;
+    const gallery = section ? section.querySelector("#gallery-8") : null;
+    if (!section || !galleryWrap || !gallery) return;
 
-    const galleryItems = galleryElement.querySelectorAll(".gallery__item");
-    if (!galleryItems.length) return;
+    const items = Array.from(gallery.querySelectorAll(".gallery__item"));
+    if (!items.length) return;
 
-    if (flipCtx) flipCtx.revert();
-    galleryElement.classList.remove("gallery--final");
+    const focusItem = gallery.querySelector(".gallery__item--focus") || items[Math.floor(items.length / 2)];
+    const nonFocusItems = items.filter((item) => item !== focusItem);
 
-    flipCtx = gsap.context(() => {
-      galleryElement.classList.add("gallery--final");
-      const flipState = Flip.getState(galleryItems);
-      galleryElement.classList.remove("gallery--final");
+    if (zoomCtx) zoomCtx.revert();
 
-      const flipTween = Flip.to(flipState, {
-        simple: true,
-        ease: "expoScale(1, 5)"
-      });
+    zoomCtx = gsap.context(() => {
+      gsap.set(items, { transformOrigin: "50% 50%" });
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: galleryElement,
-          start: "center center",
-          end: "+=100%",
-          scrub: true,
-          pin: galleryElement.parentNode,
+          trigger: galleryWrap,
+          start: "top top",
+          end: "+=160%",
+          scrub: 1,
+          pin: galleryWrap,
+          anticipatePin: 1,
           invalidateOnRefresh: true
         }
       });
 
-      tl.add(flipTween);
+      tl.to(
+        nonFocusItems,
+        {
+          opacity: 0.08,
+          scale: 0.82,
+          filter: "blur(5px)",
+          ease: "none",
+          duration: 1
+        },
+        0
+      );
+
+      tl.to(
+        focusItem,
+        {
+          scale: 4.6,
+          zIndex: 30,
+          filter: "blur(0px)",
+          ease: "none",
+          duration: 1
+        },
+        0
+      );
+
+      const focusImg = focusItem.querySelector("img");
+      if (focusImg) {
+        tl.to(
+          focusImg,
+          {
+            opacity: 1,
+            scale: 1.08,
+            ease: "none",
+            duration: 1
+          },
+          0
+        );
+      }
 
       return () => {
-        gsap.set(galleryItems, { clearProps: "all" });
+        gsap.set(items, { clearProps: "all" });
+        if (focusImg) gsap.set(focusImg, { clearProps: "all" });
       };
-    }, galleryElement);
+    }, section);
   }
 
-  createTween();
-  window.addEventListener("resize", createTween);
+  createZoomTimeline();
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(createZoomTimeline, 180);
+  });
 })();
