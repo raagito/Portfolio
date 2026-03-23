@@ -28,6 +28,42 @@
 })();
 
 /* =========================================================
+   CONTACT PANEL ENTRANCE (RIGHT SIDE)
+   ========================================================= */
+(function initContactSlideIn() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const panel = document.querySelector(".contact-panel");
+  if (!panel) return;
+
+  const links = panel.querySelectorAll(".contact-link");
+
+  const tl = gsap.timeline({
+    defaults: { ease: "power3.out" },
+    scrollTrigger: {
+      trigger: panel,
+      start: "top 88%",
+      toggleActions: "play none none none"
+    }
+  });
+
+  tl.from(panel, {
+    x: 170,
+    opacity: 0,
+    duration: 0.78
+  }).from(
+    links,
+    {
+      x: 60,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.42
+    },
+    "-=0.42"
+  );
+})();
+
+/* =========================================================
    PROJECTS CAROUSEL (CLICK + SWIPE NAVIGATION)
    ========================================================= */
 (function initProjectsGallery() {
@@ -509,7 +545,7 @@
 
   mm.add("(min-width: 981px)", () => {
     gsap.set(cards, {
-      y: (index) => (index === 0 ? 0 : 170 + index * 18),
+      y: (index) => (index === 0 ? 0 : 150 + index * 16),
       opacity: (index) => (index === 0 ? 1 : 0),
       zIndex: (index) => index + 1
     });
@@ -518,7 +554,7 @@
       scrollTrigger: {
         trigger: stackSection,
         start: "top top",
-        end: "+=180%",
+        end: "+=130%",
         scrub: 1,
         pin: stage,
         anticipatePin: 1,
@@ -526,8 +562,8 @@
       }
     });
 
-    tl.to(cards[1], { y: 18, opacity: 1, duration: 0.34, ease: "none" }, 0.24);
-    tl.to(cards[2], { y: 36, opacity: 1, duration: 0.34, ease: "none" }, 0.66);
+    tl.to(cards[1], { y: 16, opacity: 1, duration: 0.2, ease: "none" }, 0.08);
+    tl.to(cards[2], { y: 34, opacity: 1, duration: 0.2, ease: "none" }, 0.28);
 
     return () => {
       tl.scrollTrigger?.kill();

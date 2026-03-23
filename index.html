@@ -92,38 +92,46 @@
       <div class="gallery">
         <ul class="cards">
           <li style="background-color: #0b2433;">
-            <video class="project-card-media" autoplay muted loop playsinline preload="none" poster="media/image/coffe.gif" aria-hidden="true">
-              <source src="media/image/gif.webm" type="video/webm" />
-            </video>
-            <article class="project-card-content">
-              <h3>App Web Protinal</h3>
-              <p>Actualización visual de sector abogacia.</p>
-              <p class="project-tech">REACT JS • TAILWIND • DJANGO</p>
-            </article>
+              <div class="project-card-media-wrap">
+                <img class="project-card-img" src="media/image/protinal.jpg" alt="App Web Protinal screenshot" loading="lazy" /> -->
+              <article class="project-card-content">
+                <h3>App Web Protinal</h3>
+                <p>Actualización visual de sector abogacia.</p>
+                <p class="project-tech">REACT JS • TAILWIND • DJANGO</p>
+              </article>
           </li>
           <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.15), rgba(11,36,51,0.72)), url('media/logo.svg');">
-            <article class="project-card-content">
-              <h3>Gasli</h3>
-              <p>Aplicacion Movil, diseñada para gestion de gasolina.</p>
-              <p class="project-tech">REACT NATIVE • TAILWIND • GSAP</p>
-            </article>
+              <div class="project-card-media-wrap">
+                <!-- <img class="project-card-img" src="media/image/gasli.jpg" alt="Gasli screenshot" loading="lazy" /> -->
+              </div>
+              <article class="project-card-content">
+                <h3>Gasli</h3>
+                <p>Aplicacion Movil, diseñada para gestion de gasolina.</p>
+                <p class="project-tech">REACT NATIVE • TAILWIND • GSAP</p>
+              </article>
           </li>
           <li style="background-image: linear-gradient(180deg, rgba(11,36,51,0.2), rgba(11,36,51,0.75)), url('media/logo.svg');">
-            <article class="project-card-content">
-              <h3>App de Tareas</h3>
-              <p>Organizador de tareas con notificaciones, etiquetas y sincronización en la nube.</p>
-              <p class="project-tech">Vue • Firebase</p>
-            </article>
+              <div class="project-card-media-wrap">
+                <!-- <img class="project-card-img" src="media/image/tareas.jpg" alt="App de Tareas screenshot" loading="lazy" /> -->
+              </div>
+              <article class="project-card-content">
+                <h3>App de Tareas</h3>
+                <p>Organizador de tareas con notificaciones, etiquetas y sincronización en la nube.</p>
+                <p class="project-tech">Vue • Firebase</p>
+              </article>
           </li>
           <li style="background-color: #0b2433;">
-            <video class="project-card-media" autoplay muted loop playsinline preload="none" poster="media/image/coffe.gif" aria-hidden="true">
-              <source src="media/image/gif.webm" type="video/webm" />
-            </video>
-            <article class="project-card-content">
-              <h3>Portfolio Interactivo</h3>
-              <p>Portfolio personal con animaciones, secciones dinámicas y contacto directo.</p>
-              <p class="project-tech">HTML • CSS • GSAP</p>
-            </article>
+              <div class="project-card-media-wrap">
+                <!-- <img class="project-card-img" src="media/image/portfolio.jpg" alt="Portfolio Interactivo screenshot" loading="lazy" /> -->
+                <video class="project-card-media" autoplay muted loop playsinline preload="none" poster="media/image/coffe.gif" aria-hidden="true">
+                  <source src="media/image/gif.webm" type="video/webm" />
+                </video>
+              </div>
+              <article class="project-card-content">
+                <h3>Portfolio Interactivo</h3>
+                <p>Portfolio personal con animaciones, secciones dinámicas y contacto directo.</p>
+                <p class="project-tech">HTML • CSS • GSAP</p>
+              </article>
           </li>
         </ul>
         <div class="actions" aria-label="Controles de proyectos">
@@ -145,7 +153,8 @@
       </div>
       <div class="section about-info tech-stack">
         <header class="tech-header">
-          <h1 class="fluid">Tecnologias<br />que uso.</h1>
+          <h1 class="fluid">Stack Developer<footer class="tech-footer">Stack adaptable segun proyecto.</footer></h1>
+          
         </header>
 
         <div class="tech-main">
@@ -189,32 +198,39 @@
           </section>
         </div>
 
-        <footer class="tech-footer">Stack adaptable segun proyecto.</footer>
-
         <h2 class="qualities-title">Cualidades</h2>
 
         <section class="about-stack-flow" id="aboutStackFlow" aria-label="Valores principales">
           <div class="about-stack-stage">
             <article class="about-stack-card">
               <div class="about-stack-card__media">
-                <img src="media/image/whyme.jpg" alt="Visual de estrategia" loading="lazy" />
+                <img src="media/image/01cualidades.png" alt="Visual de estrategia" loading="lazy" />
               </div>
-              <h3>Desarrollo orientado a negocio</h3>
-              <p>Cada decision de interfaz tiene objetivo: retencion, conversion o claridad de producto.</p>
+              <div class="about-stack-card__body">
+                <span class="about-stack-card__step">01</span>
+                <h3>Desarrollo orientado a negocio</h3>
+                <p>Cada decision de interfaz tiene objetivo: retencion, conversion o claridad de producto.</p>
+              </div>
             </article>
             <article class="about-stack-card">
               <div class="about-stack-card__media">
-                <img src="media/image/whyme.jpg" alt="Visual de arquitectura" loading="lazy" />
+                <img src="media/image/02cualidades.png" alt="Visual de arquitectura" loading="lazy" />
               </div>
-              <h3>Arquitectura limpia y escalable</h3>
-              <p>Codigo ordenado para crecer sin romper: componentes reutilizables y mantenimiento simple.</p>
+              <div class="about-stack-card__body">
+                <span class="about-stack-card__step">02</span>
+                <h3>Arquitectura limpia y escalable</h3>
+                <p>Codigo ordenado para crecer sin romper: componentes reutilizables y mantenimiento simple.</p>
+              </div>
             </article>
             <article class="about-stack-card">
               <div class="about-stack-card__media">
-                <img src="media/image/whyme.jpg" alt="Visual de identidad" loading="lazy" />
+                <img src="media/image/03cualidades.png" alt="Visual de identidad" loading="lazy" />
               </div>
-              <h3>Experiencia visual con identidad</h3>
-              <p>No hago interfaces genericas. Creo una presencia visual coherente y memorable.</p>
+              <div class="about-stack-card__body">
+                <span class="about-stack-card__step">03</span>
+                <h3>Experiencia visual con identidad</h3>
+                <p>No hago interfaces genericas. Creo una presencia visual coherente y memorable.</p>
+              </div>
             </article>
           </div>
         </section>
@@ -222,12 +238,27 @@
     </section>
 
     <!-- CTA -->
-    <section id="contact" class="section">
-      <div class="container cta fx-zoom">
-        <h3 class="h1 center">¿Tienes una idea? Hagámosla realidad.</h3>
-        <p class="center muted">Respondo en 24-48 horas hábiles.</p>
-        <div class="center">
-          <a class="btn btn-primary" href="mailto:ricardo.alzurutt@gmail.com">Empezar proyecto</a>
+    <section id="contact" class="section contact-merge">
+      <div class="container contact-panel" aria-label="Vias de contacto para recruiters">
+        <div class="contact-panel__intro">
+          <p class="contact-eyebrow">LET'S WORK</p>
+          <h3 class="h1">¿Buscas un frontend que convierta mejor?</h3>
+          <p class="contact-copy">Estas son mis vias directas para que recruiters y equipos de hiring puedan contactarme rapido.</p>
+        </div>
+
+        <div class="contact-links" role="list" aria-label="Canales de contacto">
+          <a class="contact-link" role="listitem" href="mailto:ricardo.alzurutt@gmail.com">
+            <span class="contact-link__label">Email</span>
+            <span class="contact-link__value">ricardo.alzurutt@gmail.com</span>
+          </a>
+          <a class="contact-link" role="listitem" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+            <span class="contact-link__label">LinkedIn</span>
+            <span class="contact-link__value">linkedin.com</span>
+          </a>
+          <a class="contact-link" role="listitem" href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <span class="contact-link__label">GitHub</span>
+            <span class="contact-link__value">github.com</span>
+          </a>
         </div>
       </div>
     </section>
