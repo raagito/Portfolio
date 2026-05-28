@@ -72,9 +72,17 @@
   const projectsSection = document.getElementById("projects");
   const cards = gsap.utils.toArray(".cards li");
   const cardsContainer = document.querySelector(".cards");
-  const nextButton = document.querySelector(".next");
-  const prevButton = document.querySelector(".prev");
+  const nextButton = document.querySelector(".project-arrow--next");
+  const prevButton = document.querySelector(".project-arrow--prev");
+  const circleEl = document.querySelector(".projects-transition-circle");
   if (!projectsSection || !cards.length || !cardsContainer || !nextButton || !prevButton) return;
+
+  const cardColors = cards.map((card) => card.dataset.circleColor || "#8be3d3");
+
+  function updateCircleColor(index) {
+    if (!circleEl) return;
+    gsap.to(circleEl, { fill: cardColors[index], duration: 0.45, ease: "power2.out" });
+  }
 
   gsap.fromTo(
     cardsContainer,
@@ -139,10 +147,10 @@
     if (abs === 1) {
       return {
         x: direction * getStepDistance(1),
-        scale: 0.86,
-        opacity: 0.78,
+        scale: 0.78,
+        opacity: 0.6,
         zIndex: 30,
-        filter: "brightness(1.16) saturate(0.9)",
+        filter: "brightness(1.16) saturate(0.8)",
         pointerEvents: "none"
       };
     }
@@ -183,6 +191,7 @@
     state.animating = true;
     state.current = (state.current + direction + cards.length) % cards.length;
     render(false);
+    updateCircleColor(state.current);
     window.setTimeout(() => {
       state.animating = false;
     }, 360);
@@ -246,9 +255,45 @@
   cardsContainer.addEventListener("touchend", handleSwipeEnd, { passive: true });
   cardsContainer.addEventListener("touchcancel", handleSwipeEnd, { passive: true });
 
+  // Mouse drag support
+  let mouseStartX = null;
+  let mouseDeltaX = 0;
+  let trackingMouse = false;
+
+  cardsContainer.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+    mouseStartX = event.clientX;
+    mouseDeltaX = 0;
+    trackingMouse = false;
+  });
+
+  window.addEventListener("mousemove", (event) => {
+    if (mouseStartX === null) return;
+    mouseDeltaX = event.clientX - mouseStartX;
+    if (!trackingMouse && Math.abs(mouseDeltaX) > 6) {
+      trackingMouse = true;
+      cardsContainer.style.cursor = "grabbing";
+      document.body.style.userSelect = "none";
+    }
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (mouseStartX === null) return;
+    mouseStartX = null;
+    if (trackingMouse) {
+      trackingMouse = false;
+      cardsContainer.style.cursor = "";
+      document.body.style.userSelect = "";
+      if (Math.abs(mouseDeltaX) > 45) {
+        go(mouseDeltaX < 0 ? 1 : -1);
+      }
+    }
+  });
+
   window.addEventListener("resize", () => render(true));
 
   render(true);
+  if (circleEl) circleEl.setAttribute("fill", cardColors[0]);
 })();
 
 /* =========================================================
