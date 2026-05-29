@@ -15,10 +15,10 @@
     .from(".hero-name .mask > span", { opacity: 0, stagger: 0.12, duration: 0.55, ease: "power1.inOut" }, "-=0.1")
     .from(".hero-sub", { y: 16, opacity: 0, duration: 0.5 }, "-=0.4")
     .from(".hero-actions .btn", { y: 16, opacity: 0, stagger: 0.08, duration: 0.45 }, "-=0.35");
-  gsap.from(".proyectos-section h2", {
+  gsap.from(".proyectos-bg-label span", {
     opacity: 0,
-    y: 26,
-    duration: 0.6,
+    y: 20,
+    duration: 0.7,
     ease: "power2.out",
     scrollTrigger: {
       trigger: ".proyectos-section",
@@ -64,266 +64,280 @@
 })();
 
 /* =========================================================
-   PROJECTS CAROUSEL (CLICK + SWIPE NAVIGATION)
+   PROJECTS — desktop hover shelf + mobile carousel
    ========================================================= */
-(function initProjectsGallery() {
-  if (!window.gsap) return;
-
-  const projectsSection = document.getElementById("projects");
-  const cards = gsap.utils.toArray(".cards li");
+(function initProjects() {
+  const wraps = Array.from(document.querySelectorAll(".card-wrap"));
   const cardsContainer = document.querySelector(".cards");
-  const nextButton = document.querySelector(".project-arrow--next");
-  const prevButton = document.querySelector(".project-arrow--prev");
   const circleEl = document.querySelector(".projects-transition-circle");
-  if (!projectsSection || !cards.length || !cardsContainer || !nextButton || !prevButton) return;
+  const bgLabel = document.getElementById("proyectosBgLabel");
+  if (!wraps.length || !cardsContainer) return;
 
-  const cardColors = cards.map((card) => card.dataset.circleColor || "#8be3d3");
-
-  function updateCircleColor(index) {
-    if (!circleEl) return;
-    gsap.to(circleEl, { fill: cardColors[index], duration: 0.45, ease: "power2.out" });
-  }
-
-  gsap.fromTo(
-    cardsContainer,
-    { scale: 0.82, opacity: 0.86 },
-    {
-      scale: 1,
-      opacity: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: projectsSection,
-        start: "top 30%",
-        end: "top -20%",
-        scrub: 1.2,
-        invalidateOnRefresh: true
+  /* ---- color helpers ---- */
+  function hexToHsl(hex) {
+    let r = parseInt(hex.slice(1,3),16)/255;
+    let g = parseInt(hex.slice(3,5),16)/255;
+    let b = parseInt(hex.slice(5,7),16)/255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b);
+    let h, s, l = (max+min)/2;
+    if (max === min) { h = s = 0; }
+    else {
+      const d = max - min;
+      s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+      switch(max){
+        case r: h=((g-b)/d+(g<b?6:0))/6; break;
+        case g: h=((b-r)/d+2)/6; break;
+        default: h=((r-g)/d+4)/6;
       }
     }
-  );
-
-  const state = {
-    current: 0,
-    animating: false
-  };
-
-  gsap.set(cards, {
-    xPercent: -50,
-    yPercent: -50,
-    left: "50%",
-    top: "48%",
-    transformOrigin: "center center"
-  });
-
-  function relativeIndex(index) {
-    const total = cards.length;
-    let delta = index - state.current;
-    if (delta > total / 2) delta -= total;
-    if (delta < -total / 2) delta += total;
-    return delta;
+    return [Math.round(h*360), Math.round(s*100), Math.round(l*100)];
   }
-
-  function getStepDistance(absDelta) {
-    const mobile = window.innerWidth < 980;
-    if (absDelta === 1) return mobile ? window.innerWidth * 0.33 : 290;
-    if (absDelta === 2) return mobile ? window.innerWidth * 0.56 : 520;
-    return mobile ? window.innerWidth * 0.7 : 640;
+  function darkerHsl(hex, off) {
+    const [h,s,l] = hexToHsl(hex);
+    return `hsl(${h},${s}%,${Math.max(0,l-off)}%)`;
   }
-
-  function getStateFromDelta(delta) {
-    const abs = Math.abs(delta);
-    const direction = delta === 0 ? 0 : delta / abs;
-
-    if (abs === 0) {
-      return {
-        x: 0,
-        scale: 1,
-        opacity: 1,
-        zIndex: 40,
-        filter: "brightness(1) saturate(1)",
-        pointerEvents: "auto"
-      };
+  function applyColor(color, expandCircle) {
+    if (circleEl && window.gsap) {
+      gsap.to(circleEl, { fill: color, duration: 0.45, ease: "power2.out" });
+      if (expandCircle) {
+        gsap.to(circleEl, { attr: { r: 145 }, duration: 1.4, ease: "power1.out" });
+      } else {
+        gsap.to(circleEl, { attr: { r: 0 }, duration: 0.9, ease: "power2.in" });
+      }
     }
-
-    if (abs === 1) {
-      return {
-        x: direction * getStepDistance(1),
-        scale: 0.78,
-        opacity: 0.6,
-        zIndex: 30,
-        filter: "brightness(1.16) saturate(0.8)",
-        pointerEvents: "none"
-      };
-    }
-
-    // Keep all non-adjacent cards hidden until navigation brings them near center.
-    return {
-      x: direction * getStepDistance(3),
-      scale: 0.66,
-      opacity: 0,
-      zIndex: 10,
-      filter: "brightness(1.18)",
-      pointerEvents: "none"
-    };
+    if (bgLabel) bgLabel.style.color = darkerHsl(color, 30);
   }
 
-  function render(immediate) {
-    cards.forEach((card, index) => {
-      const delta = relativeIndex(index);
-      const visualState = getStateFromDelta(delta);
+  const defaultColor = wraps[0].dataset.circleColor || "#4CC9B1";
+  applyColor(defaultColor);
 
-      gsap.to(card, {
-        x: visualState.x,
-        scale: visualState.scale,
-        opacity: visualState.opacity,
-        zIndex: visualState.zIndex,
-        filter: visualState.filter,
-        duration: immediate ? 0 : 0.34,
-        ease: "power2.out",
-        onStart() {
-          card.style.pointerEvents = visualState.pointerEvents;
+  /* ---- layout mode ---- */
+  const DESKTOP_BP = 700;
+
+  /* ===================== DESKTOP: hover shelf ===================== */
+  function initDesktop() {
+    wraps.forEach((wrap) => {
+      const inner = wrap.querySelector(".card-inner");
+      const logo  = wrap.querySelector(".card-logo");
+
+      function activate() {
+        wraps.forEach(w => w.classList.remove("is-active"));
+        wrap.classList.add("is-active");
+        applyColor(wrap.dataset.circleColor || defaultColor, true);
+      }
+      function deactivate() {
+        wrap.classList.remove("is-active");
+        applyColor(wrap.dataset.circleColor || defaultColor, false);
+      }
+
+      let hoverTimer = null;
+      if (inner) {
+        inner.addEventListener("mouseenter", () => {
+          hoverTimer = setTimeout(activate, 450);
+        });
+        inner.addEventListener("mouseleave", () => {
+          clearTimeout(hoverTimer);
+          deactivate();
+        });
+      }
+      if (logo) {
+        let pressing = false;
+
+        function startPress() {
+          pressing = true;
+          logo.classList.add("is-pressing");
         }
-      });
+
+        function commitPress() {
+          if (!pressing) return;
+          pressing = false;
+          logo.classList.remove("is-pressing");
+          if (wrap.classList.contains("is-active")) {
+            deactivate();
+          } else {
+            activate();
+          }
+        }
+
+        function cancelPress() {
+          pressing = false;
+          logo.classList.remove("is-pressing");
+        }
+
+        logo.addEventListener("mousedown", startPress);
+        logo.addEventListener("mouseup", commitPress);
+        logo.addEventListener("mouseleave", cancelPress);
+        logo.addEventListener("touchstart", startPress, { passive: true });
+        logo.addEventListener("touchend", commitPress, { passive: true });
+        logo.addEventListener("touchcancel", cancelPress, { passive: true });
+      }
     });
   }
 
-  function go(direction) {
-    if (state.animating) return;
-    state.animating = true;
-    state.current = (state.current + direction + cards.length) % cards.length;
-    render(false);
-    updateCircleColor(state.current);
-    window.setTimeout(() => {
-      state.animating = false;
-    }, 360);
+  /* ===================== MOBILE: carousel ===================== */
+  function initMobile() {
+    const state = { current: 0, animating: false };
+
+    gsap.set(wraps, {
+      xPercent: -50, yPercent: -50,
+      left: "50%", top: "48%",
+      transformOrigin: "center center"
+    });
+
+    function relativeIndex(index) {
+      const total = wraps.length;
+      let delta = index - state.current;
+      if (delta >  total/2) delta -= total;
+      if (delta < -total/2) delta += total;
+      return delta;
+    }
+
+    function getStepDistance(abs) {
+      const w = window.innerWidth;
+      if (abs === 1) return w * 0.33;
+      if (abs === 2) return w * 0.56;
+      return w * 0.70;
+    }
+
+    function stateFromDelta(delta) {
+      const abs = Math.abs(delta);
+      const dir = delta === 0 ? 0 : delta / abs;
+      if (abs === 0) return { x:0, scale:1,    opacity:1,    zIndex:40, pointerEvents:"auto" };
+      if (abs === 1) return { x:dir*getStepDistance(1), scale:0.78, opacity:0.6, zIndex:30, pointerEvents:"none" };
+      return               { x:dir*getStepDistance(3), scale:0.66, opacity:0,   zIndex:10, pointerEvents:"none" };
+    }
+
+    function render(immediate) {
+      wraps.forEach((wrap, i) => {
+        const vs = stateFromDelta(relativeIndex(i));
+        gsap.to(wrap, { x:vs.x, scale:vs.scale, opacity:vs.opacity, zIndex:vs.zIndex,
+          duration: immediate ? 0 : 0.34, ease:"power2.out",
+          onStart() { wrap.style.pointerEvents = vs.pointerEvents; }
+        });
+      });
+    }
+
+    function go(dir) {
+      if (state.animating) return;
+      state.animating = true;
+      state.current = (state.current + dir + wraps.length) % wraps.length;
+      render(false);
+      applyColor(wraps[state.current].dataset.circleColor || defaultColor);
+      setTimeout(() => { state.animating = false; }, 360);
+    }
+
+    /* touch swipe */
+    let tStartX=0, tStartY=0, tDX=0, tDY=0, tracking=false;
+    cardsContainer.addEventListener("touchstart", e => {
+      if (!e.touches.length) return;
+      tStartX = e.touches[0].clientX; tStartY = e.touches[0].clientY;
+      tDX = tDY = 0; tracking = true;
+    }, { passive: true });
+    cardsContainer.addEventListener("touchmove", e => {
+      if (!tracking || !e.touches.length) return;
+      tDX = e.touches[0].clientX - tStartX;
+      tDY = e.touches[0].clientY - tStartY;
+      if (Math.abs(tDX) > Math.abs(tDY) * 1.2) e.preventDefault();
+    }, { passive: false });
+    function onTouchEnd() {
+      if (!tracking) return; tracking = false;
+      if (Math.abs(tDX) > Math.abs(tDY)*1.2 && Math.abs(tDX) > 45) go(tDX < 0 ? 1 : -1);
+    }
+    cardsContainer.addEventListener("touchend",   onTouchEnd, { passive: true });
+    cardsContainer.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
+    /* mouse drag */
+    let mStartX=null, mDX=0, mTracking=false;
+    cardsContainer.addEventListener("mousedown", e => {
+      e.preventDefault(); mStartX = e.clientX; mDX = 0; mTracking = false;
+    });
+    window.addEventListener("mousemove", e => {
+      if (mStartX === null) return;
+      mDX = e.clientX - mStartX;
+      if (!mTracking && Math.abs(mDX) > 6) {
+        mTracking = true;
+        cardsContainer.style.cursor = "grabbing";
+        document.body.style.userSelect = "none";
+      }
+    });
+    window.addEventListener("mouseup", () => {
+      if (mStartX === null) return;
+      mStartX = null;
+      if (mTracking) {
+        mTracking = false;
+        cardsContainer.style.cursor = "";
+        document.body.style.userSelect = "";
+        if (Math.abs(mDX) > 45) go(mDX < 0 ? 1 : -1);
+      }
+    });
+
+    window.addEventListener("resize", () => render(true));
+    render(true);
   }
 
-  nextButton.addEventListener("click", () => go(1));
-  prevButton.addEventListener("click", () => go(-1));
-
-  // Mobile UX: horizontal swipe over cards triggers prev/next.
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchDeltaX = 0;
-  let touchDeltaY = 0;
-  let trackingTouch = false;
-
-  cardsContainer.addEventListener(
-    "touchstart",
-    (event) => {
-      if (!event.touches.length) return;
-      const touch = event.touches[0];
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-      touchDeltaX = 0;
-      touchDeltaY = 0;
-      trackingTouch = true;
-    },
-    { passive: true }
-  );
-
-  cardsContainer.addEventListener(
-    "touchmove",
-    (event) => {
-      if (!trackingTouch || !event.touches.length) return;
-      const touch = event.touches[0];
-      touchDeltaX = touch.clientX - touchStartX;
-      touchDeltaY = touch.clientY - touchStartY;
-
-      // Prevent accidental page scroll only when the gesture is clearly horizontal.
-      if (Math.abs(touchDeltaX) > Math.abs(touchDeltaY) * 1.2) {
-        event.preventDefault();
-      }
-    },
-    { passive: false }
-  );
-
-  function handleSwipeEnd() {
-    if (!trackingTouch) return;
-    trackingTouch = false;
-
-    const isHorizontalIntent = Math.abs(touchDeltaX) > Math.abs(touchDeltaY) * 1.2;
-    const passedThreshold = Math.abs(touchDeltaX) > 45;
-    if (!isHorizontalIntent || !passedThreshold) return;
-
-    if (touchDeltaX < 0) {
-      go(1);
-    } else {
-      go(-1);
-    }
+  /* ---- init by breakpoint ---- */
+  if (window.innerWidth >= DESKTOP_BP) {
+    initDesktop();
+  } else {
+    initMobile();
   }
-
-  cardsContainer.addEventListener("touchend", handleSwipeEnd, { passive: true });
-  cardsContainer.addEventListener("touchcancel", handleSwipeEnd, { passive: true });
-
-  // Mouse drag support
-  let mouseStartX = null;
-  let mouseDeltaX = 0;
-  let trackingMouse = false;
-
-  cardsContainer.addEventListener("mousedown", (event) => {
-    event.preventDefault();
-    mouseStartX = event.clientX;
-    mouseDeltaX = 0;
-    trackingMouse = false;
-  });
-
-  window.addEventListener("mousemove", (event) => {
-    if (mouseStartX === null) return;
-    mouseDeltaX = event.clientX - mouseStartX;
-    if (!trackingMouse && Math.abs(mouseDeltaX) > 6) {
-      trackingMouse = true;
-      cardsContainer.style.cursor = "grabbing";
-      document.body.style.userSelect = "none";
-    }
-  });
-
-  window.addEventListener("mouseup", () => {
-    if (mouseStartX === null) return;
-    mouseStartX = null;
-    if (trackingMouse) {
-      trackingMouse = false;
-      cardsContainer.style.cursor = "";
-      document.body.style.userSelect = "";
-      if (Math.abs(mouseDeltaX) > 45) {
-        go(mouseDeltaX < 0 ? 1 : -1);
-      }
-    }
-  });
-
-  window.addEventListener("resize", () => render(true));
-
-  render(true);
-  if (circleEl) circleEl.setAttribute("fill", cardColors[0]);
 })();
 
 /* =========================================================
-   PROJECTS SECTION ENTRY TRANSITION (SVG WAVE)
-   - Circle grows with scroll progress in projects section
-   - Works as persistent background reveal
+   PROJECTS MAGNET — auto-activates first card after idle
    ========================================================= */
-(function initProjectsEntryTransition() {
-  if (!window.gsap || !window.ScrollTrigger) return;
+(function initProjectsMagnet() {
+  const wraps = Array.from(document.querySelectorAll(".card-wrap"));
+  if (!wraps.length || window.innerWidth < 700) return;
 
-  const projectsSection = document.getElementById("projects");
-  const circle = document.querySelector(".projects-transition-circle");
-  if (!projectsSection || !circle) return;
+  let magnetTimer = null;
 
-  gsap.fromTo(
-    circle,
-    { attr: { r: 0 } },
-    {
-      attr: { r: 145 },
-      ease: "none",
-      scrollTrigger: {
-        trigger: projectsSection,
-        start: "top 40%",
-        end: "top -10%",
-        scrub: 1.2,
-        invalidateOnRefresh: true
+  function resetMagnet() {
+    clearTimeout(magnetTimer);
+    magnetTimer = setTimeout(() => {
+      const hasActive = wraps.some(w => w.classList.contains("is-active"));
+      if (!hasActive) {
+        wraps[0].classList.add("is-active");
+        const color = wraps[0].dataset.circleColor;
+        if (color && window.gsap) {
+          const circle = document.querySelector(".projects-transition-circle");
+          const label  = document.getElementById("proyectosBgLabel");
+          if (circle) {
+            gsap.to(circle, { fill: color, duration: 0.45, ease: "power2.out" });
+            gsap.to(circle, { attr: { r: 145 }, duration: 1.4, ease: "power1.out" });
+          }
+          if (label) {
+            // reuse same darkerHsl — inline version
+            const hex = color;
+            const r = parseInt(hex.slice(1,3),16)/255, g = parseInt(hex.slice(3,5),16)/255, b = parseInt(hex.slice(5,7),16)/255;
+            const max=Math.max(r,g,b), min=Math.min(r,g,b); let h,s,l=(max+min)/2;
+            if(max!==min){const d=max-min;s=l>.5?d/(2-max-min):d/(max+min);switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;default:h=((r-g)/d+4)/6;}}else{h=s=0;}
+            label.style.color = `hsl(${Math.round(h*360)},${Math.round((s||0)*100)}%,${Math.max(0,Math.round(l*100)-30)}%)`;
+          }
+        }
       }
-    }
-  );
+    }, 2000);
+  }
+
+  const section = document.getElementById("projects");
+  if (!section) return;
+
+  // section.addEventListener("mouseenter", resetMagnet);
+  section.addEventListener("mouseleave", () => {
+    clearTimeout(magnetTimer);
+    wraps.forEach(w => w.classList.remove("is-active"));
+    const circle = document.querySelector(".projects-transition-circle");
+    if (circle && window.gsap) gsap.to(circle, { attr: { r: 0 }, duration: 0.9, ease: "power2.in" });
+  });
+
+  wraps.forEach(w => {
+    const inner = w.querySelector(".card-inner");
+    const logo  = w.querySelector(".card-logo");
+    if (inner) inner.addEventListener("mouseenter", () => clearTimeout(magnetTimer));
+    if (logo)  logo.addEventListener("click",       () => clearTimeout(magnetTimer));
+  });
 })();
+
 
 /* =========================================================
    HERO DISSOLVE ON SCROLL
@@ -502,10 +516,8 @@
         scrollTrigger: {
           trigger: galleryWrap,
           start: "top top",
-          end: "+=170%",
+          end: "+=80%",
           scrub: 1,
-          pin: galleryWrap,
-          anticipatePin: 1,
           invalidateOnRefresh: true
         }
       });
@@ -574,50 +586,75 @@
 })();
 
 /* =========================================================
-   ABOUT STACKED CARDS (FOLDER OVERLAP ON SCROLL)
+   TECH STACK SEQUENTIAL REVEAL ON SCROLL
+   Stack title → Frontend label + logos → Backend label + logos → Qualities + tags
    ========================================================= */
-(function initAboutStackCards() {
+(function initTechStackReveal() {
   if (!window.gsap || !window.ScrollTrigger) return;
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const stackSection = document.getElementById("aboutStackFlow");
-  const stage = stackSection ? stackSection.querySelector(".about-stack-stage") : null;
-  const cards = stackSection ? Array.from(stackSection.querySelectorAll(".about-stack-card")) : [];
-  if (!stackSection || !stage || cards.length < 3) return;
+  const section    = document.getElementById("techStackSection");
+  const stackTitle = section?.querySelector(".tech-header h1");
+  const stackSub   = section?.querySelector(".tech-footer");
+  const feTitle    = section?.querySelector(".tech-content--frontend h2");
+  const feLogos    = section ? Array.from(section.querySelectorAll(".tech-content--frontend .tech-logo-item")) : [];
+  const beTitle    = section?.querySelector(".tech-content--backend h2");
+  const beLogos    = section ? Array.from(section.querySelectorAll(".tech-content--backend .tech-logo-item")) : [];
+  const qBlock     = document.getElementById("qualitiesBlock");
+  const qTitle     = qBlock?.querySelector(".qualities-title");
+  const qTags      = qBlock ? Array.from(qBlock.querySelectorAll(".quality-tag")) : [];
 
-  const mm = gsap.matchMedia();
+  if (!section || !stackTitle) return;
 
-  mm.add("(min-width: 981px)", () => {
-    gsap.set(cards, {
-      y: (index) => (index === 0 ? 0 : 150 + index * 16),
-      opacity: (index) => (index === 0 ? 1 : 0),
-      zIndex: (index) => index + 1
+  const ease = "power3.out";
+
+  /* Set initial hidden state via JS — CSS stays visible as fallback */
+  const hideTargets = [stackTitle, stackSub, feTitle, beTitle, qBlock]
+    .filter(Boolean);
+  gsap.set(hideTargets, { opacity: 0, y: 24 });
+  gsap.set([...feLogos, ...beLogos], { opacity: 0, y: 24 });
+  gsap.set(qTags, { opacity: 0, y: 14, scale: 0.94 });
+
+  function makeReveal(targets, delay) {
+    return gsap.to(targets, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.55,
+      ease,
+      stagger: 0.08,
+      delay
     });
+  }
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stackSection,
-        start: "top top",
-        end: "+=130%",
-        scrub: 1,
-        pin: stage,
-        anticipatePin: 1,
-        invalidateOnRefresh: true
-      }
-    });
+  /* All triggers use section as root — safe against pin offsets from gallery above */
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top 80%",
+    once: true,
+    onEnter() {
+      gsap.to(stackTitle, { opacity: 1, y: 0, duration: 0.6, ease });
+      if (stackSub) gsap.to(stackSub, { opacity: 1, y: 0, duration: 0.5, ease, delay: 0.3 });
 
-    tl.to(cards[1], { y: 16, opacity: 1, duration: 0.2, ease: "none" }, 0.08);
-    tl.to(cards[2], { y: 34, opacity: 1, duration: 0.2, ease: "none" }, 0.28);
+      /* Frontend: label → logos stagger */
+      if (feTitle) gsap.to(feTitle, { opacity: 1, y: 0, duration: 0.5, ease, delay: 0.55 });
+      feLogos.forEach((logo, i) => {
+        gsap.to(logo, { opacity: 1, y: 0, duration: 0.42, ease, delay: 0.72 + i * 0.08 });
+      });
 
-    return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-      gsap.set(cards, { clearProps: "all" });
-    };
-  });
+      /* Backend: label → logos stagger */
+      if (beTitle) gsap.to(beTitle, { opacity: 1, y: 0, duration: 0.5, ease, delay: 0.55 });
+      beLogos.forEach((logo, i) => {
+        gsap.to(logo, { opacity: 1, y: 0, duration: 0.42, ease, delay: 0.72 + i * 0.08 });
+      });
 
-  mm.add("(max-width: 980px)", () => {
-    gsap.set(cards, { clearProps: "all" });
+      /* Qualities: title → tags stagger */
+      if (qBlock) gsap.to(qBlock, { opacity: 1, y: 0, duration: 0.5, ease, delay: 1.1 });
+      if (qTitle) gsap.to(qTitle, { opacity: 1, y: 0, duration: 0.5, ease, delay: 1.2 });
+      qTags.forEach((tag, i) => {
+        gsap.to(tag, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease, delay: 1.38 + i * 0.07 });
+      });
+    }
   });
 })();
