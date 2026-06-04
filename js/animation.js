@@ -96,16 +96,26 @@
     const [h,s,l] = hexToHsl(hex);
     return `hsl(${h},${s}%,${Math.max(0,l-off)}%)`;
   }
+  let lastActiveColor = null;
+
   function applyColor(color, expandCircle) {
     if (circleEl && window.gsap) {
       gsap.to(circleEl, { fill: color, duration: 0.45, ease: "power2.out" });
       if (expandCircle) {
         gsap.to(circleEl, { attr: { r: 145 }, duration: 1.4, ease: "power1.out" });
+        lastActiveColor = color;
       } else {
         gsap.to(circleEl, { attr: { r: 0 }, duration: 0.9, ease: "power2.in" });
       }
     }
-    if (bgLabel) bgLabel.style.color = darkerHsl(color, 30);
+    const span = bgLabel ? bgLabel.querySelector("span") : null;
+    if (expandCircle) {
+      if (span) span.style.textShadow = "none";
+    } else {
+      const shadowColor = lastActiveColor || color;
+      if (span) span.style.textShadow = `0 0 60px ${shadowColor}22, 0 0 120px ${shadowColor}11`;
+    }
+    if (bgLabel) bgLabel.style.color = null;
   }
 
   const defaultColor = wraps[0].dataset.circleColor || "#4CC9B1";
@@ -114,63 +124,30 @@
   /* ---- layout mode ---- */
   const DESKTOP_BP = 700;
 
-  /* ===================== DESKTOP: hover shelf ===================== */
+  /* ===================== DESKTOP: centered expand on click ===================== */
   function initDesktop() {
-    wraps.forEach((wrap) => {
-      const inner = wrap.querySelector(".card-inner");
-      const logo  = wrap.querySelector(".card-logo");
+    const section = document.getElementById("projects");
 
+    wraps.forEach((wrap) => {
       function activate() {
         wraps.forEach(w => w.classList.remove("is-active"));
         wrap.classList.add("is-active");
+        if (section) section.classList.add("has-active");
         applyColor(wrap.dataset.circleColor || defaultColor, true);
       }
       function deactivate() {
         wrap.classList.remove("is-active");
-        applyColor(wrap.dataset.circleColor || defaultColor, false);
+        if (section) section.classList.remove("has-active");
+        applyColor(defaultColor, false);
       }
 
-      let hoverTimer = null;
-      if (inner) {
-        inner.addEventListener("mouseenter", () => {
-          hoverTimer = setTimeout(activate, 450);
-        });
-        inner.addEventListener("mouseleave", () => {
-          clearTimeout(hoverTimer);
+      wrap.addEventListener("click", () => {
+        if (wrap.classList.contains("is-active")) {
           deactivate();
-        });
-      }
-      if (logo) {
-        let pressing = false;
-
-        function startPress() {
-          pressing = true;
-          logo.classList.add("is-pressing");
+        } else {
+          activate();
         }
-
-        function commitPress() {
-          if (!pressing) return;
-          pressing = false;
-          logo.classList.remove("is-pressing");
-          if (wrap.classList.contains("is-active")) {
-            deactivate();
-          } else {
-            activate();
-          }
-        }
-
-        function cancelPress() {
-          pressing = false;
-          logo.classList.remove("is-pressing");
-        }
-
-        logo.addEventListener("mousedown", startPress);
-        logo.addEventListener("mouseup", commitPress);
-        logo.addEventListener("mouseleave", cancelPress);
-        logo.addEventListener("touchstart", startPress, { passive: true });
-        logo.addEventListener("touchend", commitPress, { passive: true });
-        logo.addEventListener("touchcancel", cancelPress, { passive: true });
-      }
+      });
     });
   }
 
@@ -283,60 +260,6 @@
   }
 })();
 
-/* =========================================================
-   PROJECTS MAGNET — auto-activates first card after idle
-   ========================================================= */
-(function initProjectsMagnet() {
-  const wraps = Array.from(document.querySelectorAll(".card-wrap"));
-  if (!wraps.length || window.innerWidth < 700) return;
-
-  let magnetTimer = null;
-
-  function resetMagnet() {
-    clearTimeout(magnetTimer);
-    magnetTimer = setTimeout(() => {
-      const hasActive = wraps.some(w => w.classList.contains("is-active"));
-      if (!hasActive) {
-        wraps[0].classList.add("is-active");
-        const color = wraps[0].dataset.circleColor;
-        if (color && window.gsap) {
-          const circle = document.querySelector(".projects-transition-circle");
-          const label  = document.getElementById("proyectosBgLabel");
-          if (circle) {
-            gsap.to(circle, { fill: color, duration: 0.45, ease: "power2.out" });
-            gsap.to(circle, { attr: { r: 145 }, duration: 1.4, ease: "power1.out" });
-          }
-          if (label) {
-            // reuse same darkerHsl — inline version
-            const hex = color;
-            const r = parseInt(hex.slice(1,3),16)/255, g = parseInt(hex.slice(3,5),16)/255, b = parseInt(hex.slice(5,7),16)/255;
-            const max=Math.max(r,g,b), min=Math.min(r,g,b); let h,s,l=(max+min)/2;
-            if(max!==min){const d=max-min;s=l>.5?d/(2-max-min):d/(max+min);switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;default:h=((r-g)/d+4)/6;}}else{h=s=0;}
-            label.style.color = `hsl(${Math.round(h*360)},${Math.round((s||0)*100)}%,${Math.max(0,Math.round(l*100)-30)}%)`;
-          }
-        }
-      }
-    }, 2000);
-  }
-
-  const section = document.getElementById("projects");
-  if (!section) return;
-
-  // section.addEventListener("mouseenter", resetMagnet);
-  section.addEventListener("mouseleave", () => {
-    clearTimeout(magnetTimer);
-    wraps.forEach(w => w.classList.remove("is-active"));
-    const circle = document.querySelector(".projects-transition-circle");
-    if (circle && window.gsap) gsap.to(circle, { attr: { r: 0 }, duration: 0.9, ease: "power2.in" });
-  });
-
-  wraps.forEach(w => {
-    const inner = w.querySelector(".card-inner");
-    const logo  = w.querySelector(".card-logo");
-    if (inner) inner.addEventListener("mouseenter", () => clearTimeout(magnetTimer));
-    if (logo)  logo.addEventListener("click",       () => clearTimeout(magnetTimer));
-  });
-})();
 
 
 /* =========================================================
