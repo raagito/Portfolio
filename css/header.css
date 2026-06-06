@@ -35,8 +35,10 @@
 
 @media (min-width: 760px) {
   #headCanvas {
-    width: 54px;
-    height: 54px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
   }
 }
 

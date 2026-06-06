@@ -203,13 +203,50 @@
       </button>
     </section>
 
-    <!-- ABOUT / SINGLE IMAGE STRUCTURE -->
+    <!-- ABOUT / WHY ME 3D VIEWER -->
     <section id="about" class="aboutme-root">
-      <div class="gallery-wrap about-gallery-wrap">
-        <p class="about-title-overlay">WHY ME?</p>
+      <p class="about-title-overlay">WHY ME?</p>
+      <div class="whyme-viewer">
+
+        <!-- left: 3D canvas -->
+        <div class="whyme-stage">
+          <canvas id="whyCanvas" aria-label="Animación 3D interactiva"></canvas>
+        </div>
+
+        <!-- right: mode selector panel -->
+        <aside class="whyme-panel">
+          <p class="whyme-panel__label">MODO</p>
+
+          <button class="whyme-btn is-active" data-mode="designer">
+            <span class="whyme-btn__icon"><i class="fa-solid fa-pen-nib"></i></span>
+            <span class="whyme-btn__text">Designer</span>
+            <span class="whyme-btn__sub">Identidad visual</span>
+          </button>
+
+          <button class="whyme-btn" data-mode="developer">
+            <span class="whyme-btn__icon"><i class="fa-solid fa-code"></i></span>
+            <span class="whyme-btn__text">Developer</span>
+            <span class="whyme-btn__sub">Clean code</span>
+          </button>
+
+          <button class="whyme-btn" data-mode="friendly">
+            <span class="whyme-btn__icon"><i class="fa-solid fa-handshake"></i></span>
+            <span class="whyme-btn__text">Friendly</span>
+            <span class="whyme-btn__sub">Team player</span>
+          </button>
+
+          <div class="whyme-panel__info" id="whymePanelInfo">
+            <p id="whymePanelDesc">Diseño interfaces que convierten. Cada pixel tiene intención.</p>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- keep gallery wrap hidden for GSAP scroll compat -->
+      <div class="gallery-wrap about-gallery-wrap" style="display:none">
         <div class="about-gallery" id="about-gallery-1">
           <div class="about-gallery__item about-gallery__item--focus">
-            <img src="media/image/whyme.jpg" alt="Placeholder focus" loading="lazy" />
+            <img src="media/image/whyme.jpg" alt="" loading="lazy" />
           </div>
         </div>
       </div>
@@ -277,31 +314,7 @@
     </section>
     </div><!-- /.sections-stack -->
 
-    <!-- CTA -->
-    <section id="contact" class="section contact-merge">
-      <div class="container contact-panel" aria-label="Vias de contacto para recruiters">
-        <div class="contact-panel__intro">
-          <p class="contact-eyebrow">LET'S WORK</p>
-          <h3 class="h1">¿Buscas un frontend que convierta mejor?</h3>
-          <p class="contact-copy">Estas son mis vias directas para que recruiters y equipos de hiring puedan contactarme rapido.</p>
-        </div>
-
-        <div class="contact-links" role="list" aria-label="Canales de contacto">
-          <a class="contact-link" role="listitem" href="mailto:ricardo.alzurutt@gmail.com">
-            <span class="contact-link__label">Email</span>
-            <span class="contact-link__value">ricardo.alzurutt@gmail.com</span>
-          </a>
-          <a class="contact-link" role="listitem" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-            <span class="contact-link__label">LinkedIn</span>
-            <span class="contact-link__value">linkedin.com</span>
-          </a>
-          <a class="contact-link" role="listitem" href="https://github.com" target="_blank" rel="noopener noreferrer">
-            <span class="contact-link__label">GitHub</span>
-            <span class="contact-link__value">github.com</span>
-          </a>
-        </div>
-      </div>
-    </section>
+    <div id="contact"></div>
 
     <footer class="footer" id="mainFooter">
       <!-- decorative teal glow orb -->
@@ -375,6 +388,7 @@
   <script src="./js/script.js"></script>
   <script src="./js/animation.js"></script>
   <script src="./js/head3d.js"></script>
+  <script src="./js/whyme3d.js"></script>
   <script>
     // fallback: ensure canvas is visible even if head3d fails
     (function() {

@@ -268,6 +268,26 @@
   } else {
     initMobile();
   }
+
+  /* ---- cards entrance from right (desktop only) ---- */
+  if (window.innerWidth >= DESKTOP_BP && window.gsap && window.ScrollTrigger) {
+    gsap.set(wraps, { x: 120, opacity: 0 });
+    ScrollTrigger.create({
+      trigger: ".proyectos-section",
+      start: "top 75%",
+      once: true,
+      onEnter() {
+        gsap.to(wraps, {
+          x: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.12,
+          clearProps: "transform"
+        });
+      }
+    });
+  }
 })();
 
 
@@ -517,6 +537,7 @@
     resizeTimer = window.setTimeout(createZoomTimeline, 180);
   });
 })();
+
 
 /* =========================================================
    FOOTER — velocity-based squash & stretch bounce

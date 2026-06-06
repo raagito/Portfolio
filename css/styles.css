@@ -66,8 +66,8 @@ a{color:inherit}
   max-width:100%;
 }
 .nav.nav--hidden{transform:translateY(-120%)}
-.nav-row{display:flex; align-items:center; justify-content:space-between; height:62px; padding:0 14px; box-sizing:border-box; min-width:0}
-.brand{display:flex; gap:8px; align-items:center; text-decoration:none; min-width:0; flex-shrink:0}
+.nav-row{display:flex; align-items:center; justify-content:space-between; height:66px; padding:0 28px 0 22px; box-sizing:border-box; min-width:0}
+.brand{display:flex; gap:8px; align-items:center; text-decoration:none; min-width:0; flex-shrink:0;}
 .brand-name{font-weight:800; letter-spacing:0.02em}
 .nav-toggle{
   width:42px;

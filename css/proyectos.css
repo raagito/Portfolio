@@ -44,7 +44,7 @@
   pointer-events: none;
   user-select: none;
   transition: opacity 0.45s ease;
-  padding: 40px 0 6px;
+  padding: 80px 0 6px;
 }
 
 .proyectos-bg-label span {
@@ -321,8 +321,9 @@
     position: absolute;
     inset: 0;
     padding: 0;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    padding-bottom: 15%;
   }
 
   .proyectos-bg-label span {
@@ -375,8 +376,28 @@
       box-shadow 0.4s ease,
       opacity 0.4s ease,
       filter 0.4s ease;
-    filter: grayscale(0.5) brightness(0.75);
-    opacity: 0.7;
+    filter: brightness(0.6);
+    opacity: 0.85;
+  }
+
+  .card-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 36, 80, 0.55);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+  }
+
+  .card-wrap.is-active::after {
+    opacity: 0;
+  }
+
+  .card-wrap:hover::after {
+    opacity: 0.3;
   }
 
   .card-wrap:hover {
@@ -399,8 +420,8 @@
   .cards:has(.card-wrap.is-active) .card-wrap:not(.is-active) {
     width: 180px;
     height: 300px;
-    opacity: 0.45;
-    filter: grayscale(0.8) brightness(0.6);
+    opacity: 0.7;
+    filter: brightness(0.5);
   }
 
   .card-inner {
