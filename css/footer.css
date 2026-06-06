@@ -1,4 +1,4 @@
-/* ----------------- Footer (mobile first) ----------------- */
+/* ----------------- Contact section (mobile first) ----------------- */
 .contact-merge {
   background: linear-gradient(180deg, #0b2433 0%, #12384f 62%, #184d65 100%);
   padding: 36px 16px 0;
@@ -74,92 +74,260 @@
   font-weight: 700;
 }
 
+/* ----------------- Footer ----------------- */
 .footer {
-  background: linear-gradient(180deg, #12384f 0%, #0b2433 100%);
+  position: relative;
+  background: linear-gradient(160deg, #071520 0%, #0b2433 55%, #0d2c44 100%);
   color: #f2f8ff;
-  padding: 14px 16px 24px;
-  border-radius: 0 0 24px 24px;
-  box-shadow: 0 -4px 32px rgba(11, 36, 51, 0.08);
+  overflow: hidden;
+  padding: 0;
+}
+
+/* decorative teal orb behind brand */
+.footer-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -58%;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(76, 201, 177, 0.18) 0%, rgba(76, 201, 177, 0.04) 55%, transparent 72%);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* main grid */
+.footer-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "bebas", "akira", Arial, sans-serif;
+  gap: 48px;
+  padding: 64px 24px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+  transform-origin: 50% 100%; /* squash from bottom anchor */
+  will-change: transform;
 }
 
-.footer-main {
-  width: min(100%, 860px);
-  background: rgba(255, 255, 255, 0.09);
-  border-radius: 20px;
-  padding: 20px 14px;
-  margin-bottom: 24px;
+/* ---- columns ---- */
+.footer-col {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   align-items: center;
-}
-
-.footer-title {
-  font-size: 1.7rem;
-  font-weight: 700;
-  margin-bottom: 18px;
   text-align: center;
 }
 
-.footer-socials {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 8px;
+.footer-col__label {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: #4cc9b1;
+  font-family: "akira", "bebas", Arial, sans-serif;
 }
 
-.footer-socials a {
+/* ---- left col: nav ---- */
+.footer-col-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col-link {
+  color: #bcd6ee;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.footer-col-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: #4cc9b1;
+  transition: width 0.28s ease;
+}
+
+.footer-col-link:hover {
+  color: #fff;
+}
+
+.footer-col-link:hover::after {
+  width: 100%;
+}
+
+/* ---- center col: brand ---- */
+.footer-col--center {
+  gap: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.88;
+  gap: 0;
+}
+
+.footer-brand__first,
+.footer-brand__last {
+  display: block;
+  font-family: "akira", "bebas", Arial, sans-serif;
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #fff;
+  will-change: transform, opacity;
+}
+
+.footer-brand__last {
+  color: #4cc9b1;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #7aa8c4;
+}
+
+.footer-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.footer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  will-change: transform;
+}
+
+.footer-cta--solid {
+  background: linear-gradient(90deg, #4cc9b1, #66d9e8);
+  color: #071520;
+  box-shadow: 0 8px 28px rgba(76, 201, 177, 0.35);
+}
+
+.footer-cta--solid:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 36px rgba(76, 201, 177, 0.48);
+}
+
+.footer-cta--outline {
+  background: transparent;
+  color: #bcd6ee;
+  border: 1px solid rgba(139, 183, 210, 0.35);
+  box-shadow: 0 4px 16px rgba(11, 36, 51, 0.2);
+}
+
+.footer-cta--outline:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(139, 183, 210, 0.6);
+  box-shadow: 0 10px 28px rgba(11, 36, 51, 0.3);
+}
+
+/* ---- right col: socials ---- */
+.footer-social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(139, 183, 210, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: #bcd6ee;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  min-width: 160px;
+}
+
+.footer-social-link:hover {
+  background: rgba(76, 201, 177, 0.1);
+  border-color: rgba(76, 201, 177, 0.35);
+  transform: translateX(4px);
+}
+
+.footer-social-link__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 54px;
-  height: 54px;
-  padding: 0 12px;
-  background: #f8fcff;
-  color: #0b2433;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(11, 36, 51, 0.2);
-  text-decoration: none;
-  font-size: 1.15rem;
-  font-weight: 700;
-  transition: transform 0.2s, background 0.2s;
-}
-
-.footer-socials a:hover {
-  transform: translateY(-2px);
-  background: #e9f8f5;
-}
-
-.footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.footer-nav a {
-  color: #fff;
-  text-decoration: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(76, 201, 177, 0.12);
+  color: #4cc9b1;
   font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: color 0.2s;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
 }
 
-.footer-nav a:hover {
+.footer-social-link:hover .footer-social-link__icon {
+  background: rgba(76, 201, 177, 0.22);
   color: #8be3d3;
 }
 
-.footer-bottom {
-  font-size: 0.92rem;
-  color: #bcd6ee;
-  margin-top: 8px;
-  text-align: center;
+.footer-social-link__name {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
+.footer-social-link__arrow {
+  font-size: 0.9rem;
+  color: #4cc9b1;
+  opacity: 0.6;
+  transition: transform 0.2s, opacity 0.2s;
+  margin-left: auto;
+}
+
+.footer-social-link:hover .footer-social-link__arrow {
+  transform: translate(3px, -3px);
+  opacity: 1;
+}
+
+/* ---- bottom bar ---- */
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-top: 1px solid rgba(139, 183, 210, 0.1);
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 0.8rem;
+  color: #5b7c88;
+  letter-spacing: 0.06em;
+}
+
+/* ======================== DESKTOP ======================== */
 @media (min-width: 760px) {
   .contact-merge {
     padding: 54px 16px 0;
@@ -193,44 +361,35 @@
     font-size: 1.05rem;
   }
 
-  .footer {
-    padding: 20px 16px 24px;
-  }
-
-  .footer-main {
-    border-radius: 24px;
-    padding: 30px 42px;
-    margin-bottom: 30px;
-  }
-
-  .footer-title {
-    font-size: 2.2rem;
-    margin-bottom: 24px;
-  }
-
-  .footer-socials {
+  .footer-inner {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 80px 48px 60px;
     gap: 24px;
-    margin-bottom: 16px;
   }
 
-  .footer-socials a {
-    min-width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    font-size: 1.3rem;
+  .footer-col {
+    align-items: flex-start;
+    text-align: left;
   }
 
-  .footer-nav {
-    gap: 32px;
-    margin-bottom: 16px;
+  .footer-col--center {
+    align-items: center;
+    text-align: center;
+    flex: 1;
   }
 
-  .footer-nav a {
-    font-size: 1.1rem;
+  .footer-col--right {
+    align-items: flex-end;
+    text-align: right;
   }
 
-  .footer-bottom {
-    font-size: 0.95rem;
-    margin-top: 12px;
+  .footer-col-nav {
+    gap: 14px;
+  }
+
+  .footer-bar {
+    padding: 20px 48px;
   }
 }

@@ -130,15 +130,25 @@
 
     wraps.forEach((wrap) => {
       function activate() {
-        wraps.forEach(w => w.classList.remove("is-active"));
+        wraps.forEach(w => {
+          w.classList.remove("is-active");
+          /* pause any video in deactivated cards */
+          const v = w.querySelector(".project-card-video");
+          if (v) v.pause();
+        });
         wrap.classList.add("is-active");
         if (section) section.classList.add("has-active");
         applyColor(wrap.dataset.circleColor || defaultColor, true);
+        /* play video in activated card */
+        const vid = wrap.querySelector(".project-card-video");
+        if (vid) vid.play().catch(() => {});
       }
       function deactivate() {
         wrap.classList.remove("is-active");
         if (section) section.classList.remove("has-active");
         applyColor(defaultColor, false);
+        const vid = wrap.querySelector(".project-card-video");
+        if (vid) vid.pause();
       }
 
       wrap.addEventListener("click", () => {
@@ -505,6 +515,187 @@
   window.addEventListener("resize", () => {
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(createZoomTimeline, 180);
+  });
+})();
+
+/* =========================================================
+   FOOTER — velocity-based squash & stretch bounce
+   Inspired by: https://demos.gsap.com/demo/footer-bounce/
+   ========================================================= */
+(function initFooterAnimations() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
+
+  const footer   = document.getElementById("mainFooter");
+  if (!footer) return;
+
+  const orb        = footer.querySelector(".footer-orb");
+  const brandFirst = footer.querySelector(".footer-brand__first");
+  const brandLast  = footer.querySelector(".footer-brand__last");
+  const tagline    = footer.querySelector(".footer-tagline");
+  const ctas       = footer.querySelectorAll(".footer-cta");
+  const colLeft    = footer.querySelector(".footer-col--left");
+  const colRight   = footer.querySelector(".footer-col--right");
+  const colLabel   = footer.querySelectorAll(".footer-col__label");
+  const navLinks   = footer.querySelectorAll(".footer-col-link");
+  const socials    = footer.querySelectorAll(".footer-social-link");
+  const bar        = footer.querySelector(".footer-bar");
+  const inner      = footer.querySelector(".footer-inner");
+
+  /* wrap footer-inner so we can squash/stretch it independently */
+  gsap.set(inner, { transformOrigin: "50% 100%" });
+  gsap.set(orb,   { transformOrigin: "50% 50%" });
+
+  /* -------------------------------------------------------
+     1. VELOCITY SQUASH — fires each time footer enters view.
+        Reads scroll speed, squashes the inner block down on
+        "impact", then elastic-bounces back up.
+     ------------------------------------------------------- */
+  let bounceInProgress = false;
+
+  ScrollTrigger.create({
+    trigger: footer,
+    start: "top bottom",
+    onEnter() {
+      if (bounceInProgress) return;
+      bounceInProgress = true;
+
+      /* velocity: px/s → clamp to useful range, map to squash amount */
+      const vel       = Math.abs(ScrollTrigger.getVelocity());
+      const clampVel  = Math.min(vel, 4000);
+      const squashY   = gsap.utils.mapRange(0, 4000, 1, 0.55, clampVel);
+      const squashX   = gsap.utils.mapRange(0, 4000, 1, 1.22, clampVel);
+      const duration  = gsap.utils.mapRange(0, 4000, 0.25, 0.12, clampVel);
+
+      const tl = gsap.timeline({
+        onComplete() { bounceInProgress = false; }
+      });
+
+      /* impact squash */
+      tl.to(inner, {
+        scaleY: squashY,
+        scaleX: squashX,
+        duration,
+        ease: "power2.in"
+      });
+
+      /* elastic bounce back — overshoot then settle */
+      tl.to(inner, {
+        scaleY: 1,
+        scaleX: 1,
+        duration: 1.1,
+        ease: "elastic.out(1, 0.4)"
+      });
+
+      /* orb pulses on impact */
+      tl.to(orb, {
+        scale: 1.35,
+        opacity: 0.85,
+        duration: duration * 0.8,
+        ease: "power2.in"
+      }, 0);
+      tl.to(orb, {
+        scale: 1,
+        opacity: 1,
+        duration: 1.0,
+        ease: "elastic.out(1, 0.45)"
+      }, duration);
+    },
+    onLeaveBack() {
+      /* reset if user scrolls back up so bounce re-fires on re-enter */
+      bounceInProgress = false;
+      gsap.set(inner, { scaleY: 1, scaleX: 1 });
+    }
+  });
+
+  /* -------------------------------------------------------
+     2. CONTENT ENTRANCE — staggered reveal after bounce
+     ------------------------------------------------------- */
+  gsap.set(orb, { opacity: 0, scale: 0.5 });
+  gsap.set([brandFirst, brandLast], { opacity: 0, y: 70, skewY: 5 });
+  gsap.set(tagline, { opacity: 0, letterSpacing: "0.65em" });
+  gsap.set(ctas, { opacity: 0, y: 30, scale: 0.88 });
+  gsap.set(colLeft, { opacity: 0, x: -50 });
+  gsap.set(colRight, { opacity: 0, x: 50 });
+  gsap.set(colLabel, { opacity: 0, y: 12 });
+  gsap.set(navLinks, { opacity: 0, x: -20 });
+  gsap.set(socials, { opacity: 0, x: 20 });
+  gsap.set(bar, { opacity: 0 });
+
+  const entrance = gsap.timeline({
+    scrollTrigger: {
+      trigger: footer,
+      start: "top 88%",
+      toggleActions: "play none none none"
+    },
+    defaults: { ease: "power3.out" }
+  });
+
+  entrance
+    /* orb bloom */
+    .to(orb, { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" }, 0)
+
+    /* cols slide from sides */
+    .to(colLeft,  { opacity: 1, x: 0, duration: 0.75 }, 0.1)
+    .to(colRight, { opacity: 1, x: 0, duration: 0.75 }, 0.1)
+    .to(colLabel, { opacity: 1, y: 0, duration: 0.4, stagger: 0.12 }, 0.3)
+    .to(navLinks, { opacity: 1, x: 0, duration: 0.38, stagger: 0.07 }, 0.42)
+    .to(socials,  { opacity: 1, x: 0, duration: 0.38, stagger: 0.08 }, 0.42)
+
+    /* brand lines slam down with skew */
+    .to(brandFirst, { opacity: 1, y: 0, skewY: 0, duration: 0.7, ease: "back.out(1.6)" }, 0.18)
+    .to(brandLast,  { opacity: 1, y: 0, skewY: 0, duration: 0.7, ease: "back.out(1.6)" }, 0.30)
+
+    /* tagline letter-spacing crush */
+    .to(tagline, { opacity: 1, letterSpacing: "0.3em", duration: 0.65, ease: "power2.out" }, 0.52)
+
+    /* CTAs pop */
+    .to(ctas, { opacity: 1, y: 0, scale: 1, duration: 0.52, stagger: 0.1, ease: "back.out(1.8)" }, 0.7)
+
+    /* bar fade */
+    .to(bar, { opacity: 1, duration: 0.45 }, 1.05);
+
+  /* -------------------------------------------------------
+     3. ORB SCROLL PARALLAX
+     ------------------------------------------------------- */
+  gsap.to(orb, {
+    y: -70,
+    ease: "none",
+    scrollTrigger: {
+      trigger: footer,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1.8
+    }
+  });
+
+  /* -------------------------------------------------------
+     4. BRAND HOVER — skew shimmer
+     ------------------------------------------------------- */
+  [brandFirst, brandLast].forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      gsap.to(el, { skewX: -4, scale: 1.04, duration: 0.2, ease: "power2.out" });
+    });
+    el.addEventListener("mouseleave", () => {
+      gsap.to(el, { skewX: 0, scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)" });
+    });
+  });
+
+  /* -------------------------------------------------------
+     5. CTA MAGNETIC HOVER
+     ------------------------------------------------------- */
+  ctas.forEach(cta => {
+    cta.addEventListener("mousemove", e => {
+      const r  = cta.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width  / 2)) / r.width;
+      const dy = (e.clientY - (r.top  + r.height / 2)) / r.height;
+      gsap.to(cta, { x: dx * 10, y: dy * 6, duration: 0.28, ease: "power2.out" });
+    });
+    cta.addEventListener("mouseleave", () => {
+      gsap.to(cta, { x: 0, y: 0, duration: 0.55, ease: "elastic.out(1, 0.4)" });
+    });
   });
 })();
 

@@ -44,7 +44,7 @@
   pointer-events: none;
   user-select: none;
   transition: opacity 0.45s ease;
-  padding: 0 0 6px;
+  padding: 40px 0 6px;
 }
 
 .proyectos-bg-label span {
@@ -132,14 +132,44 @@
   pointer-events: none;
 }
 
+/* media wrap stacks default + active on top of each other */
+.project-card-media-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .project-card-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1;
   pointer-events: none;
+}
+
+/* default visible, active hidden */
+.project-img--default {
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+
+.project-img--active {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+/* when card is active: swap */
+.card-wrap.is-active .project-img--default {
+  opacity: 0;
+}
+
+.card-wrap.is-active .project-img--active {
+  opacity: 1;
+  z-index: 3;
 }
 
 .project-card-content {
@@ -364,4 +394,8 @@
 
   .project-card-content h3 { font-size: 1.2rem; }
   .project-card-content p  { font-size: 0.85rem; }
+}
+
+@media (pointer: fine) {
+  .cards, .card-wrap, .card-wrap.is-active { cursor: none !important; }
 }

@@ -20,8 +20,34 @@
   font-style: normal;
 }
 
-/* ----------------- Header interactions ----------------- */
+/* ----------------- Head 3D canvas ----------------- */
+#headCanvas {
+  display: block;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  cursor: none;
+  background: transparent;
+}
 
+/* ----------------- Scroll progress bar ----------------- */
+.progress {
+  height: 3px;
+  background: transparent;
+  border-radius: 0 0 100px 100px;
+  overflow: hidden;
+}
+
+.progress .bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  box-shadow: 0 0 8px rgba(76, 201, 177, 0.7);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.1s linear;
+}
+
+/* ----------------- Nav links ----------------- */
 .nav-links {
   gap: 8px;
 }
@@ -33,6 +59,9 @@
   border-radius: 999px;
   text-decoration: none;
   color: var(--text);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
   background: transparent;
   background-image: linear-gradient(to top, #0b2433 100%, transparent 0%);
   background-size: 100% 0%;
@@ -54,10 +83,64 @@
   text-decoration: none;
 }
 
+/* ----------------- CTA pill "LET'S WORK" ----------------- */
+.nav-links a.nav-cta {
+  background-image: none;
+  background: #0b2433;
+  color: #f2f8ff;
+  padding: 8px 20px;
+  border: 1.5px solid rgba(76, 201, 177, 0.35);
+  box-shadow: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+/* expanding circle from center */
+.nav-links a.nav-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--primary);
+  transform: scale(0);
+  transform-origin: center;
+  border-radius: 999px;
+  z-index: -1;
+  transition: transform 0.42s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-links a.nav-cta:hover::before,
+.nav-links a.nav-cta:focus-visible::before {
+  transform: scale(2.2);
+}
+
+.nav-links a.nav-cta:hover,
+.nav-links a.nav-cta:focus-visible {
+  background-size: unset;
+  color: #071520;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
 /* ----------------- Responsive ----------------- */
+@media (max-width: 759px) {
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px 16px;
+  }
+
+  .nav-links a.nav-cta {
+    margin-top: 4px;
+    border-radius: 12px;
+  }
+}
+
 @media (min-width: 760px) {
   .nav-links {
-    gap: 16px;
+    gap: 8px;
   }
 
   .nav-links a {
@@ -66,4 +149,3 @@
     padding: 8px 16px;
   }
 }
-

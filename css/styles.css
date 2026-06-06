@@ -317,6 +317,101 @@ a{color:inherit}
 .social a{text-decoration:none; color:#9FB0C4}
 .social a:hover{color:#D8E7FF}
 
+/* ================= Custom cursor ================= */
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button, [role="button"], .card-wrap, .card-inner, .cards { cursor: none; }
+}
+
+/* dot — snaps to pointer */
+.c-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.22s ease, height 0.22s ease, background 0.22s ease, opacity 0.2s ease, box-shadow 0.22s ease;
+  will-change: transform;
+  mix-blend-mode: normal;
+}
+
+/* ring — follows with lag via GSAP */
+.c-cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(76, 201, 177, 0.55);
+  background: transparent;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
+  will-change: transform;
+  box-shadow: 0 0 12px rgba(76, 201, 177, 0.2);
+}
+
+/* hover states toggled via JS class on body */
+/* label inside dot */
+.c-cursor-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.18s ease;
+  user-select: none;
+}
+
+/* generic hover: links/buttons */
+body.cursor--hover .c-cursor {
+  width: 36px; height: 36px;
+  background: #f97316;
+  box-shadow: 0 0 18px rgba(249, 115, 22, 0.55);
+}
+
+body.cursor--hover .c-cursor-ring {
+  width: 36px; height: 36px;
+  border-color: transparent;
+  box-shadow: none;
+  opacity: 0;
+}
+
+/* card hover: dot + PUSH label */
+body.cursor--card .c-cursor {
+  width: 52px; height: 52px;
+  background: #f97316;
+  box-shadow: 0 0 22px rgba(249, 115, 22, 0.5);
+}
+
+body.cursor--card .c-cursor-ring {
+  width: 52px; height: 52px;
+  border-color: transparent;
+  box-shadow: none;
+  opacity: 0;
+}
+
+body.cursor--card .c-cursor-label {
+  opacity: 1;
+  font-size: 10px;
+}
+
+body.cursor--hidden .c-cursor,
+body.cursor--hidden .c-cursor-ring {
+  opacity: 0;
+}
+
 /* ================= Animaciones reusables (aplícalas con .fx / .fx-zoom) ================= */
 .fx{opacity:0; transform:translateY(14px); transition:opacity var(--fx-duration) var(--fx-ease), transform var(--fx-duration) var(--fx-ease)}
 .fx.in{opacity:1; transform:translateY(0)}

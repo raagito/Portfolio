@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/proyectos.css">
   <link rel="stylesheet" href="css/aboutme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -21,7 +22,7 @@
     <header id="navbar" class="nav">
       <div class="container nav-row">
         <a class="brand" href="#hero">
-          <img class="logo" src="./media/logo.svg" alt="Logo" width="50" height="50">
+          <canvas id="headCanvas" aria-label="Avatar 3D" role="img"></canvas>
         </a>
         <button
           class="nav-toggle"
@@ -38,13 +39,17 @@
         <nav class="nav-links" id="primaryNav">
           <a href="#projects">PROJECTS</a>
           <a href="#about">ABOUT ME</a>
-          <a href="#contact">LET'S WORK</a>
+          <a href="#contact" class="nav-cta">LET'S WORK</a>
         </nav>
       </div>
       <div class="progress" aria-hidden="true">
         <div class="bar" id="scrollProgress"></div>
       </div>
     </header>
+
+    <!-- Custom cursor -->
+    <div class="c-cursor" id="cursorDot" aria-hidden="true"><span class="c-cursor-label">PUSH</span></div>
+    <div class="c-cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
     <!-- HERO: split headline con máscara/reveal y cursor-blur -->
     <section id="hero" class="hero">
@@ -94,7 +99,10 @@
               <img src="media/svg/logo_react.svg" alt="" />
             </div>
             <div class="card-inner" style="background-color: #0b2433;">
-              <img class="project-card-img" src="media/image/protinal.jpg" alt="App Web Protinal screenshot" loading="lazy" />
+              <div class="project-card-media-wrap">
+                <img class="project-card-img project-img--default" src="media/image/project_protinal.jpg" alt="Protinal preview" loading="lazy" />
+                <img class="project-card-img project-img--active" src="media/image/protinal.jpg" alt="App Web Protinal screenshot" loading="lazy" />
+              </div>
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">01</span>
@@ -116,6 +124,10 @@
               <img src="media/svg/logo_react.svg" alt="" />
             </div>
             <div class="card-inner" style="background-color: #1a1a2e;">
+              <div class="project-card-media-wrap">
+                <img class="project-card-img project-img--default" src="media/image/project_gasli.jpg" alt="Gasli preview" loading="lazy" />
+                <img class="project-card-img project-img--active" src="media/image/gasli-phone.png" alt="Gasli App screenshot" loading="lazy" />
+              </div>
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">02</span>
@@ -137,6 +149,10 @@
               <img src="media/svg/vmLub-01.svg" alt="" />
             </div>
             <div class="card-inner" style="background-color: #120a2e;">
+              <div class="project-card-media-wrap">
+                <img class="project-card-img project-img--default" src="media/image/project_dominotip.jpg" alt="Domino TIP preview" loading="lazy" />
+                <img class="project-card-img project-img--active" src="media/image/project_dominotip.jpg" alt="Domino TIP screenshot" loading="lazy" />
+              </div>
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">03</span>
@@ -158,9 +174,12 @@
               <img src="media/svg/dominoTip-01.svg" alt="" />
             </div>
             <div class="card-inner" style="background-color: #0b2433;">
-              <video class="project-card-media" autoplay muted loop playsinline preload="none" poster="media/image/coffe.gif" aria-hidden="true">
-                <source src="media/image/gif.webm" type="video/webm" />
-              </video>
+              <div class="project-card-media-wrap">
+                <img class="project-card-img project-img--default" src="media/image/project_vmlub.jpg" alt="VM Lub preview" loading="lazy" />
+                <video class="project-card-img project-img--active project-card-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
+                  <source src="media/image/gif.webm" type="video/webm" />
+                </video>
+              </div>
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">04</span>
@@ -284,30 +303,77 @@
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="footer-main">
-        <div class="footer-title">You can find me here:</div>
-        <div class="footer-socials">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">IN</a>
-          <a href="mailto:ricardo.alzurutt@gmail.com" aria-label="Email">@</a>
+    <footer class="footer" id="mainFooter">
+      <!-- decorative teal glow orb -->
+      <div class="footer-orb" aria-hidden="true"></div>
+
+      <div class="footer-inner">
+        <!-- col left: nav links -->
+        <div class="footer-col footer-col--left">
+          <p class="footer-col__label">NAVEGACION</p>
+          <nav class="footer-col-nav">
+            <a href="#hero" class="footer-col-link">Home</a>
+            <a href="#projects" class="footer-col-link">Works</a>
+            <a href="#about" class="footer-col-link">About</a>
+            <a href="#contact" class="footer-col-link">Contact</a>
+          </nav>
+        </div>
+
+        <!-- col center: brand + CTAs -->
+        <div class="footer-col footer-col--center">
+          <div class="footer-brand">
+            <span class="footer-brand__first">RICARDO</span>
+            <span class="footer-brand__last">ALZURUTT</span>
+          </div>
+          <p class="footer-tagline">Frontend Developer</p>
+          <div class="footer-ctas">
+            <a href="mailto:alzuruttricardo@gmail.com" class="footer-cta footer-cta--solid">
+              <span>Escribeme</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-cta footer-cta--outline">
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- col right: socials -->
+        <div class="footer-col footer-col--right">
+          <p class="footer-col__label">REDES</p>
+          <div class="footer-social-list">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+              <span class="footer-social-link__icon"><i class="fa-brands fa-github" aria-hidden="true"></i></span>
+              <span class="footer-social-link__name">GitHub</span>
+              <span class="footer-social-link__arrow">↗</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+              <span class="footer-social-link__icon"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span>
+              <span class="footer-social-link__name">LinkedIn</span>
+              <span class="footer-social-link__arrow">↗</span>
+            </a>
+            <a href="mailto:alzuruttricardo@gmail.com" class="footer-social-link">
+              <span class="footer-social-link__icon"><i class="fa-regular fa-envelope" aria-hidden="true"></i></span>
+              <span class="footer-social-link__name">Email</span>
+              <span class="footer-social-link__arrow">↗</span>
+            </a>
+          </div>
         </div>
       </div>
-      <nav class="footer-nav">
-        <a href="#projects">WORKS</a>
-        <a href="#about">ABOUT</a>
-        <a href="#hero">HOME</a>
-        <a href="#contact">CONTACT</a>
-      </nav>
-      <div class="footer-bottom">
-        RICARDO ALZURUTT &nbsp;|&nbsp; <span id="year">2026</span> | ALL RIGHTS RESERVED
+
+      <!-- bottom bar -->
+      <div class="footer-bar">
+        <span class="footer-bar__copy">© <span id="year">2026</span> Ricardo Alzurutt</span>
+        <span class="footer-bar__rights">All rights reserved</span>
       </div>
     </footer>
+    <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js"></script>
     <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <!-- SCRIPTS -->
   <script src="./js/script.js"></script>
   <script src="./js/animation.js"></script>
+  <script src="./js/head3d.js"></script>
   </body>
 </html>

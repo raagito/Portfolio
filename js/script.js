@@ -73,15 +73,71 @@ const CONFIG = {
 (function cursorBlob() {
   const blob = document.getElementById("cursorBlob");
   if (!blob) return;
+  window.addEventListener("pointermove", (e) => {
+    blob.style.left = `${e.clientX}px`;
+    blob.style.top  = `${e.clientY}px`;
+  }, { passive: true });
+})();
 
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      blob.style.left = `${e.clientX}px`;
-      blob.style.top = `${e.clientY}px`;
-    },
-    { passive: true }
-  );
+(function customCursor() {
+  /* only on fine-pointer (mouse) devices */
+  if (!window.matchMedia("(pointer: fine)").matches) return;
+  if (!window.gsap) { window.addEventListener("load", customCursor, { once: true }); return; }
+
+  const dot  = document.getElementById("cursorDot");
+  const ring = document.getElementById("cursorRing");
+  if (!dot || !ring) return;
+
+  /* dot snaps instantly via CSS transform set in RAF */
+  let mx = -100, my = -100;
+
+  window.addEventListener("pointermove", (e) => {
+    mx = e.clientX; my = e.clientY;
+    gsap.set(dot, { x: mx, y: my });
+  }, { passive: true });
+
+  /* ring follows with smooth lag */
+  gsap.ticker.add(() => {
+    gsap.to(ring, {
+      x: mx, y: my,
+      duration: 0.55,
+      ease: "power3.out",
+      overwrite: "auto"
+    });
+  });
+
+  /* hover state on interactive elements */
+  const hoverTargets = "a, button, [role='button'], label, input, textarea, select";
+  const cardTargets  = ".card-wrap";
+
+  document.addEventListener("pointerover", (e) => {
+    if (e.target.closest(cardTargets)) {
+      document.body.classList.remove("cursor--hover");
+      document.body.classList.add("cursor--card");
+    } else if (e.target.closest(hoverTargets)) {
+      document.body.classList.remove("cursor--card");
+      document.body.classList.add("cursor--hover");
+    }
+  });
+  document.addEventListener("pointerout", (e) => {
+    if (e.target.closest(cardTargets)) {
+      document.body.classList.remove("cursor--card");
+    } else if (e.target.closest(hoverTargets)) {
+      document.body.classList.remove("cursor--hover");
+    }
+  });
+
+  /* hide when leaving window */
+  document.addEventListener("pointerleave", () => document.body.classList.add("cursor--hidden"));
+  document.addEventListener("pointerenter", () => document.body.classList.remove("cursor--hidden"));
+
+  /* click pulse on ring */
+  window.addEventListener("pointerdown", () => {
+    gsap.to(ring, { scale: 0.7, duration: 0.12, ease: "power2.in" });
+  });
+  window.addEventListener("pointerup", () => {
+    gsap.to(ring, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.4)" });
+  });
 })();
 
 (function enforceWebmInfiniteLoop() {
@@ -126,6 +182,7 @@ const CONFIG = {
 
   observer.observe(document.body, { childList: true, subtree: true });
 })();
+
 
 (function headerBehavior() {
   const nav = document.getElementById("navbar");
@@ -225,6 +282,23 @@ const CONFIG = {
       }
     });
   }
+})();
+
+(function projectLinkPress() {
+  document.querySelectorAll(".project-link-btn").forEach(btn => {
+    btn.addEventListener("click", function(e) {
+      const href = this.getAttribute("href");
+      if (!href || href === "#") return;
+
+      e.preventDefault();
+      this.classList.add("is-pressing");
+
+      setTimeout(() => {
+        this.classList.remove("is-pressing");
+        window.open(href, this.getAttribute("target") || "_self");
+      }, 220);
+    });
+  });
 })();
 
 
