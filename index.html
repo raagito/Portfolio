@@ -22,7 +22,7 @@
     <header id="navbar" class="nav">
       <div class="container nav-row">
         <a class="brand" href="#hero">
-          <canvas id="headCanvas" aria-label="Avatar 3D" role="img"></canvas>
+          <canvas id="headCanvas" width="108" height="108" aria-label="Avatar 3D" role="img"></canvas>
         </a>
         <button
           class="nav-toggle"
@@ -367,7 +367,7 @@
       </div>
     </footer>
     <!-- Three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js"></script>
+  <script src="./js/three.min.js"></script>
     <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -375,5 +375,17 @@
   <script src="./js/script.js"></script>
   <script src="./js/animation.js"></script>
   <script src="./js/head3d.js"></script>
+  <script>
+    // fallback: ensure canvas is visible even if head3d fails
+    (function() {
+      var c = document.getElementById("headCanvas");
+      if (c && (c.width === 0 || c.height === 0)) {
+        c.width = 108; c.height = 108;
+        c.style.width = "54px"; c.style.height = "54px";
+        c.style.background = "#4cc9b1";
+        c.style.borderRadius = "50%";
+      }
+    })();
+  </script>
   </body>
 </html>
