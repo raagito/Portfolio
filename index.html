@@ -69,7 +69,7 @@
           </div>
         </div>
         <figure class="hero-right fx-zoom">
-          <img class="hero-illustration" src="media/svg/hero-25.svg" alt="Hero illustration" loading="eager" />
+          <video class="hero-illustration" src="media/webm/hero.webm" autoplay loop muted playsinline></video>
         </figure>
       </div>
       <!-- Marquee horizontal (infinito) -->
@@ -101,7 +101,7 @@
             <div class="card-inner" style="background-color: #0b2433;">
               <div class="project-card-media-wrap">
                 <img class="project-card-img project-img--default" src="media/image/project_protinal.jpg" alt="Protinal preview" loading="lazy" />
-                <img class="project-card-img project-img--active" src="media/image/protinal.jpg" alt="App Web Protinal screenshot" loading="lazy" />
+                <img class="project-card-img project-img--active" src="media/image/protinal.webp" alt="App Web Protinal screenshot" loading="lazy" />
               </div>
               <article class="project-card-content">
                 <div class="project-card-top">
@@ -242,14 +242,6 @@
 
       </div>
 
-      <!-- keep gallery wrap hidden for GSAP scroll compat -->
-      <div class="gallery-wrap about-gallery-wrap" style="display:none">
-        <div class="about-gallery" id="about-gallery-1">
-          <div class="about-gallery__item about-gallery__item--focus">
-            <img src="media/image/whyme.jpg" alt="" loading="lazy" />
-          </div>
-        </div>
-      </div>
       <div class="section about-info tech-stack" id="techStackSection">
         <header class="tech-header">
           <h1 class="fluid">Stack Developer</h1>
@@ -381,9 +373,12 @@
     </footer>
     <!-- Three.js -->
   <script src="./js/three.min.js"></script>
+  <script src="./js/DRACOLoader.js"></script>
+  <script src="./js/GLTFLoader.js"></script>
     <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
     <!-- SCRIPTS -->
   <script src="./js/script.js"></script>
   <script src="./js/animation.js"></script>

@@ -184,6 +184,12 @@ const CONFIG = {
 })();
 
 
+(function registerGSAPPlugins() {
+  if (window.gsap && window.ScrollToPlugin) {
+    gsap.registerPlugin(ScrollToPlugin);
+  }
+})();
+
 (function headerBehavior() {
   const nav = document.getElementById("navbar");
   const bar = document.getElementById("scrollProgress");
@@ -268,7 +274,23 @@ const CONFIG = {
     });
 
     navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeMobileMenu);
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            closeMobileMenu();
+            gsap.to(window, {
+              duration: 1.0,
+              scrollTo: { y: target, offsetY: 70 },
+              ease: "power3.inOut"
+            });
+            return;
+          }
+        }
+        closeMobileMenu();
+      });
     });
 
     window.addEventListener("resize", () => {

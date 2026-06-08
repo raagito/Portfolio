@@ -11,6 +11,16 @@
 .hero-sub span{display:inline-block}
 
 .hero-illustration{display:block; width:100%; height:auto; border-radius:0; background:none; box-shadow:none;}
+.hero-right{position:relative;}
+.hero-right::after{
+  content:"";
+  position:absolute;
+  bottom:12%; left:10%; right:10%;
+  height:120px;
+  background:radial-gradient(ellipse at center, rgba(11,36,51,0.25) 0%, transparent 70%);
+  filter:blur(8px);
+  pointer-events:none;
+}
 .hero-video{display:block; object-fit:cover}
 .hero-right figcaption{margin-top:8px}
 
@@ -72,7 +82,7 @@
 
   .hero-right{
     display:block;
-    width:min(115%, 700px);
+    width:min(95%, 620px);
     justify-self:end;
   }
 }
