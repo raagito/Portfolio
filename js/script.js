@@ -306,6 +306,27 @@ const CONFIG = {
   }
 })();
 
+/* Smooth-scroll para cualquier enlace de ancla (#) -> misma animacion que el navbar */
+(function smoothAnchors() {
+  if (!window.gsap || !window.ScrollToPlugin) return;
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || href === "#") return;
+    // los del navbar ya tienen su propio handler
+    if (link.closest("#primaryNav")) return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      gsap.to(window, {
+        duration: 1.0,
+        scrollTo: { y: target, offsetY: 70 },
+        ease: "power3.inOut"
+      });
+    });
+  });
+})();
+
 (function projectLinkPress() {
   document.querySelectorAll(".project-link-btn").forEach(btn => {
     btn.addEventListener("click", function(e) {

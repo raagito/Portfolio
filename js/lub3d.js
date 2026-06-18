@@ -65,44 +65,59 @@ function initLub3D() {
   let model = null;
   let baseY = 0;  // posicion vertical base tras centrar el modelo
 
-  const dracoLoader = new THREE.DRACOLoader();
-  dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+  // Carga diferida: el GLB (1.1MB) + decoder solo se piden cuando la card
+  // VM Lub se activa por primera vez -> menos peso en la carga inicial.
+  let loadStarted = false;
+  function loadModel() {
+    if (loadStarted) return;
+    loadStarted = true;
 
-  const loader = new THREE.GLTFLoader();
-  loader.setDRACOLoader(dracoLoader);
-  loader.load(
-    "media/3d/lubricante3d.glb",
-    function(gltf) {
-      model = gltf.scene;
+    const dracoLoader = new THREE.DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
 
-      model.traverse(o => {
-        if (o.isMesh) {
-          o.castShadow = true;
-          o.receiveShadow = true;
-          if (o.material) o.material.envMapIntensity = 1.0;
-        }
-      });
+    const loader = new THREE.GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    loader.load(
+      "media/3d/lubricante3d.glb",
+      function(gltf) {
+        model = gltf.scene;
 
-      const box    = new THREE.Box3().setFromObject(model);
-      const center = box.getCenter(new THREE.Vector3());
-      const size   = box.getSize(new THREE.Vector3());
-      // Escalar por la altura (no maxDim) para que no se vea achatado/ancho
-      const scale  = 1.9 / size.y;
+        model.traverse(o => {
+          if (o.isMesh) {
+            o.castShadow = true;
+            o.receiveShadow = true;
+            if (o.material) o.material.envMapIntensity = 1.0;
+          }
+        });
 
-      model.scale.setScalar(scale);
-      // Centrar en X/Z, apoyar la base en el suelo (y = -1.1)
-      model.position.x = -center.x * scale;
-      model.position.z = -center.z * scale;
-      model.position.y = -box.min.y * scale - 1.1;
-      baseY = model.position.y;
-      model.rotation.x = -0.25;  // inclinar la parte superior hacia atras/arriba
+        const box    = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size   = box.getSize(new THREE.Vector3());
+        // Escalar por la altura (no maxDim) para que no se vea achatado/ancho
+        const scale  = 1.9 / size.y;
 
-      scene.add(model);
-      resize();
-    },
-    undefined,
-    function(err) { console.warn("lub3d: GLB load failed", err); }
-  );
+        model.scale.setScalar(scale);
+        // Centrar en X/Z, apoyar la base en el suelo (y = -1.1)
+        model.position.x = -center.x * scale;
+        model.position.z = -center.z * scale;
+        model.position.y = -box.min.y * scale - 1.1;
+        baseY = model.position.y;
+        model.rotation.x = -0.25;  // inclinar la parte superior hacia atras/arriba
+
+        scene.add(model);
+        resize();
+      },
+      undefined,
+      function(err) { console.warn("lub3d: GLB load failed", err); }
+    );
+  }
+
+  // Observa la activacion de la card para disparar la carga + render
+  function isActive() { return card && card.classList.contains("is-active"); }
+  if (card) {
+    new MutationObserver(() => { if (isActive()) loadModel(); })
+      .observe(card, { attributes: true, attributeFilter: ["class"] });
+  }
 
   window.addEventListener("resize", resize, { passive: true });
   resize();
@@ -119,16 +134,17 @@ function initLub3D() {
   const clock = new THREE.Clock();
   (function loop() {
     requestAnimationFrame(loop);
-    const t = clock.getElapsedTime();
 
-    // Luz orbital siempre activa (brillo en movimiento)
+    // Sin modelo o card inactiva: no renderizar -> ahorra GPU/CPU
+    if (!model || !isActive()) return;
+
+    const t = clock.getElapsedTime();
+    // Luz orbital (brillo en movimiento)
     rim.position.set(Math.cos(t * 1.2) * 4, 1.5 + Math.sin(t * 0.8) * 1.2, Math.sin(t * 1.2) * 4);
 
-    if (model && card && card.classList.contains("is-active") && !reduceMotion) {
-      // Sigue al mouse solo en Y (suavizado)
+    if (!reduceMotion) {
       rRotY += (tRotY - rRotY) * 0.12;
       model.rotation.y = rRotY;
-      // Float / bob suave arriba-abajo
       model.position.y = baseY + Math.sin(t * 1.6) * 0.08;
     }
     renderer.render(scene, camera);

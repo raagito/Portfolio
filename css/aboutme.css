@@ -30,18 +30,18 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  width: clamp(78px, 9vw, 120px);     /* mas ancha */
-  min-height: clamp(96px, 13vw, 156px);
-  padding: clamp(14px, 1.8vw, 22px) 8px 0;
+  width: clamp(56px, 6vw, 84px);
+  min-height: clamp(70px, 9vw, 110px);
+  padding: clamp(10px, 1.3vw, 16px) 6px 0;
   /* degradado para volumen real */
   background: linear-gradient(180deg, #d10000 0%, #b30000 55%, #8f0000 100%);
   color: #fff;
   font-family: "akira", "bebas", Arial, sans-serif;
-  font-size: clamp(0.78rem, 1.3vw, 1.1rem);
+  font-size: clamp(0.6rem, 1vw, 0.85rem);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-align: center;
-  border-radius: 12px 12px 0 0;       /* esquinas superiores redondeadas */
+  border-radius: 4px 4px 0 0;         /* esquinas superiores apenas redondeadas */
 }
 
 /* muesca en V del extremo inferior (forma de cinta) */
@@ -534,7 +534,18 @@
     font-size: clamp(2rem, 10vw, 4.2rem);
     letter-spacing: 0.06em;
     white-space: nowrap;
-    padding-top: 40px;
+    padding-top: 56px;
+  }
+
+  /* cinta mas pequeña en mobile, no tapa WHY ME */
+  .skills-ribbon {
+    top: 0;
+    left: 14px;
+    width: 64px;
+    min-height: 58px;
+    font-size: 0.62rem;
+    padding: 7px 6px 0;
+    z-index: 12;
   }
 
   .about-gallery {

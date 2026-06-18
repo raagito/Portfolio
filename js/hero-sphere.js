@@ -8,8 +8,11 @@
   ];
 
   // Radio de la esfera: relativo al viewport (estas dentro)
+  // mas grande en mobile para que las palabras se lean
   function radius() {
-    return Math.min(window.innerWidth, window.innerHeight) * 0.62;
+    const m = Math.min(window.innerWidth, window.innerHeight);
+    const factor = window.innerWidth < 760 ? 0.95 : 0.62;
+    return m * factor;
   }
 
   // Distribucion tipo espiral de Fibonacci -> reparte uniforme en la esfera
@@ -45,4 +48,32 @@
     clearTimeout(t);
     t = setTimeout(build, 200);
   }, { passive: true });
+
+  // --- Relleno por cercania del cursor ---
+  // Las palabras se rellenan (de outline a solido) cuando el mouse pasa cerca.
+  const RADIUS = 160;           // px: distancia de influencia
+  let mx = -9999, my = -9999;
+  let ticking = false;
+
+  window.addEventListener("mousemove", (e) => {
+    mx = e.clientX; my = e.clientY;
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateFill);
+    }
+  }, { passive: true });
+
+  function updateFill() {
+    ticking = false;
+    const words = spin.children;
+    for (let i = 0; i < words.length; i++) {
+      const r = words[i].getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const d = Math.hypot(mx - cx, my - cy);
+      // 0 (lejos) .. 1 (encima)
+      const k = Math.max(0, 1 - d / RADIUS);
+      words[i].style.setProperty("--fill", k.toFixed(3));
+    }
+  }
 })();

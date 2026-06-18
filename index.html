@@ -18,6 +18,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Toggle de idioma ES / EN (fijo arriba a la derecha) -->
+    <button type="button" class="lang-switch" id="langToggle" role="switch" aria-label="Cambiar idioma">
+      <span class="lang-switch__label lang-switch__label--es">ES</span>
+      <span class="lang-switch__track">
+        <span class="lang-switch__knob"></span>
+      </span>
+      <span class="lang-switch__label lang-switch__label--en">EN</span>
+    </button>
+
     <!-- NAV: se esconde al bajar y aparece al subir (ver script.js: hideShowHeader) -->
     <header id="navbar" class="nav">
       <div class="container nav-row">
@@ -37,9 +46,9 @@
           <span></span>
         </button>
         <nav class="nav-links" id="primaryNav">
-          <a href="#projects">PROJECTS</a>
-          <a href="#about">ABOUT ME</a>
-          <a href="#contact" class="nav-cta">LET'S WORK</a>
+          <a href="#projects" data-i18n="nav.projects">PROJECTS</a>
+          <a href="#about" data-i18n="nav.about">ABOUT ME</a>
+          <a href="mailto:alzuruttricardo@gmail.com" class="nav-cta js-mail" data-i18n="nav.cta">LET'S WORK</a>
         </nav>
       </div>
       <div class="progress" aria-hidden="true">
@@ -62,15 +71,15 @@
       </div>
       <div class="container hero-grid">
         <div class="hero-left">
-          <p class="kicker" id="heroKicker">Frontend Developer</p>
+          <p class="kicker" id="heroKicker" data-i18n="hero.kicker">3D Experience Developer</p>
           <h1 class="display hero-name">
             <span class="mask"><span id="h1l1">RICARDO</span></span>
             <span class="mask"><span id="h1l2">ALZURUTT</span></span>
           </h1>
-          <p class="hero-sub mask"><span id="h1l3">Software Engineer</span></p>
+          <p class="hero-sub mask"><span id="h1l3" data-i18n="hero.sub">Software Engineer</span></p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#projects">View Projects</a>
-            <a class="btn btn-ghost" href="#contact">Let's Work</a>
+            <a class="btn btn-primary" href="#projects" data-i18n="hero.viewProjects">View Projects</a>
+            <a class="btn btn-ghost js-mail" href="mailto:alzuruttricardo@gmail.com" data-i18n="hero.letsWork">Let's Work</a>
           </div>
         </div>
         <figure class="hero-right fx-zoom">
@@ -98,7 +107,7 @@
             </div>
             <div class="card-inner" style="background-color: #592c17;">
               <div class="project-card-media-wrap">
-                <video class="project-card-img ficha3d-bg-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
+                <video class="project-card-img ficha3d-bg-video project-card-video" muted loop playsinline preload="none" aria-hidden="true">
                   <source src="media/webm/bg_DominoTip.webm" type="video/webm" />
                 </video>
                 <img class="project-card-img project-img--default" src="media/image/project_dominotip.jpg" alt="Domino TIP preview" loading="lazy" />
@@ -121,13 +130,13 @@
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">01</span>
-                  <span class="project-tag">Juego</span>
+                  <span class="project-tag" data-i18n="proj.domino.tag">Juego</span>
                 </div>
                 <h3>Domino TIP</h3>
-                <p>Juego de mesa digital con interfaz intuitiva y jugabilidad emocionante.</p>
+                <p data-i18n="proj.domino.desc">Juego de mesa digital con interfaz intuitiva y jugabilidad emocionante.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">Vue • PostgreSQL</p>
-                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true">Demo Próximamente</span>
+                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true" data-i18n="proj.soon">Demo Próximamente</span>
                 </div>
               </article>
             </div>
@@ -144,13 +153,13 @@
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">02</span>
-                  <span class="project-tag">Mobile App</span>
+                  <span class="project-tag" data-i18n="proj.gasli.tag">Mobile App</span>
                 </div>
                 <h3>Gasli Web/App</h3>
-                <p>Aplicacion Movil, diseñada para gestion de gasolina.</p>
+                <p data-i18n="proj.gasli.desc">Aplicacion Movil, diseñada para gestion de gasolina.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">REACT NATIVE • TAILWIND • GSAP</p>
-                  <a class="project-link-btn" href="https://gasli.vercel.app/" target="_blank" rel="noopener noreferrer">Ver proyecto
+                  <a class="project-link-btn" href="https://gasli.vercel.app/" target="_blank" rel="noopener noreferrer"><span data-i18n="proj.view">Ver proyecto</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
                   </a>
                 </div>
@@ -169,13 +178,13 @@
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">03</span>
-                  <span class="project-tag">Web App</span>
+                  <span class="project-tag" data-i18n="proj.protinal.tag">Web App</span>
                 </div>
                 <h3>App Web Protinal</h3>
-                <p>Actualización visual de sector abogacia.</p>
+                <p data-i18n="proj.protinal.desc">Actualización visual de sector abogacia.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">REACT JS • TAILWIND • DJANGO</p>
-                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true">Demo Próximamente</span>
+                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true" data-i18n="proj.soon">Demo Próximamente</span>
                 </div>
               </article>
             </div>
@@ -195,13 +204,13 @@
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">04</span>
-                  <span class="project-tag">Landing</span>
+                  <span class="project-tag" data-i18n="proj.vmlub.tag">Landing</span>
                 </div>
                 <h3>VM Lub</h3>
-                <p>Página Web para una empresa de lubricantes.</p>
+                <p data-i18n="proj.vmlub.desc">Página Web para una empresa de lubricantes.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">HTML • CSS • GSAP</p>
-                  <a class="project-link-btn" href="https://vmlub.vercel.app/" target="_blank" rel="noopener noreferrer">Ver proyecto
+                  <a class="project-link-btn" href="https://vmlub.vercel.app/" target="_blank" rel="noopener noreferrer"><span data-i18n="proj.view">Ver proyecto</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
                   </a>
                 </div>
@@ -232,28 +241,28 @@
 
         <!-- right: mode selector panel -->
         <aside class="whyme-panel">
-          <p class="whyme-panel__label">MODO</p>
+          <p class="whyme-panel__label" data-i18n="why.mode">MODO</p>
 
           <button class="whyme-btn is-active" data-mode="designer">
             <span class="whyme-btn__icon"><i class="fa-solid fa-pen-nib"></i></span>
             <span class="whyme-btn__text">Designer</span>
-            <span class="whyme-btn__sub">Identidad visual</span>
+            <span class="whyme-btn__sub" data-i18n="why.designer.sub">Identidad visual</span>
           </button>
 
           <button class="whyme-btn" data-mode="developer">
             <span class="whyme-btn__icon"><i class="fa-solid fa-code"></i></span>
             <span class="whyme-btn__text">Developer</span>
-            <span class="whyme-btn__sub">Clean code</span>
+            <span class="whyme-btn__sub" data-i18n="why.developer.sub">Clean code</span>
           </button>
 
           <button class="whyme-btn" data-mode="friendly">
             <span class="whyme-btn__icon"><i class="fa-solid fa-handshake"></i></span>
             <span class="whyme-btn__text">Friendly</span>
-            <span class="whyme-btn__sub">Team player</span>
+            <span class="whyme-btn__sub" data-i18n="why.friendly.sub">Team player</span>
           </button>
 
           <div class="whyme-panel__info" id="whymePanelInfo">
-            <p id="whymePanelDesc">Diseño interfaces que convierten. Cada pixel tiene intención.</p>
+            <p id="whymePanelDesc" data-i18n="why.desc.designer">Diseño interfaces que convierten. Cada pixel tiene intención.</p>
           </div>
         </aside>
 
@@ -261,8 +270,8 @@
 
       <div class="section about-info tech-stack" id="techStackSection">
         <header class="tech-header">
-          <h1 class="fluid">Stack Developer</h1>
-          <p class="tech-footer">Stack adaptable segun proyecto.</p>
+          <h1 class="fluid" data-i18n="stack.title">Stack Developer</h1>
+          <p class="tech-footer" data-i18n="stack.footer">Stack adaptable segun proyecto.</p>
         </header>
 
         <div class="tech-main">
@@ -309,14 +318,14 @@
         </div>
 
         <div class="qualities-block" id="qualitiesBlock" aria-label="Cualidades">
-          <h2 class="qualities-title" id="qualitiesTitle">Cualidades</h2>
+          <h2 class="qualities-title" id="qualitiesTitle" data-i18n="qualities.title">Cualidades</h2>
           <div class="qualities-tags" id="qualitiesTags" aria-label="Valores principales">
-            <span class="quality-tag">Orientado a negocio</span>
-            <span class="quality-tag">Arquitectura limpia</span>
-            <span class="quality-tag">Identidad visual</span>
-            <span class="quality-tag">Codigo escalable</span>
-            <span class="quality-tag">UI/UX consciente</span>
-            <span class="quality-tag">Entrega rapida</span>
+            <span class="quality-tag" data-i18n="qualities.business">Orientado a negocio</span>
+            <span class="quality-tag" data-i18n="qualities.architecture">Arquitectura limpia</span>
+            <span class="quality-tag" data-i18n="qualities.identity">Identidad visual</span>
+            <span class="quality-tag" data-i18n="qualities.scalable">Codigo escalable</span>
+            <span class="quality-tag" data-i18n="qualities.uiux">UI/UX consciente</span>
+            <span class="quality-tag" data-i18n="qualities.fast">Entrega rapida</span>
           </div>
         </div>
       </div>
@@ -337,10 +346,10 @@
             <span class="footer-brand__first">RICARDO</span>
             <span class="footer-brand__last">ALZURUTT</span>
           </div>
-          <p class="footer-tagline">Frontend Developer</p>
+          <p class="footer-tagline" data-i18n="hero.kicker">Frontend Developer</p>
           <div class="footer-ctas">
-            <a href="mailto:alzuruttricardo@gmail.com" class="footer-cta footer-cta--solid">
-              <span>Escribeme</span>
+            <a href="mailto:alzuruttricardo@gmail.com" class="footer-cta footer-cta--solid js-mail">
+              <span data-i18n="footer.write">Escribeme</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
@@ -356,7 +365,7 @@
             <a href="https://wa.me/584129709449" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="WhatsApp">
               <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
             </a>
-            <a href="mailto:alzuruttricardo@gmail.com" class="footer-social" aria-label="Email">
+            <a href="mailto:alzuruttricardo@gmail.com" class="footer-social js-mail" aria-label="Email">
               <i class="fa-regular fa-envelope" aria-hidden="true"></i>
             </a>
           </div>
@@ -366,18 +375,41 @@
       <!-- bottom bar -->
       <div class="footer-bar">
         <span class="footer-bar__copy">© <span id="year">2026</span> Ricardo Alzurutt</span>
-        <span class="footer-bar__rights">All rights reserved</span>
+        <span class="footer-bar__rights" data-i18n="footer.rights">All rights reserved</span>
       </div>
     </footer>
+    <!-- Modal: elegir cliente de correo -->
+    <div class="mail-modal" id="mailModal" aria-hidden="true">
+      <div class="mail-modal__backdrop" data-mail-close></div>
+      <div class="mail-modal__card" role="dialog" aria-modal="true" aria-labelledby="mailModalTitle">
+        <button class="mail-modal__close" type="button" aria-label="Cerrar" data-mail-close>&times;</button>
+        <p class="mail-modal__title" id="mailModalTitle" data-i18n="mail.title">¿Con qué quieres escribirme?</p>
+        <div class="mail-modal__options">
+          <a class="mail-modal__opt" id="mailGmail" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-google" aria-hidden="true"></i><span>Gmail</span>
+          </a>
+          <a class="mail-modal__opt" id="mailOutlook" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-microsoft" aria-hidden="true"></i><span>Outlook</span>
+          </a>
+          <a class="mail-modal__opt" id="mailDefault">
+            <i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-i18n="mail.default">App de correo</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Three.js -->
   <script src="./js/three.min.js"></script>
   <script src="./js/DRACOLoader.js"></script>
   <script src="./js/GLTFLoader.js"></script>
+  <script src="./js/SVGLoader.js"></script>
     <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
     <!-- SCRIPTS -->
+  <script src="./js/i18n.js"></script>
+  <script src="./js/mail-modal.js"></script>
   <script src="./js/script.js"></script>
   <script src="./js/animation.js"></script>
   <script src="./js/head3d.js"></script>
