@@ -43,7 +43,7 @@ const CONFIG = {
 })();
 
 (function revealOnScroll() {
-  const items = Array.from(document.querySelectorAll(".fx, .fx-zoom"));
+  const items = Array.from(document.querySelectorAll(".fx, .fx-zoom, .fx-blur"));
   if (!items.length) return;
 
   const io = new IntersectionObserver(

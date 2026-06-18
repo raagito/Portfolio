@@ -93,10 +93,52 @@
   pointer-events:none; filter:blur(18px); mix-blend-mode:screen; transform:translate(-50%, -50%) scale(.9);
 }
 
-.marquee{border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04); white-space:nowrap; overflow:hidden}
-.marquee .track{display:inline-block; padding:10px 0; animation:marquee 24s linear infinite}
-.marquee span{margin:0 22px; color:#9ED7FF; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:12px}
-@keyframes marquee{ from { transform:translateX(0) } to { transform:translateX(-50%) } }
+/* ---- Esfera de texto 3D (estas dentro, mirando como gira) ---- */
+.hero{overflow:hidden}
+
+.hero-sphere{
+  position:absolute;
+  top:50%; left:50%;
+  width:1px; height:1px;       /* origen 3D en el centro */
+  transform:translate(-50%,-50%);
+  perspective:520px;            /* perspectiva corta -> sensacion "desde adentro" */
+  perspective-origin:50% 50%;
+  pointer-events:none;
+  z-index:0;
+}
+
+.hero-sphere__spin{
+  position:absolute;
+  transform-style:preserve-3d;
+  animation:hero-sphere-spin 40s linear infinite;
+  will-change:transform;
+}
+
+.hero-sphere__word{
+  position:absolute;
+  left:0; top:0;
+  transform-style:preserve-3d;
+  white-space:nowrap;
+  font-family:"bebas","akira",Arial,sans-serif;
+  font-size:clamp(2.2rem, 5vw, 4.5rem);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(158,215,255,0.32);
+  backface-visibility:hidden;
+}
+
+@keyframes hero-sphere-spin{
+  from{ transform:rotateY(0deg); }
+  to  { transform:rotateY(360deg); }
+}
+
+/* contenido por encima */
+.hero-grid{position:relative; z-index:2}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-sphere__spin{ animation:none }
+}
 
 /* Hero dissolve dust layer */
 .hero-dust-layer{

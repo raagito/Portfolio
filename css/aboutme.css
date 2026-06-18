@@ -7,6 +7,57 @@
   background: var(--bg);
 }
 
+/* Sombra en el borde superior de WHY ME -> sensacion de capa por encima */
+.aboutme-root::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 32px;
+  transform: translateY(-100%);
+  background: linear-gradient(to top, rgba(11, 36, 51, 0.04), rgba(11, 36, 51, 0));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Cinta / bookmark "Skills" arriba a la izquierda */
+.skills-ribbon {
+  position: absolute;
+  top: clamp(-34px, -3vw, -18px);     /* asoma mas arriba */
+  left: clamp(24px, 6vw, 90px);
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: clamp(78px, 9vw, 120px);     /* mas ancha */
+  min-height: clamp(96px, 13vw, 156px);
+  padding: clamp(14px, 1.8vw, 22px) 8px 0;
+  /* degradado para volumen real */
+  background: linear-gradient(180deg, #d10000 0%, #b30000 55%, #8f0000 100%);
+  color: #fff;
+  font-family: "akira", "bebas", Arial, sans-serif;
+  font-size: clamp(0.78rem, 1.3vw, 1.1rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 12px 12px 0 0;       /* esquinas superiores redondeadas */
+}
+
+/* muesca en V del extremo inferior (forma de cinta) */
+.skills-ribbon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: clamp(16px, 2vw, 26px);
+  background: var(--bg);
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  pointer-events: none;
+}
+
+
 /* ---- WHY ME viewer layout ---- */
 .whyme-viewer {
   display: flex;
@@ -302,7 +353,7 @@
   display: block;
   font-size: clamp(0.85rem, 1.2vw, 1rem);
   color: var(--muted);
-  font-family: "Inter", sans-serif;
+  font-family: "Elms Sans", sans-serif;
   font-weight: 400;
   letter-spacing: 0.02em;
   margin: 0;
@@ -382,7 +433,7 @@
   filter: drop-shadow(0 0 10px var(--logo-glow));
 }
 
-.tech-logo-item.is-js       { --logo-glow: rgba(255, 233, 88, 0.75); }
+.tech-logo-item.is-threejs  { --logo-glow: rgba(220, 235, 255, 0.7); }
 .tech-logo-item.is-react    { --logo-glow: rgba(97, 218, 251, 0.78); }
 .tech-logo-item.is-tailwind { --logo-glow: rgba(56, 189, 248, 0.78); }
 .tech-logo-item.is-gsap     { --logo-glow: rgba(136, 255, 64, 0.8);  }
@@ -446,7 +497,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-family: "Inter", sans-serif;
+  font-family: "Elms Sans", sans-serif;
   transition: background 220ms ease, border-color 220ms ease, color 220ms ease, transform 220ms ease;
 }
 

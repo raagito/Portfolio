@@ -178,63 +178,31 @@
   gap: 10px;
 }
 
-.footer-social-link {
+/* Redes: solo iconos, horizontal, debajo del boton Escribeme */
+.footer-socials {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 183, 210, 0.14);
-  background: rgba(255, 255, 255, 0.04);
-  color: #bcd6ee;
-  text-decoration: none;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
-  min-width: 160px;
+  flex-direction: row;
+  gap: 14px;
+  margin-top: 18px;
 }
 
-.footer-social-link:hover {
-  background: rgba(76, 201, 177, 0.1);
-  border-color: rgba(76, 201, 177, 0.35);
-  transform: translateX(4px);
-}
-
-.footer-social-link__icon {
+.footer-social {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(76, 201, 177, 0.12);
-  color: #4cc9b1;
-  font-size: 1rem;
-  flex-shrink: 0;
-  transition: background 0.2s, color 0.2s;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #bcd6ee;
+  font-size: 1.15rem;
+  text-decoration: none;
+  transition: color 0.22s ease, transform 0.22s ease, background 0.22s ease;
 }
 
-.footer-social-link:hover .footer-social-link__icon {
-  background: rgba(76, 201, 177, 0.22);
-  color: #8be3d3;
-}
-
-.footer-social-link__name {
-  flex: 1;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.footer-social-link__arrow {
-  font-size: 0.9rem;
-  color: #4cc9b1;
-  opacity: 0.6;
-  transition: transform 0.2s, opacity 0.2s;
-  margin-left: auto;
-}
-
-.footer-social-link:hover .footer-social-link__arrow {
-  transform: translate(3px, -3px);
-  opacity: 1;
+.footer-social:hover {
+  color: #fff;
+  background: rgba(76, 201, 177, 0.16);
+  transform: translateY(-4px);
 }
 
 /* ---- bottom bar ---- */

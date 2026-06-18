@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ricardo Alzurutt — Portfolio</title>
+    <title>Alzurutt</title>
     <meta name="description" content="Portfolio de Ricardo Alzurutt — Frontend Developer. Landing personal con proyectos y contacto." />
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/header.css" />
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   </head>
   <body>
     <!-- NAV: se esconde al bajar y aparece al subir (ver script.js: hideShowHeader) -->
@@ -55,6 +55,11 @@
     <section id="hero" class="hero">
       <!-- Ajusta textos desde script.js CONFIG.hero.* -->
       <div class="cursor-blob" id="cursorBlob" aria-hidden="true"></div>
+
+      <!-- Esfera de texto: estas en el centro viendola girar desde adentro -->
+      <div class="hero-sphere" id="heroSphere" aria-hidden="true">
+        <div class="hero-sphere__spin" id="heroSphereSpin"></div>
+      </div>
       <div class="container hero-grid">
         <div class="hero-left">
           <p class="kicker" id="heroKicker">Frontend Developer</p>
@@ -72,13 +77,6 @@
           <video class="hero-illustration" src="media/webm/hero.webm" autoplay loop muted playsinline></video>
         </figure>
       </div>
-      <!-- Marquee horizontal (infinito) -->
-      <div class="marquee" aria-hidden="true">
-        <div class="track">
-          <span>Strategy</span><span>Branding</span><span>Webflow</span><span>Motion</span><span>3D</span><span>Illustration</span>
-          <span>Strategy</span><span>Branding</span><span>Webflow</span><span>Motion</span><span>3D</span><span>Illustration</span>
-        </div>
-      </div>
     </section>
 
     <div class="sections-stack">
@@ -94,27 +92,42 @@
       </div>
       <div class="gallery">
         <ul class="cards">
-          <li class="card-wrap" data-circle-color="#4CC9B1">
+          <li class="card-wrap" data-circle-color="#a0350b">
             <div class="card-logo" aria-hidden="true">
-              <img src="media/svg/logo_react.svg" alt="" />
+              <img src="media/svg/vmLub-01.svg" alt="" />
             </div>
-            <div class="card-inner" style="background-color: #0b2433;">
+            <div class="card-inner" style="background-color: #592c17;">
               <div class="project-card-media-wrap">
-                <img class="project-card-img project-img--default" src="media/image/project_protinal.jpg" alt="Protinal preview" loading="lazy" />
-                <img class="project-card-img project-img--active" src="media/image/protinal.webp" alt="App Web Protinal screenshot" loading="lazy" />
+                <video class="project-card-img ficha3d-bg-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
+                  <source src="media/webm/bg_DominoTip.webm" type="video/webm" />
+                </video>
+                <img class="project-card-img project-img--default" src="media/image/project_dominotip.jpg" alt="Domino TIP preview" loading="lazy" />
+                <!-- Ficha 3D (FichaVisual portada de DominoTip) — rota en X solo al hover -->
+                <div class="ficha3d-stage">
+                  <div class="ficha3d-scene">
+                    <div class="ficha3d-rotate">
+                      <div class="ficha3d-inner">
+                        <div class="ficha3d-face ficha3d-front"></div>
+                        <div class="ficha3d-face ficha3d-back"></div>
+                        <div class="ficha3d-edge ficha3d-edge-v ficha3d-edge-l"></div>
+                        <div class="ficha3d-edge ficha3d-edge-v ficha3d-edge-r"></div>
+                        <div class="ficha3d-edge ficha3d-edge-h ficha3d-edge-t"></div>
+                        <div class="ficha3d-edge ficha3d-edge-h ficha3d-edge-b"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">01</span>
-                  <span class="project-tag">Web App</span>
+                  <span class="project-tag">Juego</span>
                 </div>
-                <h3>App Web Protinal</h3>
-                <p>Actualización visual de sector abogacia.</p>
+                <h3>Domino TIP</h3>
+                <p>Juego de mesa digital con interfaz intuitiva y jugabilidad emocionante.</p>
                 <div class="project-card-bottom">
-                  <p class="project-tech">REACT JS • TAILWIND • DJANGO</p>
-                  <a class="project-link-btn" href="#" target="_blank" rel="noopener noreferrer">Ver proyecto
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-                  </a>
+                  <p class="project-tech">Vue • PostgreSQL</p>
+                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true">Demo Próximamente</span>
                 </div>
               </article>
             </div>
@@ -126,7 +139,7 @@
             <div class="card-inner" style="background-color: #1a1a2e;">
               <div class="project-card-media-wrap">
                 <img class="project-card-img project-img--default" src="media/image/project_gasli.jpg" alt="Gasli preview" loading="lazy" />
-                <img class="project-card-img project-img--active" src="media/image/gasli-phone.png" alt="Gasli App screenshot" loading="lazy" />
+                <img class="project-card-img project-img--active" src="media/image/project_gasli_hover.jpg" alt="Gasli App screenshot" loading="lazy" />
               </div>
               <article class="project-card-content">
                 <div class="project-card-top">
@@ -137,48 +150,47 @@
                 <p>Aplicacion Movil, diseñada para gestion de gasolina.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">REACT NATIVE • TAILWIND • GSAP</p>
-                  <a class="project-link-btn" href="#" target="_blank" rel="noopener noreferrer">Ver proyecto
+                  <a class="project-link-btn" href="https://gasli.vercel.app/" target="_blank" rel="noopener noreferrer">Ver proyecto
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
                   </a>
                 </div>
               </article>
             </div>
           </li>
-          <li class="card-wrap" data-circle-color="#a78bfa">
+          <li class="card-wrap" data-circle-color="#4CC9B1">
             <div class="card-logo" aria-hidden="true">
-              <img src="media/svg/vmLub-01.svg" alt="" />
+              <img src="media/svg/logo_react.svg" alt="" />
             </div>
-            <div class="card-inner" style="background-color: #120a2e;">
+            <div class="card-inner" style="background-color: #0b2433;">
               <div class="project-card-media-wrap">
-                <img class="project-card-img project-img--default" src="media/image/project_dominotip.jpg" alt="Domino TIP preview" loading="lazy" />
-                <img class="project-card-img project-img--active" src="media/image/project_dominotip.jpg" alt="Domino TIP screenshot" loading="lazy" />
+                <img class="project-card-img project-img--default" src="media/image/project_protinal.jpg" alt="Protinal preview" loading="lazy" />
+                <img class="project-card-img project-img--active" src="media/image/protinal.webp" alt="App Web Protinal screenshot" loading="lazy" />
               </div>
               <article class="project-card-content">
                 <div class="project-card-top">
                   <span class="project-num">03</span>
-                  <span class="project-tag">Juego</span>
+                  <span class="project-tag">Web App</span>
                 </div>
-                <h3>Domino TIP</h3>
-                <p>Juego de mesa digital con interfaz intuitiva y jugabilidad emocionante.</p>
+                <h3>App Web Protinal</h3>
+                <p>Actualización visual de sector abogacia.</p>
                 <div class="project-card-bottom">
-                  <p class="project-tech">Vue • PostgreSQL</p>
-                  <a class="project-link-btn" href="#" target="_blank" rel="noopener noreferrer">Ver proyecto
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-                  </a>
+                  <p class="project-tech">REACT JS • TAILWIND • DJANGO</p>
+                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true">Demo Próximamente</span>
                 </div>
               </article>
             </div>
           </li>
-          <li class="card-wrap" data-circle-color="#f87171">
+          <li class="card-wrap" data-circle-color="#e3ba01">
             <div class="card-logo" aria-hidden="true">
               <img src="media/svg/dominoTip-01.svg" alt="" />
             </div>
-            <div class="card-inner" style="background-color: #0b2433;">
+            <div class="card-inner" style="background-color: #e2af1e;">
               <div class="project-card-media-wrap">
                 <img class="project-card-img project-img--default" src="media/image/project_vmlub.jpg" alt="VM Lub preview" loading="lazy" />
-                <video class="project-card-img project-img--active project-card-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
-                  <source src="media/image/gif.webm" type="video/webm" />
-                </video>
+                <!-- Modelo 3D lubricante (GLB) — rota solo al hacer click -->
+                <div class="lub3d-stage">
+                  <canvas id="lubCanvas" aria-hidden="true"></canvas>
+                </div>
               </div>
               <article class="project-card-content">
                 <div class="project-card-top">
@@ -189,7 +201,7 @@
                 <p>Página Web para una empresa de lubricantes.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">HTML • CSS • GSAP</p>
-                  <a class="project-link-btn" href="#" target="_blank" rel="noopener noreferrer">Ver proyecto
+                  <a class="project-link-btn" href="https://vmlub.vercel.app/" target="_blank" rel="noopener noreferrer">Ver proyecto
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
                   </a>
                 </div>
@@ -203,10 +215,15 @@
       </button>
     </section>
 
+    <!-- espaciador: alarga el scroll fijo de PROYECTOS -->
+    <div class="proyectos-scroll-spacer" aria-hidden="true"></div>
+
     <!-- ABOUT / WHY ME 3D VIEWER -->
     <section id="about" class="aboutme-root">
-      <p class="about-title-overlay">WHY ME?</p>
-      <div class="whyme-viewer">
+      <!-- cinta/bookmark "Skills" arriba izquierda -->
+      <span class="skills-ribbon" aria-hidden="true">Skills</span>
+      <p class="about-title-overlay fx-blur">WHY ME?</p>
+      <div class="whyme-viewer fx-blur">
 
         <!-- left: 3D canvas -->
         <div class="whyme-stage">
@@ -255,8 +272,8 @@
               <span class="sr-only">Frontend stack</span>
             </h2>
             <div class="tech-logos" aria-label="Frontend technologies">
-              <span class="tech-logo-item is-js" title="JavaScript">
-                <img src="media/svg/logo_js.svg" alt="JavaScript" loading="lazy" />
+              <span class="tech-logo-item is-threejs" title="Three.js">
+                <img src="media/svg/logo_threejs.svg" alt="Three.js" loading="lazy" />
               </span>
               <span class="tech-logo-item is-react" title="React">
                 <img src="media/svg/logo_react.svg" alt="React" loading="lazy" />
@@ -313,16 +330,6 @@
       <div class="footer-orb" aria-hidden="true"></div>
 
       <div class="footer-inner">
-        <!-- col left: nav links -->
-        <div class="footer-col footer-col--left">
-          <p class="footer-col__label">NAVEGACION</p>
-          <nav class="footer-col-nav">
-            <a href="#hero" class="footer-col-link">Home</a>
-            <a href="#projects" class="footer-col-link">Works</a>
-            <a href="#about" class="footer-col-link">About</a>
-            <a href="#contact" class="footer-col-link">Contact</a>
-          </nav>
-        </div>
 
         <!-- col center: brand + CTAs -->
         <div class="footer-col footer-col--center">
@@ -336,30 +343,21 @@
               <span>Escribeme</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-cta footer-cta--outline">
-              <span>LinkedIn</span>
-            </a>
           </div>
-        </div>
 
-        <!-- col right: socials -->
-        <div class="footer-col footer-col--right">
-          <p class="footer-col__label">REDES</p>
-          <div class="footer-social-list">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-social-link">
-              <span class="footer-social-link__icon"><i class="fa-brands fa-github" aria-hidden="true"></i></span>
-              <span class="footer-social-link__name">GitHub</span>
-              <span class="footer-social-link__arrow">↗</span>
+          <!-- redes: solo iconos, en horizontal debajo del boton -->
+          <div class="footer-socials">
+            <a href="https://github.com/raagito" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="GitHub">
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-link">
-              <span class="footer-social-link__icon"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span>
-              <span class="footer-social-link__name">LinkedIn</span>
-              <span class="footer-social-link__arrow">↗</span>
+            <a href="https://www.linkedin.com/in/ricardo-alzurutt-89ab44163/?locale=es" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
             </a>
-            <a href="mailto:alzuruttricardo@gmail.com" class="footer-social-link">
-              <span class="footer-social-link__icon"><i class="fa-regular fa-envelope" aria-hidden="true"></i></span>
-              <span class="footer-social-link__name">Email</span>
-              <span class="footer-social-link__arrow">↗</span>
+            <a href="https://wa.me/584129709449" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+            </a>
+            <a href="mailto:alzuruttricardo@gmail.com" class="footer-social" aria-label="Email">
+              <i class="fa-regular fa-envelope" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -383,6 +381,8 @@
   <script src="./js/script.js"></script>
   <script src="./js/animation.js"></script>
   <script src="./js/head3d.js"></script>
+  <script src="./js/lub3d.js"></script>
+  <script src="./js/hero-sphere.js"></script>
   <script src="./js/whyme3d.js"></script>
   <script>
     // fallback: ensure canvas is visible even if head3d fails

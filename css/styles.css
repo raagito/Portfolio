@@ -25,7 +25,7 @@
 html,body{margin:0; padding:0;}
 body { overflow-x: clip; }
 body{
-  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  font-family:"Elms Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   background:var(--bg); color:var(--text);
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
@@ -206,7 +206,7 @@ a{color:inherit}
 }
 
 .hero-actions .btn-primary{
-  font-family:"akira", "bebas", Inter, Arial, sans-serif;
+  font-family:"akira", "bebas", "Elms Sans", Arial, sans-serif;
   font-size:clamp(1rem, 1.35vw, 1.3rem);
   background:#0B2433;
   color:#f6f9ff;
@@ -216,7 +216,7 @@ a{color:inherit}
 }
 
 .hero-actions .btn-ghost{
-  font-family:"akira", "bebas", Inter, Arial, sans-serif;
+  font-family:"akira", "bebas", "Elms Sans", Arial, sans-serif;
   font-size:clamp(1.05rem, 1.25vw, 1.25rem);
   font-weight:700;
   color:#405a77;
@@ -290,7 +290,7 @@ a{color:inherit}
 .card-inner{
   display:block; color:inherit; text-decoration:none; min-height:320px; padding:0; background:transparent; transition:transform .45s var(--fx-ease), box-shadow .35s ease, filter .3s ease; border-radius:var(--radius);
 }
-.card-inner:hover{transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,.08)}
+.card-wrap:not(.is-active) .card-inner:hover{transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,.08)}
 .card .meta{position:relative; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border-radius:14px; margin-top:-36px}
 
 /* Placeholders de imagen para cada card (puedes cambiar a url) */
@@ -369,7 +369,7 @@ a{color:inherit}
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: "Elms Sans", system-ui, sans-serif;
   font-size: 8px;
   font-weight: 300;
   letter-spacing: 0.12em;
@@ -424,3 +424,6 @@ body.cursor--hidden .c-cursor-ring {
 .fx.in{opacity:1; transform:translateY(0)}
 .fx-zoom{opacity:0; transform:scale(.96); transition:opacity var(--fx-duration) var(--fx-ease), transform var(--fx-duration) var(--fx-ease)}
 .fx-zoom.in{opacity:1; transform:scale(1)}
+/* Aparicion suave con desenfoque (WHY ME) */
+.fx-blur{opacity:0; filter:blur(18px); transform:translateY(18px); transition:opacity 900ms var(--fx-ease), filter 900ms var(--fx-ease), transform 900ms var(--fx-ease)}
+.fx-blur.in{opacity:1; filter:blur(0); transform:translateY(0)}

@@ -3,6 +3,13 @@
   position: relative;
 }
 
+/* Alarga el tiempo que PROYECTOS queda fijo antes de entrar WHY ME */
+.proyectos-scroll-spacer {
+  height: 60vh;
+  width: 100%;
+  pointer-events: none;
+}
+
 /* ----------------- Projects section ----------------- */
 .proyectos-section {
   position: sticky;
@@ -63,9 +70,10 @@
   overflow: visible;
 }
 
-/* When a card is active, push label behind cards */
+/* Cuando hay card activa: el label queda por encima de las cards NO activas,
+   pero por debajo de la activa (solo la seleccionada lo tapa). */
 .proyectos-section.has-active .proyectos-bg-label {
-  z-index: 1;
+  z-index: 5;
 }
 
 .proyectos-section.has-active .proyectos-bg-label span {
@@ -170,6 +178,11 @@
 .card-wrap.is-active .project-img--active {
   opacity: 1;
   z-index: 3;
+}
+
+/* El panel de texto queda por encima de la imagen on-click */
+.card-wrap.is-active .project-card-content {
+  z-index: 5;
 }
 
 .project-card-content {
@@ -305,6 +318,17 @@
   transition-delay: 0s;
 }
 
+/* Variante "Demo Proximamente" — deshabilitada */
+.project-link-btn--soon {
+  color: #cdd6dd;
+  background: linear-gradient(160deg, #4a5a66 0%, #3a4853 60%, #2c3942 100%);
+  box-shadow: 0 6px 0 0 #1c272e, 0 8px 14px rgba(11,36,51,0.4);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.project-link-btn--soon::before { display: none; }
+
 .project-arrow {
   display: none;
 }
@@ -337,6 +361,8 @@
     align-items: center;
     justify-content: center;
     padding: 0 32px;
+    z-index: auto;   /* no crear contexto de apilado: deja que las cards
+                        compitan en z directamente con el label PROYECTOS */
   }
 
   .cards {
@@ -359,6 +385,7 @@
   /* Card base — centered, fixed collapsed size */
   .card-wrap {
     position: relative;
+    z-index: 2;          /* por debajo del label PROYECTOS (z:8) por defecto */
     top: auto;
     left: auto;
     width: 260px;
@@ -396,11 +423,11 @@
     opacity: 0;
   }
 
-  .card-wrap:hover::after {
+  .card-wrap:not(.is-active):hover::after {
     opacity: 0.3;
   }
 
-  .card-wrap:hover {
+  .card-wrap:not(.is-active):hover {
     opacity: 0.9;
     filter: grayscale(0.2) brightness(0.9);
   }
@@ -413,7 +440,7 @@
     filter: grayscale(0) brightness(1);
     opacity: 1;
     cursor: default;
-    z-index: 2;
+    z-index: 10;   /* por encima del label PROYECTOS (z:5) */
   }
 
   /* Inactive while another is active */
@@ -422,6 +449,7 @@
     height: 300px;
     opacity: 0.7;
     filter: brightness(0.5);
+    z-index: 2;    /* por debajo del label PROYECTOS (z:5) */
   }
 
   .card-inner {
@@ -456,4 +484,173 @@
 
 @media (pointer: fine) {
   .cards, .card-wrap, .card-wrap.is-active { cursor: none !important; }
+}
+
+/* ===================== Ficha 3D (portada DominoTip) ===================== */
+/* Base FichaVisual 44x88 escalada a w=90 (r = 90/44 = 2.0454) */
+/* Rota solo en eje X, posicion estatica, animada solo en hover de la card */
+/* Sube el media-wrap por encima del panel de texto cuando la card esta activa,
+   para que la ficha 3D quede visible (la ficha vive en la zona superior). */
+.card-wrap.is-active .project-card-media-wrap {
+  z-index: 4;
+}
+
+/* Video de fondo DominoTip — tenue para no resaltar */
+.ficha3d-bg-video {
+  z-index: 0;
+  opacity: 0.18;
+  object-fit: cover;
+}
+
+.ficha3d-stage {
+  position: absolute;
+  inset: 0 0 38% 0;          /* zona superior: deja libre el panel de texto */
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  perspective: 1000px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Ficha solo visible al hacer click (card activa) */
+.card-wrap.is-active .ficha3d-stage {
+  opacity: 1;
+}
+
+.ficha3d-scene {
+  width: 90px;
+  height: 180px;
+  transform-style: preserve-3d;
+}
+
+.ficha3d-rotate {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+}
+
+/* Giro continuo en eje Y al seleccionar la card */
+.card-wrap.is-active .ficha3d-rotate {
+  animation: ficha3d-spin-y 4s linear infinite;
+}
+
+@keyframes ficha3d-spin-y {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
+.ficha3d-inner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.ficha3d-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 10.2px;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+/* Brillo de resina */
+.ficha3d-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10.2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.08) 38%,
+    transparent 55%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ficha3d-front {
+  background-color: #f7f2e9;
+  background-image: url(../media/image/ficha-matriz.png);
+  background-repeat: no-repeat;
+  background-position: -8.18px -8.18px;   /* celda 6-6 (idx 0) */
+  background-size: 687.3px 752.7px;       /* 336x368 * r */
+  transform: translateZ(8.18px);
+}
+
+.ficha3d-back {
+  background-color: #f7f2e9;
+  background-image: url(../media/image/ficha-back.png);
+  background-size: cover;
+  background-position: center;
+  transform: rotateY(180deg) translateZ(8.18px);
+}
+
+/* Cantos: grosor = 2 * TZ = 16.36px, offset = -8.18px */
+.ficha3d-edge { position: absolute; }
+
+.ficha3d-edge-v {
+  top: 0;
+  width: 16.36px;
+  height: 180px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%, #c8c0b0 6%, #a8a098 30%,
+    #908880 50%, #c0b9b2 70%, #c8c0b0 94%, transparent 100%
+  );
+}
+
+.ficha3d-edge-l { left: -8.18px; transform: rotateY(-90deg); }
+.ficha3d-edge-r { right: -8.18px; transform: rotateY(90deg); }
+
+.ficha3d-edge-h {
+  left: 0;
+  width: 90px;
+  height: 16.36px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%, #c8c0b0 6%, #a8a098 30%,
+    #908880 50%, #a8a098 70%, #c8c0b0 94%, transparent 100%
+  );
+}
+
+.ficha3d-edge-t { top: -8.18px; transform: rotateX(90deg); }
+.ficha3d-edge-b { bottom: -8.18px; transform: rotateX(-90deg); }
+
+/* Respeta reduce-motion: ficha estatica, sin giro */
+@media (prefers-reduced-motion: reduce) {
+  .card-wrap.is-active .ficha3d-rotate {
+    animation: none;
+  }
+}
+
+/* ===================== Modelo 3D lubricante (VM Lub) ===================== */
+.lub3d-stage {
+  position: absolute;
+  inset: 4% 0 30% 0;         /* alto y angosto: evita que el modelo se vea ancho */
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.lub3d-stage canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Visible solo al hacer click (card activa) */
+.card-wrap.is-active .lub3d-stage {
+  opacity: 1;
 }
