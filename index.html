@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Alzurutt</title>
-    <meta name="description" content="Portfolio de Ricardo Alzurutt — Frontend Developer. Landing personal con proyectos y contacto." />
+    <meta name="description" content="Portfolio de Ricardo Alzurutt — Fullstack Developer. Landing personal con proyectos y contacto." />
+  <link rel="preload" href="media/3d/face.glb" as="fetch" crossorigin="anonymous" />
   <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/loader.css" />
   <link rel="stylesheet" href="./css/header.css" />
   <link rel="stylesheet" href="./css/hero.css" />
   <link rel="stylesheet" href="./css/animations.css" />
@@ -16,8 +18,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <noscript><style>.site-loader{display:none}</style></noscript>
   </head>
   <body>
+    <!-- Pantalla de carga (ver js/loader.js) -->
+    <div class="site-loader" id="siteLoader" role="progressbar" aria-label="Cargando" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="site-loader__face">
+        <img class="site-loader__poster" src="media/image/face-poster.webp" alt="" />
+        <canvas id="loaderCanvas" aria-hidden="true"></canvas>
+      </div>
+      <div class="site-loader__bar"><span class="site-loader__fill" id="siteLoaderFill"></span></div>
+      <p class="site-loader__pct" id="siteLoaderPct">0%</p>
+    </div>
+    <script src="./js/loader.js"></script>
+
     <!-- Toggle de idioma ES / EN (fijo arriba a la derecha) -->
     <button type="button" class="lang-switch" id="langToggle" role="switch" aria-label="Cambiar idioma">
       <span class="lang-switch__label lang-switch__label--es">ES</span>
@@ -71,7 +85,7 @@
       </div>
       <div class="container hero-grid">
         <div class="hero-left">
-          <p class="kicker" id="heroKicker" data-i18n="hero.kicker">3D Experience Developer</p>
+          <p class="kicker" id="heroKicker" data-i18n="hero.kicker">Fullstack Developer</p>
           <h1 class="display hero-name">
             <span class="mask"><span id="h1l1">RICARDO</span></span>
             <span class="mask"><span id="h1l2">ALZURUTT</span></span>
@@ -186,7 +200,9 @@
                 <p data-i18n="proj.protinal.desc">Actualización visual de sector abogacia.</p>
                 <div class="project-card-bottom">
                   <p class="project-tech">REACT JS • TAILWIND • DJANGO</p>
-                  <span class="project-link-btn project-link-btn--soon" aria-disabled="true" data-i18n="proj.soon">Demo Próximamente</span>
+                  <a class="project-link-btn" href="https://protinaldemo.vercel.app/" target="_blank" rel="noopener noreferrer"><span data-i18n="proj.view">Ver proyecto</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                  </a>
                 </div>
               </article>
             </div>
@@ -348,7 +364,7 @@
             <span class="footer-brand__first">RICARDO</span>
             <span class="footer-brand__last">ALZURUTT</span>
           </div>
-          <p class="footer-tagline" data-i18n="hero.kicker">Frontend Developer</p>
+          <p class="footer-tagline" data-i18n="hero.kicker">Fullstack Developer</p>
           <div class="footer-ctas">
             <a href="mailto:alzuruttricardo@gmail.com" class="footer-cta footer-cta--solid js-mail">
               <span data-i18n="footer.write">Escribeme</span>
@@ -385,7 +401,7 @@
       <div class="mail-modal__backdrop" data-mail-close></div>
       <div class="mail-modal__card" role="dialog" aria-modal="true" aria-labelledby="mailModalTitle">
         <button class="mail-modal__close" type="button" aria-label="Cerrar" data-mail-close>&times;</button>
-        <p class="mail-modal__title" id="mailModalTitle" data-i18n="mail.title">¿Con qué quieres escribirme?</p>
+        <p class="mail-modal__title" id="mailModalTitle" data-i18n="mail.title">Elige como escribirnos</p>
         <div class="mail-modal__options">
           <a class="mail-modal__opt" id="mailGmail" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-google" aria-hidden="true"></i><span>Gmail</span>

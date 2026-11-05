@@ -39,6 +39,7 @@ function initHead3D() {
   loader.load(
     "media/3d/face.glb",
     function(gltf) {
+      window.SiteLoader.faceLoaded(gltf.scene.clone(true));
       head = gltf.scene;
 
       const box    = new THREE.Box3().setFromObject(head);
@@ -53,8 +54,11 @@ function initHead3D() {
       scene.add(head);
       dirty = true;
     },
-    undefined,
-    function(err) { console.warn("head3d: GLB load failed", err); }
+    function(e) { window.SiteLoader.faceProgress(e); },
+    function(err) {
+      console.warn("head3d: GLB load failed", err);
+      window.SiteLoader.faceLoaded(null);
+    }
   );
 
   let tRotY = 0, tRotX = 0;

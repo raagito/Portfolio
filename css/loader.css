@@ -1,0 +1,92 @@
+/* ============= PANTALLA DE CARGA ============= */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+}
+
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000; /* sobre todo el sitio, pero bajo el cursor custom */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--bg);
+  transition: opacity 0.55s ease;
+}
+
+.site-loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-loader__face {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  transition: transform 0.55s ease;
+}
+
+.site-loader.is-done .site-loader__face {
+  transform: scale(1.08);
+}
+
+.site-loader__poster,
+#loaderCanvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.35s ease;
+}
+
+#loaderCanvas {
+  opacity: 0;
+}
+
+.site-loader.has-3d #loaderCanvas {
+  opacity: 1;
+}
+
+.site-loader.has-3d .site-loader__poster {
+  opacity: 0;
+}
+
+.site-loader__bar {
+  width: min(280px, 64vw);
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(11, 36, 51, 0.08);
+}
+
+.site-loader__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  transform: scaleX(0);
+  transform-origin: left center;
+  /* la transicion sigue avanzando aunque el hilo principal este ocupado */
+  transition: transform 0.3s ease-out;
+}
+
+.site-loader__pct {
+  margin: 8px 0 0;
+  font-family: "bebas", Arial, sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  .site-loader__face {
+    width: 200px;
+    height: 200px;
+  }
+}

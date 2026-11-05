@@ -9,12 +9,14 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) return;
 
-  const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+  // Pausada hasta que termine la pantalla de carga, para que se vea entera
+  const intro = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   intro
     .from(".nav", { y: -30, opacity: 0, duration: 0.6, clearProps: "transform" })
     .from(".hero-name .mask > span", { opacity: 0, stagger: 0.12, duration: 0.55, ease: "power1.inOut" }, "-=0.1")
     .from(".hero-sub", { y: 16, opacity: 0, duration: 0.5 }, "-=0.4")
     .from(".hero-actions .btn", { y: 16, opacity: 0, stagger: 0.08, duration: 0.45 }, "-=0.35");
+  window.SiteLoader.whenDone(() => intro.play());
   gsap.from(".proyectos-bg-label span", {
     opacity: 0,
     y: 20,

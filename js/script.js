@@ -7,7 +7,7 @@ const CONFIG = {
     primary2: "#66D9E8"
   },
   hero: {
-    kicker: "Frontend Developer",
+    kicker: "Fullstack Developer",
     line1: "RICARDO",
     line2: "ALZURUTT",
     line3: "Software Engineer"
@@ -93,6 +93,7 @@ const CONFIG = {
 
   /* ring follows with smooth lag: quickTo reutiliza un solo tween,
      en vez de crear uno nuevo en cada frame */
+  gsap.set([dot, ring], { x: mx, y: my }); // fuera de pantalla hasta mover el raton
   const ringX = gsap.quickTo(ring, "x", { duration: 0.55, ease: "power3.out" });
   const ringY = gsap.quickTo(ring, "y", { duration: 0.55, ease: "power3.out" });
 
