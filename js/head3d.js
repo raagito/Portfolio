@@ -29,6 +29,7 @@ function initHead3D() {
   scene.add(fill);
 
   let head = null;
+  let dirty = true;   // hay algo nuevo que dibujar
 
   const dracoLoader = new THREE.DRACOLoader();
   dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
@@ -50,6 +51,7 @@ function initHead3D() {
       head.position.sub(center.multiplyScalar(scale));
 
       scene.add(head);
+      dirty = true;
     },
     undefined,
     function(err) { console.warn("head3d: GLB load failed", err); }
@@ -64,12 +66,16 @@ function initHead3D() {
   let rRotY = 0, rRotX = 0;
   (function loop() {
     requestAnimationFrame(loop);
-    if (head) {
+    // Solo dibuja si la cabeza se esta moviendo
+    if (head && Math.abs(tRotY - rRotY) + Math.abs(tRotX - rRotX) > 0.0005) {
       rRotY += (tRotY - rRotY) * 0.18;
       rRotX += (tRotX - rRotX) * 0.18;
       head.rotation.y = rRotY;
       head.rotation.x = rRotX;
+      dirty = true;
     }
+    if (!dirty) return;
+    dirty = false;
     renderer.render(scene, camera);
   })();
 }

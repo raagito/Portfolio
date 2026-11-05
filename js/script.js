@@ -91,20 +91,17 @@ const CONFIG = {
   /* dot snaps instantly via CSS transform set in RAF */
   let mx = -100, my = -100;
 
+  /* ring follows with smooth lag: quickTo reutiliza un solo tween,
+     en vez de crear uno nuevo en cada frame */
+  const ringX = gsap.quickTo(ring, "x", { duration: 0.55, ease: "power3.out" });
+  const ringY = gsap.quickTo(ring, "y", { duration: 0.55, ease: "power3.out" });
+
   window.addEventListener("pointermove", (e) => {
     mx = e.clientX; my = e.clientY;
     gsap.set(dot, { x: mx, y: my });
+    ringX(mx);
+    ringY(my);
   }, { passive: true });
-
-  /* ring follows with smooth lag */
-  gsap.ticker.add(() => {
-    gsap.to(ring, {
-      x: mx, y: my,
-      duration: 0.55,
-      ease: "power3.out",
-      overwrite: "auto"
-    });
-  });
 
   /* hover state on interactive elements */
   const hoverTargets = "a, button, [role='button'], label, input, textarea, select";

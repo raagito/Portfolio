@@ -13,11 +13,13 @@
     const r = canvas.getBoundingClientRect();
     const w = Math.round(r.width)  || 480;
     const h = Math.round(r.height) || 520;
-    canvas.width  = w * 2;
-    canvas.height = h * 2;
+    // Resolucion segun la pantalla, con tope de 2x
+    const pr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = w * pr;
+    canvas.height = h * pr;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    renderer.setSize(w * 2, h * 2, false);
+    renderer.setSize(w * pr, h * pr, false);
   }
 
   const scene    = new THREE.Scene();
@@ -270,10 +272,20 @@
   setSize();
   window.addEventListener("resize", setSize, { passive: true });
 
-  buildMode("designer");
+  // Carga el modelo al acercarse a la seccion y solo dibuja mientras se ve
+  let visible = false;
+  let built = false;
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible && !built) {
+      built = true;
+      buildMode(currentMode);
+    }
+  }, { rootMargin: "300px" }).observe(canvas);
 
   (function loop() {
     requestAnimationFrame(loop);
+    if (!visible) return;
     const t = clock.getElapsedTime();
     if (animFn) animFn(t);
     renderer.render(scene, camera);

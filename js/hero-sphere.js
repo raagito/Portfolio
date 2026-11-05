@@ -65,15 +65,38 @@
 
   function updateFill() {
     ticking = false;
+    if (!heroVisible) return;
     const words = spin.children;
+    // Primero se leen todas las posiciones y despues se escribe: mezclar
+    // lecturas y escrituras obliga al navegador a recalcular en cada palabra.
+    const fills = [];
     for (let i = 0; i < words.length; i++) {
       const r = words[i].getBoundingClientRect();
       const cx = r.left + r.width / 2;
       const cy = r.top + r.height / 2;
       const d = Math.hypot(mx - cx, my - cy);
       // 0 (lejos) .. 1 (encima)
-      const k = Math.max(0, 1 - d / RADIUS);
-      words[i].style.setProperty("--fill", k.toFixed(3));
+      fills.push(Math.max(0, 1 - d / RADIUS).toFixed(3));
     }
+    for (let i = 0; i < words.length; i++) {
+      if (words[i]._fill === fills[i]) continue;
+      words[i]._fill = fills[i];
+      words[i].style.setProperty("--fill", fills[i]);
+    }
+  }
+
+  // Fuera de pantalla no hace falta girar la esfera ni reproducir el video
+  let heroVisible = true;
+  const hero = spin.closest(".hero");
+  const heroVideo = hero && hero.querySelector("video");
+  if (hero) {
+    new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      spin.style.animationPlayState = heroVisible ? "running" : "paused";
+      if (heroVideo) {
+        if (heroVisible) heroVideo.play().catch(() => {});
+        else heroVideo.pause();
+      }
+    }).observe(hero);
   }
 })();

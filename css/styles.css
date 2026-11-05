@@ -440,7 +440,7 @@ body.cursor--hidden .c-cursor-ring {
 .fx-zoom.in{opacity:1; transform:scale(1)}
 /* Aparicion suave con desenfoque (WHY ME) */
 .fx-blur{opacity:0; filter:blur(18px); transform:translateY(18px); transition:opacity 900ms var(--fx-ease), filter 900ms var(--fx-ease), transform 900ms var(--fx-ease)}
-.fx-blur.in{opacity:1; filter:blur(0); transform:translateY(0)}
+.fx-blur.in{opacity:1; filter:none; transform:translateY(0)}
 
 /* ================= Modal elegir correo ================= */
 .mail-modal{
